@@ -385,11 +385,7 @@
     .nx-impact__metrics b .unit{font-size:.45em;color:var(--nx-orange);margin-left:3px;font-weight:var(--nx-w-regular)}
     .nx-impact__metrics span{font-size:var(--nx-size-2xs);color:var(--nx-mute-on-bone);letter-spacing:var(--nx-track-caps);text-transform:uppercase;font-family:var(--nx-font-mono)}
 
-    /* X mark watermark on impact */
-    .nx-impact__x{
-      position:absolute;right:-6%;top:-10%;width:60vh;aspect-ratio:1;opacity:.05;color:var(--nx-ink);pointer-events:none;
-      transform:rotate(-12deg);
-    }
+    /* (X watermark removed — was floating to the right of the map and reading as a stray logo) */
 
     /* ============ RADIAL · DUPLA MATERIALIDADE — Climate-Tech-Map inspired ============ */
     .nx-radial{display:grid;grid-template-columns:minmax(280px,1.1fr) minmax(360px,1fr);gap:clamp(28px,4vw,72px);align-items:center;padding-block:8vh;padding-right:clamp(60px,8vw,120px)}
@@ -748,7 +744,10 @@
     .nx-chapcover__pattern--suns .sun svg line{stroke:rgba(237,204,192,.55);stroke-width:3}
     @keyframes nxSunFadeIn{to{opacity:1}}
 
-    /* — Squares pattern (Cap 02) — */
+    /* — Squares pattern (Cap 02) — thick bars cross at corners forming
+       triangles where they overlap (matches 02.png reference). Each square
+       is an SVG with 4 extended bars + a central pip · the bars protrude
+       past the corners so their crossings read as little triangles. */
     .nx-chapcover__pattern--squares{
       display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(4,1fr);
       gap:clamp(10px,1.6vw,28px);
@@ -756,10 +755,8 @@
       padding:clamp(24px,4vh,56px) clamp(28px,5vw,72px);
     }
     .nx-chapcover__pattern--squares .sq{
-      width:58%;aspect-ratio:1;
-      border:2.5px solid rgba(237,204,192,.55);
-      display:grid;place-items:center;
-      opacity:0;transform:scale(.6) rotate(0deg);
+      width:62%;aspect-ratio:1;position:relative;
+      opacity:0;transform:scale(.55) rotate(0deg);
       transition:opacity 700ms var(--nx-ease-out), transform 700ms var(--nx-ease-spring);
       will-change:transform, opacity;
     }
@@ -769,12 +766,13 @@
     }
     @keyframes nxSquarePulse{
       0%,100%{transform:scale(1)        rotate(0deg);   opacity:.85}
-      50%   {transform:scale(1.06)      rotate(45deg);  opacity:1   }
+      50%   {transform:scale(1.08)      rotate(45deg);  opacity:1   }
     }
-    .nx-chapcover__pattern--squares .sq::before{
-      content:"";width:22%;aspect-ratio:1;background:rgba(237,204,192,.65);
-      transition:transform 700ms var(--nx-ease-out);
+    .nx-chapcover__pattern--squares .sq svg{
+      width:100%;height:100%;display:block;overflow:visible;
     }
+    .nx-chapcover__pattern--squares .sq rect{fill:rgba(237,234,227,.62)}
+    .nx-chapcover__pattern--squares .sq .pip{fill:rgba(237,234,227,.85)}
 
     /* Diretrizes 2025–2050 · ribbon between persp head and the 3 pillars */
     .nx-persp__marks{
@@ -1928,12 +1926,6 @@
 
   <!-- ====== 02 IMPACT — 198M€ ====== -->
   <section class="nx-stage nx-stage--bone nx-impact" data-reveal id="impact">
-    <svg class="nx-impact__x" viewBox="0 0 100 100" aria-hidden="true">
-      <line x1="14" y1="14" x2="42" y2="42" stroke="currentColor" stroke-width="7"/>
-      <line x1="58" y1="58" x2="86" y2="86" stroke="currentColor" stroke-width="7"/>
-      <line x1="86" y1="14" x2="58" y2="42" stroke="currentColor" stroke-width="7"/>
-      <line x1="42" y1="58" x2="14" y2="86" stroke="currentColor" stroke-width="7"/>
-    </svg>
     <div class="nx-impact__grid">
       <span class="nx-impact__eyebrow" data-i18n="impact.eyebrow">Universo NEXA</span>
 
@@ -3249,9 +3241,18 @@
       });
     })();
 
-    // Squares pattern: 7 × 4 frame+dot tiles · each tile pulses scale +
-    // 45° rotation continuous, staggered per-tile delay
+    // Squares pattern: 7 × 4 tiles. Each tile is an SVG frame composed
+    // of 4 thick bars (16% of the side) that protrude 12% past the
+    // square corners so their crossings form little triangles · plus a
+    // central pip. The whole tile pulses + rotates 45°.
     (function buildSquaresPatterns(){
+      const SQ_SVG = `<svg viewBox="-12 -12 124 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="-12" y="0"   width="124" height="16"/>
+        <rect x="-12" y="84"  width="124" height="16"/>
+        <rect x="0"   y="-12" width="16"  height="124"/>
+        <rect x="84"  y="-12" width="16"  height="124"/>
+        <rect class="pip" x="38" y="38" width="24" height="24"/>
+      </svg>`;
       document.querySelectorAll('.nx-chapcover__pattern--squares').forEach(host => {
         host.replaceChildren();
         for(let i = 0; i < 28; i++){
@@ -3259,6 +3260,7 @@
           s.className = 'sq';
           s.style.setProperty('--pulse-dur',   (5 + Math.random()*3).toFixed(2) + 's');
           s.style.setProperty('--pulse-delay', (i * 0.08).toFixed(2) + 's');
+          s.innerHTML = SQ_SVG;
           host.appendChild(s);
         }
       });
