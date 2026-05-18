@@ -1112,62 +1112,66 @@
         radial-gradient(40% 30% at 10% 10%, rgba(200,82,4,0.10) 0%, transparent 60%),
         var(--nx-ink);
     }
-    /* ============ FOOTER · contact + (giant wordmark retired) ============ */
+    /* ============ FOOTER · compact, minimal, single column ============ */
     .nx-foot{
       position:relative;overflow:hidden;
-      padding-top:clamp(80px,12vh,140px);padding-bottom:clamp(48px,6vh,72px);
+      padding:clamp(48px,7vh,80px) 0 clamp(28px,4vh,48px);
     }
-    .nx-foot__contact{
-      display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,4vw,80px);
-      max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px);
+    .nx-foot > *{
+      max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,80px);
       position:relative;z-index:2;
     }
-    .nx-foot__field{display:grid;gap:8px}
+    /* CTA — pill back to site (sits first per user direction) */
+    .nx-foot__cta{margin-bottom:clamp(20px,2.5vh,32px)}
+    .nx-foot__sitelink{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:9px 16px;border-radius:var(--nx-r-pill);
+      background:var(--nx-orange);color:#fff;cursor:none;
+      font-family:var(--nx-font-mono);font-size:10.5px;
+      letter-spacing:.18em;text-transform:uppercase;
+      transition:background .25s var(--nx-ease-out), gap .25s var(--nx-ease-out);
+    }
+    .nx-foot__sitelink:hover{background:var(--nx-orange-deep);gap:14px}
+    .nx-foot__sitelink-url{
+      padding:2px 6px;border-radius:2px;background:rgba(0,0,0,.18);
+      color:#fff;font-weight:500;letter-spacing:.10em;font-size:10px;
+    }
+    .nx-foot__sitelink svg{width:11px;height:11px;flex-shrink:0;stroke:currentColor;fill:none}
+
+    /* Contact · 3 fields inline, compact */
+    .nx-foot__contact{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:clamp(16px,2.4vw,32px);margin-bottom:clamp(18px,2.4vh,28px);
+      padding-top:clamp(18px,2.4vh,28px);
+      border-top:1px solid rgba(237,234,227,.10);
+    }
+    .nx-foot__field{display:grid;gap:4px}
     .nx-foot__label{
-      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
-      letter-spacing:var(--nx-track-caps);text-transform:uppercase;
-      color:var(--nx-orange);
+      font-family:var(--nx-font-mono);font-size:10px;
+      letter-spacing:.20em;text-transform:uppercase;color:var(--nx-orange);
     }
     .nx-foot__value{
-      font-size:var(--nx-size-lg);color:var(--nx-on-ink);font-weight:var(--nx-w-light);
-      letter-spacing:-.01em;
+      font-size:var(--nx-size-sm);color:var(--nx-on-ink);font-weight:var(--nx-w-regular);
+      letter-spacing:0;line-height:1.4;
     }
     .nx-foot__value a{color:inherit;border-bottom:1px solid transparent;transition:border-color .25s var(--nx-ease-out)}
     .nx-foot__value a:hover{border-bottom-color:var(--nx-orange)}
-    .nx-foot__bottom{
-      display:flex;justify-content:space-between;gap:24px;
-      max-width:1200px;margin:clamp(32px,5vh,56px) auto 0;padding:0 clamp(20px,5vw,80px);
-      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
-      letter-spacing:var(--nx-track-caps);text-transform:uppercase;
-      color:var(--nx-mute-on-ink);
-      position:relative;z-index:2;
-      flex-wrap:wrap;
-    }
-    .nx-foot__bottom > div{display:flex;gap:18px;flex-wrap:wrap}
 
-    /* Footer · back-to-site CTA */
-    .nx-foot__cta{
-      max-width:1200px;margin:32px auto 0;padding:0 clamp(20px,5vw,80px);
-      position:relative;z-index:2;
+    /* Meta row · single line on desktop, wraps on narrow */
+    .nx-foot__bottom{
+      display:flex;justify-content:space-between;gap:18px;
+      padding-top:clamp(14px,2vh,20px);
+      border-top:1px solid rgba(237,234,227,.10);
+      font-family:var(--nx-font-mono);font-size:10px;
+      letter-spacing:.16em;text-transform:uppercase;
+      color:var(--nx-mute-on-ink);flex-wrap:wrap;
     }
-    .nx-foot__sitelink{
-      display:inline-flex;align-items:center;gap:14px;
-      padding:14px 22px;border-radius:var(--nx-r-pill);
-      background:var(--nx-orange);color:#fff;cursor:none;
-      font-family:var(--nx-font-mono);font-size:11.5px;
-      letter-spacing:.22em;text-transform:uppercase;
-      transition:background .25s var(--nx-ease-out), transform .25s var(--nx-ease-arch), gap .25s var(--nx-ease-out);
-    }
-    .nx-foot__sitelink:hover{background:var(--nx-orange-deep);transform:translateY(-2px);gap:18px}
-    .nx-foot__sitelink-url{
-      padding:3px 9px;border-radius:2px;background:rgba(0,0,0,.18);
-      color:#fff;font-weight:500;letter-spacing:.12em;
-    }
-    .nx-foot__sitelink svg{width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none}
+    .nx-foot__bottom > div{display:flex;gap:12px;flex-wrap:wrap}
+
     .nx-foot__easter{
-      max-width:1200px;margin:24px auto 0;padding:0 clamp(20px,5vw,80px);
-      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);color:var(--nx-ink-3);
-      letter-spacing:var(--nx-track-loose);position:relative;z-index:2;
+      margin-top:clamp(18px,2vh,24px);
+      font-family:var(--nx-font-mono);font-size:10px;color:var(--nx-ink-3);
+      letter-spacing:.14em;
     }
 
     /* ============ SECTION SCAFFOLDING (reusable) ============ */
@@ -1850,6 +1854,45 @@
       .nx-orangeband{grid-template-columns:1fr;gap:20px}
       .nx-mapwrap{grid-template-columns:1fr}
       .nx-chapdiv{grid-template-columns:1fr;text-align:left}
+
+      /* === Mobile pass · phone-first refinements === */
+      /* Map: smaller + full-width */
+      .nx-map{max-width:100%;aspect-ratio:5/6}
+      /* Macro KPI cards: slightly tighter, headline a hair smaller */
+      .nx-impact__metrics.nx-impact__metrics--5{gap:8px}
+      .nx-impact__metrics.nx-impact__metrics--5 > div{padding:14px 18px;min-height:80px}
+      .nx-impact__metrics.nx-impact__metrics--5 b{font-size:clamp(1.7rem,7vw,2.4rem)}
+      /* Cert layout: stack tabla over donut */
+      .nx-certs__layout{grid-template-columns:1fr;gap:16px}
+      .nx-certs__table,.nx-certs__donut{min-height:auto}
+      .nx-certs__donut-svg svg{width:120px;height:120px}
+      /* Cert table cells smaller on phone */
+      .nx-certs__row{padding:11px 4px;gap:6px}
+      .nx-certs__cell{font-size:10px}
+      .nx-certs__type{font-size:13px}
+      /* Dark pauses: tighter min-height */
+      .nx-phil{min-height:auto;padding:clamp(40px,7vh,72px) 22px}
+      .nx-phil__quote{font-size:clamp(1.05rem,4.8vw,1.6rem)}
+      /* Scatter dashes: half the size, no horizontal scroll risk */
+      .nx-phil__scatter span{transform:translate(var(--x,0), var(--y,0)) rotate(var(--rot,0deg)) scale(.55)}
+      .nx-phil--scatter.is-in .nx-phil__scatter span{
+        transform:translate(var(--x,0), var(--y,0)) rotate(var(--rot,0deg)) scale(.55);
+      }
+      /* Suns: smaller scale */
+      .nx-phil--suns.is-in .nx-phil__suns .sun{transform:translate(var(--x,0), var(--y,0)) scale(.6)}
+      @keyframes nxSunSpinMobile{to{transform:translate(var(--x,0), var(--y,0)) scale(.6) rotate(360deg)}}
+      .nx-phil--suns.is-in .nx-phil__suns .sun{animation-name:nxSunSpinMobile}
+      /* Chapter covers: shorter on phone, numeral inboard */
+      .nx-chapcover{min-height:36vh;aspect-ratio:auto;max-height:none}
+      .nx-chapcover__num{font-size:clamp(5rem,18vw,9rem);padding:0 28px clamp(20px,4vh,40px) 0}
+      /* Hero title slightly smaller still */
+      .nx-hero__titlefinal{font-size:clamp(22px,7vw,38px)}
+      /* Sheet modal panels stack on phone (done by 720px rule, redundant safe) */
+      .nx-sheet__row--2col,.nx-sheet__row--3col{grid-template-columns:1fr}
+      /* Footer: single column */
+      .nx-foot__contact{grid-template-columns:1fr;gap:14px}
+      .nx-foot__bottom{flex-direction:column;gap:8px}
+      /* Liquid Data was removed · safe */
     }
   </style>
 </head>
@@ -2600,6 +2643,18 @@
 
   <!-- ====== FOOTER · CONTACTO ====== -->
   <footer class="nx-stage nx-stage--ink nx-foot" id="contact">
+    <!-- 1 · CTA back to NEXA site (per user · before email block) -->
+    <div class="nx-foot__cta">
+      <a href="https://www.nexa-sgoic.pt/" target="_blank" rel="noopener" class="nx-foot__sitelink">
+        <span data-i18n="foot.backsite">Voltar ao site</span>
+        <span class="nx-foot__sitelink-url">nexa-sgoic.pt</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- 2 · contact info (email · phone · address) -->
     <div class="nx-foot__contact">
       <div class="nx-foot__field">
         <span class="nx-foot__label" data-i18n="foot.email">Email</span>
@@ -2611,10 +2666,11 @@
       </div>
       <div class="nx-foot__field">
         <span class="nx-foot__label" data-i18n="foot.address">Morada</span>
-        <span class="nx-foot__value">Avenida 31 de Janeiro, 307<br/>4715-052 Braga</span>
+        <span class="nx-foot__value">Avenida 31 de Janeiro, 307 · 4715-052 Braga</span>
       </div>
     </div>
 
+    <!-- 3 · meta row · regulator · privacy -->
     <div class="nx-foot__bottom">
       <div>
         <span>NEXA SGOIC, S.A.</span>
@@ -2630,16 +2686,6 @@
         <span>·</span>
         <span data-i18n="foot.institutional">Informação Institucional</span>
       </div>
-    </div>
-
-    <div class="nx-foot__cta">
-      <a href="https://www.nexa-sgoic.pt/" target="_blank" rel="noopener" class="nx-foot__sitelink">
-        <span data-i18n="foot.backsite">Voltar ao site da NEXA</span>
-        <span class="nx-foot__sitelink-url">nexa-sgoic.pt</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
     </div>
 
     <div class="nx-foot__easter" data-i18n="foot.easter">// efeito surpresa</div>
