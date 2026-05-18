@@ -3435,8 +3435,254 @@
           frag.appendChild(r2);
           return frag;
         }
+      },
+
+      agua: {
+        eyebrow: '02.2 — Environmental · Água',
+        title: 'Consumo de água · 9.933 m³',
+        titleAccent: '−14,5%',
+        lede: 'Redução face a 2024 (11.622 m³). Construção representa ~32% do consumo, com o SPARK como principal contribuinte.',
+        build: () => {
+          const frag = document.createDocumentFragment();
+          const r1 = document.createElement('div');
+          r1.className = 'nx-sheet__row nx-sheet__row--2col';
+          r1.appendChild(buildPanel({
+            title: 'Consumo de água por atividade · 2025',
+            stat: '9.933', unit: 'm³',
+            body: buildDonut([
+              {label:'Operação OIC',         pct:54.4, color:'#C85204'},
+              {label:'Construção',           pct:32.0, color:'#A8420A'},
+              {label:'Operação Terceiros',   pct:13.6, color:'#EDCCC0'}
+            ], '9.933')
+          }));
+          r1.appendChild(buildPill({
+            year:'2025',
+            cap:'Água reutilizada',
+            num:'0', unit:'%',
+            note:'Sem sistemas de reutilização ativos em 2025. Em avaliação para SPARK II e La Movida.'
+          }));
+          frag.appendChild(r1);
+          const r2 = document.createElement('div');
+          r2.className = 'nx-sheet__row nx-sheet__row--3col';
+          r2.appendChild(buildPanel({
+            title:'Construção', stat:'3.176', unit:'m³',
+            note:'SPARK II (3.063 m³) + The Breeze (113 m³) — uso intensivo em obra.',
+            body: buildHbars({
+              label:'Por projeto',
+              rows:[
+                {cat:'SPARK II',   val:'3.063', unit:'m³', w:96, strong:true},
+                {cat:'The Breeze', val:'113',   unit:'m³', w:4}
+              ]
+            })
+          }));
+          r2.appendChild(buildPanel({
+            title:'Operação · OIC', stat:'5.403', unit:'m³',
+            note:'Castro Capital SIC — operação direta dos ativos sob gestão.',
+            body: buildHbars({
+              label:'Top consumidores',
+              rows:[
+                {cat:'Bloom Living', val:'2.180', unit:'m³', w:60, strong:true},
+                {cat:'BUZ',          val:'1.840', unit:'m³', w:48},
+                {cat:'Outros',       val:'1.383', unit:'m³', w:30}
+              ]
+            })
+          }));
+          r2.appendChild(buildPanel({
+            title:'Operação · Terceiros', stat:'1.354', unit:'m³',
+            note:'Estimativa baseada em capacidade de contadores e medições partilhadas.',
+            body: buildHbars({
+              label:'Por ativo',
+              rows:[
+                {cat:'Conjunto',     val:'1.354', unit:'m³', w:74, strong:true}
+              ]
+            })
+          }));
+          frag.appendChild(r2);
+          return frag;
+        }
+      },
+
+      residuos: {
+        eyebrow: '02.2 — Environmental · Resíduos',
+        title: 'Resíduos valorizados · 97,3%',
+        titleAccent: 'Construção: 100%',
+        lede: 'Gestão da produção e encaminhamento — operação direta e obras seguem políticas de separação, valorização e rastreabilidade.',
+        build: () => {
+          const frag = document.createDocumentFragment();
+          const r1 = document.createElement('div');
+          r1.className = 'nx-sheet__row nx-sheet__row--2col';
+          r1.appendChild(buildPanel({
+            title: 'Distribuição de resíduos por atividade · 2025',
+            stat: '38,7', unit: 'Ton',
+            body: buildDonut([
+              {label:'Construção',  pct:95.2, color:'#C85204'},
+              {label:'Operação',    pct: 4.8, color:'#EDCCC0'}
+            ], '38,7 Ton')
+          }));
+          r1.appendChild(buildPill({
+            year:'2025',
+            cap:'Resíduos recuperados',
+            num:'57,2', unit:'%',
+            note:'Materiais separados e encaminhados para reciclagem, reutilização ou compostagem.'
+          }));
+          frag.appendChild(r1);
+          const r2 = document.createElement('div');
+          r2.className = 'nx-sheet__row nx-sheet__row--3col';
+          r2.appendChild(buildPanel({
+            title:'Produção por atividade', stat:'38,7', unit:'Ton',
+            note:'Quase totalidade vem de obra — operação contribui de forma residual.',
+            body: buildHbars({
+              label:'Toneladas geradas',
+              rows:[
+                {cat:'Construção', val:'36,87', unit:'Ton', w:95, strong:true},
+                {cat:'Operação',   val:'1,85',  unit:'Ton', w:5}
+              ]
+            })
+          }));
+          r2.appendChild(buildPanel({
+            title:'Construção · destino', stat:'100', unit:'%',
+            note:'Totalidade dos resíduos de construção foi encaminhada para valorização.',
+            body: buildHbars({
+              label:'Destinos',
+              rows:[
+                {cat:'Reciclagem',  val:'82', unit:'%', w:82, strong:true},
+                {cat:'Reutilização',val:'18', unit:'%', w:18}
+              ]
+            })
+          }));
+          r2.appendChild(buildPanel({
+            title:'Operação · destino', stat:'46', unit:'%',
+            note:'Recuperação parcial — em consolidação no plano 2026 (Código de Conduta ESG fornecedores).',
+            body: buildHbars({
+              label:'Destinos',
+              rows:[
+                {cat:'Recuperados', val:'46', unit:'%', w:46, strong:true},
+                {cat:'Aterro',      val:'54', unit:'%', w:54}
+              ]
+            })
+          }));
+          frag.appendChild(r2);
+          return frag;
+        }
+      },
+
+      mobilidade: {
+        eyebrow: '02.2 — Environmental · Mobilidade',
+        title: 'Frota elétrica · 66,7%',
+        titleAccent: '4 de 6 veículos',
+        lede: 'Caracterização da frota Nexa em 2025: composta por veículos de duas categorias — elétricos e a gasolina. Plano 2026–2030: 100% eléctrica.',
+        build: () => {
+          const frag = document.createDocumentFragment();
+          const r1 = document.createElement('div');
+          r1.className = 'nx-sheet__row nx-sheet__row--2col';
+          r1.appendChild(buildPanel({
+            title: 'Caracterização da frota · 2025',
+            stat: '6', unit: 'veículos',
+            body: buildDonut([
+              {label:'Elétricos',  pct:66.7, color:'#C85204'},
+              {label:'Gasolina',   pct:33.3, color:'#EDCCC0'}
+            ], '6 carros')
+          }));
+          r1.appendChild(buildPill({
+            year:'2025',
+            cap:'Emissões evitadas',
+            num:'59,9', unit:'%',
+            note:'Equivalente a 14,1 TonCO₂e evitadas vs cenário 100% combustão interna.'
+          }));
+          frag.appendChild(r1);
+          const r2 = document.createElement('div');
+          r2.className = 'nx-sheet__row nx-sheet__row--2col';
+          r2.appendChild(buildPanel({
+            title:'Quilómetros por categoria', stat:'100.225', unit:'km',
+            note:'Distância total percorrida pela frota em 2025.',
+            body: buildHbars({
+              label:'Por tipo',
+              rows:[
+                {cat:'Elétricos',  val:'65.603', unit:'km', w:65, strong:true},
+                {cat:'Gasolina',   val:'34.622', unit:'km', w:35}
+              ]
+            })
+          }));
+          r2.appendChild(buildPanel({
+            title:'Emissões Scope 1 · frota', stat:'8,1', unit:'TonCO₂e',
+            note:'Combustão interna de 34.622 km da fração não-elétrica. Eliminar Scope 1 até 2030.',
+            body: buildHbars({
+              label:'Combustível',
+              rows:[
+                {cat:'Gasolina',   val:'8,1', unit:'TonCO₂e', w:100, strong:true}
+              ]
+            })
+          }));
+          frag.appendChild(r2);
+          return frag;
+        }
+      },
+
+      scopes: {
+        eyebrow: '02.2 — Environmental · Pegada de Carbono',
+        title: 'Emissões totais · 342,6 TonCO₂e',
+        titleAccent: 'Scope 3 = 91,3%',
+        lede: 'Inventário 2025 segundo o GHG Protocol — Scope 1 (combustão direta), Scope 2 (eletricidade adquirida) e Scope 3 (cadeia de valor). Perfil típico de gestoras imobiliárias.',
+        build: () => {
+          const frag = document.createDocumentFragment();
+          const r1 = document.createElement('div');
+          r1.className = 'nx-sheet__row nx-sheet__row--2col';
+          r1.appendChild(buildPanel({
+            title: 'Distribuição total por scope',
+            stat: '342,6', unit: 'TonCO₂e',
+            body: buildDonut([
+              {label:'Scope 3 · Cadeia de valor', pct:91.3, color:'#C85204'},
+              {label:'Scope 2 · Eletricidade',    pct: 6.4, color:'#A8420A'},
+              {label:'Scope 1 · Combustão',       pct: 2.4, color:'#EDCCC0'}
+            ], '342,6 t')
+          }));
+          r1.appendChild(buildPill({
+            year:'2025',
+            cap:'Emissões compensadas',
+            num:'5,0', unit:'%',
+            note:'17 TonCO₂e compensadas via projetos certificados Verra/Gold Standard. Restantes 95% em plano de redução 2025-2030.'
+          }));
+          frag.appendChild(r1);
+          const r2 = document.createElement('div');
+          r2.className = 'nx-sheet__row nx-sheet__row--3col';
+          r2.appendChild(buildPanel({
+            title:'Scope 1 · Combustão direta', stat:'8,1', unit:'TonCO₂e',
+            note:'Frota a gasolina — eliminação prevista até 2030 com 100% eletrificação.',
+            body: buildHbars({
+              label:'Fonte',
+              rows:[
+                {cat:'Frota',   val:'8,1', unit:'TonCO₂e', w:100, strong:true}
+              ]
+            })
+          }));
+          r2.appendChild(buildPanel({
+            title:'Scope 2 · Eletricidade', stat:'21,9', unit:'TonCO₂e',
+            note:'Localização baseada no mix EU. Scope 2 market-based (GdO) = 0,0 TonCO₂e na operação direta.',
+            body: buildHbars({
+              label:'Por uso',
+              rows:[
+                {cat:'Obra',       val:'21,9', unit:'TonCO₂e', w:100, strong:true},
+                {cat:'Operação',   val:'0,0',  unit:'TonCO₂e', w:0}
+              ]
+            })
+          }));
+          r2.appendChild(buildPanel({
+            title:'Scope 3 · Cadeia de valor', stat:'312,6', unit:'TonCO₂e',
+            note:'Compras, transportes e resíduos (cat. 1+5) + casa-trabalho (cat. 7) + viagens negócio (cat. 6) + operação ativos terceiros (cat. 13).',
+            body: buildHbars({
+              label:'Principais categorias',
+              rows:[
+                {cat:'Compras',    val:'170,8', unit:'TonCO₂e', w:55, strong:true},
+                {cat:'Ativos 3ºs', val:'138,7', unit:'TonCO₂e', w:44},
+                {cat:'Viagens',    val:'1,9',   unit:'TonCO₂e', w:1},
+                {cat:'Outras',     val:'1,2',   unit:'TonCO₂e', w:1}
+              ]
+            })
+          }));
+          frag.appendChild(r2);
+          return frag;
+        }
       }
-      // água, residuos, mobilidade, scopes → próxima iteração
     };
 
     function openSheet(key){
