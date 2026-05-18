@@ -653,6 +653,84 @@
       .nx-kpi-grid{grid-template-columns:1fr}
     }
 
+    /* ════════════════════════════════════════════════════════════════════
+       CHAPTER COVERS · full-bleed orange + decorative pattern + numeral
+       ───────────────────────────────────────────────────────────────────
+       Three variants matching the 01/02/03.png references:
+         lines   · rows of short vertical bars (Cap 01 NEXA)
+         squares · grid of frame+dot tiles (Cap 02 Situação Atual)
+         suns    · grid of radiant bursts (Cap 03 — kept in .nx-chap below)
+       ════════════════════════════════════════════════════════════════════ */
+    .nx-chapcover{
+      position:relative;width:100vw;
+      margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+      min-height:48vh;
+      aspect-ratio:16/9;max-height:78vh;
+      background:var(--nx-orange);overflow:hidden;
+      display:grid;align-items:end;
+      isolation:isolate;
+    }
+    .nx-chapcover__pattern{
+      position:absolute;inset:0;z-index:1;pointer-events:none;
+    }
+    .nx-chapcover__num{
+      position:relative;z-index:2;
+      font-family:var(--nx-font-sans);font-weight:var(--nx-w-bold);
+      font-size:clamp(7rem,16vw,16rem);
+      line-height:.85;letter-spacing:-.05em;
+      color:rgba(237,204,192,.72);
+      padding:0 clamp(28px,6vw,96px) clamp(24px,5vh,72px) 0;
+      justify-self:end;
+      opacity:0;transform:translateY(40px);
+      transition:opacity 1.2s var(--nx-ease-out), transform 1.2s var(--nx-ease-arch);
+    }
+    .nx-chapcover.is-in .nx-chapcover__num{opacity:1;transform:translateY(0)}
+
+    /* — Lines pattern (Cap 01) — */
+    .nx-chapcover__pattern--lines{
+      display:grid;grid-template-rows:repeat(5,1fr);
+      padding:clamp(24px,4vh,56px) clamp(28px,5vw,72px);
+      gap:clamp(18px,3vh,48px);
+    }
+    .nx-chapcover__pattern--lines .row{
+      display:grid;grid-template-columns:repeat(26,1fr);
+      gap:clamp(6px,.8vw,16px);
+      align-items:center;
+    }
+    .nx-chapcover__pattern--lines .bar{
+      width:100%;max-width:7px;
+      background:rgba(237,204,192,.55);border-radius:1px;
+      justify-self:start;
+      transform:scaleY(0);transform-origin:center;
+      transition:transform 700ms var(--nx-ease-arch);
+    }
+    .nx-chapcover.is-in .nx-chapcover__pattern--lines .bar{transform:scaleY(1)}
+
+    /* — Squares pattern (Cap 02) — */
+    .nx-chapcover__pattern--squares{
+      display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(4,1fr);
+      gap:clamp(10px,1.6vw,28px);
+      place-items:center;
+      padding:clamp(24px,4vh,56px) clamp(28px,5vw,72px);
+    }
+    .nx-chapcover__pattern--squares .sq{
+      width:58%;aspect-ratio:1;
+      border:2.5px solid rgba(237,204,192,.55);
+      display:grid;place-items:center;
+      opacity:0;transform:scale(.6);
+      transition:opacity 700ms var(--nx-ease-out), transform 700ms var(--nx-ease-spring);
+    }
+    .nx-chapcover.is-in .nx-chapcover__pattern--squares .sq{opacity:1;transform:scale(1)}
+    .nx-chapcover__pattern--squares .sq::before{
+      content:"";width:22%;aspect-ratio:1;background:rgba(237,204,192,.65);
+    }
+
+    @media (max-width:880px){
+      .nx-chapcover{min-height:42vh;aspect-ratio:auto}
+      .nx-chapcover__pattern--squares{grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(3,1fr)}
+      .nx-chapcover__pattern--lines .row{grid-template-columns:repeat(18,1fr)}
+    }
+
     /* ============ CHAPTER COVER (05) — HALF-BLEED ORANGE ============ */
     .nx-chap{padding:0;min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
     .nx-chap__left{
@@ -1665,6 +1743,12 @@
     </div>
   </section>
 
+  <!-- Chapter cover 01 · full-bleed orange + lines pattern + numeral -->
+  <section class="nx-chapcover" data-reveal aria-label="Capítulo 01 · NEXA">
+    <div class="nx-chapcover__pattern nx-chapcover__pattern--lines" data-pattern="lines" aria-hidden="true"></div>
+    <div class="nx-chapcover__num">01</div>
+  </section>
+
   <!-- Chapter divider 01 -->
   <div class="nx-chapdiv" id="ch01">
     <span class="nx-chapdiv__num">01</span>
@@ -1745,6 +1829,12 @@
       </div>
 
     </div>
+  </section>
+
+  <!-- Chapter cover 02 · full-bleed orange + squares pattern + numeral -->
+  <section class="nx-chapcover" data-reveal aria-label="Capítulo 02 · Situação Atual">
+    <div class="nx-chapcover__pattern nx-chapcover__pattern--squares" data-pattern="squares" aria-hidden="true"></div>
+    <div class="nx-chapcover__num">02</div>
   </section>
 
   <!-- Chapter divider 02 -->
@@ -2790,7 +2880,7 @@
       }
     })();
 
-    // ============ Suns (chapter cover) ============
+    // ============ Suns (chapter cover 03) ============
     (function(){
       const host = document.getElementById('suns'); if(!host) return;
       function sunSVG(){
@@ -2811,6 +2901,38 @@
         w.style.animationDuration = (12 + Math.random()*14).toFixed(1)+'s';
         host.appendChild(w);
       }
+    })();
+
+    // ============ Chapter cover patterns (01 lines · 02 squares) ============
+    // Lines pattern: 5 rows × 26 vertical bars · alternating heights
+    // per row offset so each row has a slightly different rhythm
+    (function buildLinesPatterns(){
+      const heights = [22,32,42,32,22,32,42,22,32,32,42,22,32,42,32,22,32,42,32,22,32,42,22,32,42,32];
+      document.querySelectorAll('.nx-chapcover__pattern--lines').forEach(host => {
+        for(let r = 0; r < 5; r++){
+          const row = document.createElement('div');
+          row.className = 'row';
+          const offset = (r * 7) % heights.length;
+          for(let i = 0; i < 26; i++){
+            const b = document.createElement('span');
+            b.className = 'bar';
+            b.style.height = heights[(i + offset) % heights.length] + 'px';
+            row.appendChild(b);
+          }
+          host.appendChild(row);
+        }
+      });
+    })();
+
+    // Squares pattern: 7 × 4 frame+dot tiles
+    (function buildSquaresPatterns(){
+      document.querySelectorAll('.nx-chapcover__pattern--squares').forEach(host => {
+        for(let i = 0; i < 28; i++){
+          const s = document.createElement('span');
+          s.className = 'sq';
+          host.appendChild(s);
+        }
+      });
     })();
 
 
