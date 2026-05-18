@@ -276,50 +276,6 @@
 
     @keyframes nxFadeIn{to{opacity:1}}
 
-    /* ════════ HERO DEV TOOLS · mode selector + replay (Motion Sketch §5.2) ════════
-       Discreet · only visible on desktop · for visual validation of the 5
-       bar entry vocabularies. Top-right of the hero. */
-    .nx-modes{
-      position:absolute;top:84px;right:clamp(20px,4vw,56px);z-index:6;
-      display:inline-flex;gap:0;
-      background:rgba(20,18,20,.55);
-      backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-      border:1px solid rgba(237,234,227,.10);
-      border-radius:var(--nx-r-sm);
-      padding:2px;
-      opacity:0;animation:nxFadeIn 900ms var(--nx-ease-out) 3600ms forwards;
-    }
-    .nx-modes button{
-      padding:5px 10px;cursor:none;
-      font-family:var(--nx-font-mono);font-size:10px;
-      letter-spacing:.18em;text-transform:uppercase;
-      color:var(--nx-mid);
-      transition:color .2s, background .2s;
-      border-radius:2px;
-    }
-    .nx-modes button:hover{color:var(--nx-on-ink);background:rgba(237,234,227,.04)}
-    .nx-modes button.is-on{
-      color:var(--nx-brand-ink);background:var(--nx-orange);font-weight:500;
-    }
-    .nx-modes button.is-on:hover{background:var(--nx-orange-deep);color:#fff}
-
-    .nx-hero__replay{
-      position:absolute;right:clamp(20px,4vw,56px);bottom:clamp(22px,4vh,40px);z-index:6;
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 14px;border-radius:var(--nx-r-pill);
-      background:rgba(20,18,20,.55);
-      backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-      border:1px solid rgba(237,234,227,.14);
-      cursor:none;
-      font-family:var(--nx-font-mono);font-size:10px;
-      letter-spacing:.18em;text-transform:uppercase;
-      color:var(--nx-on-ink);
-      transition:background .25s, border-color .25s, color .25s;
-      opacity:0;animation:nxFadeIn 900ms var(--nx-ease-out) 4000ms forwards;
-    }
-    .nx-hero__replay:hover{background:var(--nx-orange);border-color:var(--nx-orange);color:#fff}
-    .nx-hero__replay svg{width:13px;height:13px;flex-shrink:0}
-
     /* ============ IMPACT (02) — 198M€ ============ */
     .nx-impact{align-items:start;padding-block:7vh}
     .nx-impact__grid{display:grid;grid-template-columns:1fr;gap:clamp(20px,3vh,40px);width:100%;max-width:1440px;margin:0 auto}
@@ -729,7 +685,8 @@
     /* ============ PHILOSOPHY (06) ============ */
     .nx-phil{
       align-items:center;justify-items:end;text-align:right;
-      padding-block:12vh;
+      padding-block:6vh;
+      min-height:auto;
     }
     .nx-phil__body{position:relative;z-index:3;max-width:680px;margin-right:clamp(20px,8vw,120px)}
     .nx-phil__quote{
@@ -748,6 +705,73 @@
     .nx-phil.is-in .nx-phil__skyline .bar:hover{
       transform:scaleY(1.6);background:var(--nx-orange);
       transition:transform .35s var(--nx-ease-spring), background-color .2s;
+    }
+
+    /* ════════════════════════════════════════════════════════════════
+       CHAIN PAUSE · transition into chapter 03 (Connect)
+       ──────────────────────────────────────────────────────────────
+       Full-bleed photo pause using the chain reference. Image goes
+       grayscale + orange-tint overlay to stay on brand.
+       ════════════════════════════════════════════════════════════════ */
+    .nx-chainpause{
+      position:relative;width:100vw;
+      margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+      min-height:64vh;overflow:hidden;
+      display:grid;align-items:end;
+      background:var(--nx-brand-ink);
+      isolation:isolate;
+    }
+    .nx-chainpause__media{
+      position:absolute;inset:0;z-index:1;
+      background:#000 url("uploads/references/cadena.jpg") center/cover no-repeat;
+      filter:grayscale(.55) contrast(1.05) brightness(.65);
+      transform:scale(1.06);
+      transition:transform 2.4s var(--nx-ease-arch), filter 1.6s var(--nx-ease-out);
+    }
+    .nx-chainpause.is-in .nx-chainpause__media{transform:scale(1)}
+    .nx-chainpause__overlay{
+      position:absolute;inset:0;z-index:2;pointer-events:none;
+      background:
+        linear-gradient(180deg, rgba(3,2,12,.55) 0%, rgba(3,2,12,.30) 40%, rgba(3,2,12,.85) 100%),
+        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(200,82,4,.18), transparent 60%);
+    }
+    .nx-chainpause__body{
+      position:relative;z-index:3;
+      padding:clamp(48px,8vh,96px) clamp(28px,6vw,96px);
+      max-width:min(800px, 78vw);
+      display:flex;flex-direction:column;gap:18px;
+      color:var(--nx-on-ink);
+    }
+    .nx-chainpause__eyebrow{
+      font-family:var(--nx-font-mono);font-size:11px;
+      letter-spacing:.24em;text-transform:uppercase;
+      color:var(--nx-orange);
+      opacity:0;transform:translateY(14px);transition:opacity 1s var(--nx-ease-out), transform 1s var(--nx-ease-arch);
+    }
+    .nx-chainpause.is-in .nx-chainpause__eyebrow{opacity:1;transform:translateY(0);transition-delay:.15s}
+    .nx-chainpause__quote{
+      font-family:var(--nx-font-sans);font-weight:var(--nx-w-light);font-style:italic;
+      font-size:clamp(1.4rem, 3.4vw, 2.6rem);
+      line-height:1.18;letter-spacing:-.018em;
+      color:var(--nx-on-ink);margin:0;max-width:32ch;
+      opacity:0;transform:translateY(24px);transition:opacity 1.2s var(--nx-ease-out), transform 1.2s var(--nx-ease-arch);
+    }
+    .nx-chainpause.is-in .nx-chainpause__quote{opacity:1;transform:translateY(0);transition-delay:.4s}
+    .nx-chainpause__cap{
+      font-family:var(--nx-font-mono);font-size:10px;
+      letter-spacing:.22em;text-transform:uppercase;
+      color:var(--nx-mid);
+      opacity:0;transform:translateY(10px);transition:opacity 1s var(--nx-ease-out), transform 1s var(--nx-ease-arch);
+    }
+    .nx-chainpause.is-in .nx-chainpause__cap{opacity:1;transform:translateY(0);transition-delay:.8s}
+    .nx-chainpause__cap::before{
+      content:"";display:inline-block;width:28px;height:1px;
+      background:var(--nx-orange);vertical-align:middle;margin-right:12px;opacity:.7;
+    }
+    @media (max-width: 880px){
+      .nx-chainpause{min-height:52vh}
+      .nx-chainpause__body{padding:48px 24px;max-width:none}
+      .nx-chainpause__quote{font-size:clamp(1.2rem,5vw,1.7rem)}
     }
 
     /* ============ EXPLORE (07) — CHAPTER CARDS ============ */
@@ -1089,61 +1113,68 @@
     /* ============ CERTIFICAÇÃO DE ATIVOS (cap 03 · from PDF p.31) ============ */
     .nx-certs{background:var(--nx-paper)}
     .nx-certs__layout{
-      display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(32px,5vw,72px);
+      display:grid;grid-template-columns:1.7fr 1fr;gap:clamp(24px,3vw,44px);
       align-items:start;margin-top:24px;
     }
     .nx-certs__table{
       display:grid;border-top:1px solid var(--nx-line);font-size:var(--nx-size-sm);
     }
     .nx-certs__row{
-      display:grid;grid-template-columns:1.4fr repeat(4, minmax(0, 1fr));
-      align-items:center;padding:14px 6px;
+      display:grid;grid-template-columns:1.5fr repeat(4, minmax(0, 1fr));
+      align-items:center;padding:14px 4px;gap:8px;
       border-bottom:1px solid var(--nx-line);
       transition:background-color .25s;
     }
     .nx-certs__row:hover{background:rgba(200,82,4,.04)}
     .nx-certs__row.is-head{
-      padding:10px 6px;font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
-      color:var(--nx-orange);letter-spacing:var(--nx-track-caps);text-transform:uppercase;
+      padding:10px 4px;font-family:var(--nx-font-mono);font-size:10.5px;
+      color:var(--nx-orange);letter-spacing:.14em;text-transform:uppercase;
       border-bottom:1px solid var(--nx-line-dark);
     }
-    .nx-certs__type{font-weight:var(--nx-w-medium);color:var(--nx-ink)}
-    .nx-certs__cell{
-      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
-      color:var(--nx-ink);letter-spacing:.06em;
+    .nx-certs__row.is-head > span:first-child{text-align:left}
+    .nx-certs__row.is-head > span:not(:first-child){text-align:center}
+    .nx-certs__type{
+      font-family:var(--nx-font-sans);font-weight:var(--nx-w-medium);
+      font-size:var(--nx-size-sm);color:var(--nx-ink);text-align:left;
+      letter-spacing:-.005em;line-height:1.25;
     }
-    .nx-certs__cell.is-empty{color:var(--nx-mid);font-size:14px}
+    .nx-certs__cell{
+      font-family:var(--nx-font-mono);font-size:11.5px;
+      color:var(--nx-ink);letter-spacing:.04em;text-align:center;
+      line-height:1.3;
+    }
+    .nx-certs__cell.is-empty{color:var(--nx-mid);font-size:16px;line-height:1}
     .nx-certs__cell strong{color:var(--nx-orange);font-weight:var(--nx-w-medium)}
 
     .nx-certs__donut{
-      position:relative;display:grid;gap:18px;
+      position:relative;display:grid;gap:14px;
       grid-template-rows:auto 1fr;align-self:start;
     }
     .nx-certs__donut-head{
       display:flex;flex-direction:column;gap:4px;
     }
     .nx-certs__donut-num{
-      font-size:clamp(1.7rem,3vw,2.4rem);font-weight:var(--nx-w-light);
+      font-size:clamp(1.5rem,2.6vw,2.1rem);font-weight:var(--nx-w-light);
       letter-spacing:-.025em;line-height:1;color:var(--nx-ink);
     }
     .nx-certs__donut-num .unit{font-size:.45em;color:var(--nx-orange);margin-left:5px}
     .nx-certs__donut-cap{
-      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      font-family:var(--nx-font-mono);font-size:10.5px;
       color:var(--nx-mute-on-bone);letter-spacing:.12em;text-transform:uppercase;
     }
     .nx-certs__donut-svg{
-      display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;
+      display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;
     }
-    .nx-certs__donut-svg svg{width:170px;height:170px;display:block;flex-shrink:0}
+    .nx-certs__donut-svg svg{width:140px;height:140px;display:block;flex-shrink:0}
     .nx-certs__donut-svg circle{transition:stroke-width .25s, opacity .25s}
     .nx-certs__donut-svg g:hover circle{stroke-width:24}
     .nx-certs__donut-legend{
-      display:grid;gap:8px;
-      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
-      letter-spacing:.06em;color:var(--nx-mute-on-bone);
+      display:grid;gap:7px;
+      font-family:var(--nx-font-mono);font-size:10.5px;
+      letter-spacing:.04em;color:var(--nx-mute-on-bone);
     }
-    .nx-certs__donut-legend div{display:grid;grid-template-columns:14px 1fr auto;align-items:center;gap:8px}
-    .nx-certs__donut-legend i{display:block;width:10px;height:10px;border-radius:2px}
+    .nx-certs__donut-legend div{display:grid;grid-template-columns:10px 1fr auto;align-items:center;gap:7px}
+    .nx-certs__donut-legend i{display:block;width:9px;height:9px;border-radius:2px}
     .nx-certs__donut-legend strong{color:var(--nx-ink);font-weight:var(--nx-w-medium)}
 
     /* Objetivos 2026 redesigned · cards instead of list */
@@ -1453,7 +1484,6 @@
       .nx-foot__bottom{flex-direction:column;gap:12px}
       /* Hero mobile · skip strokes animation, simplify layout, hide cursor */
       .nx-hero__titlelayer{display:none}
-      .nx-modes, .nx-hero__replay{display:none}
       .nx-hero__titlefinal{opacity:1;font-size:clamp(28px,7.5vw,46px);top:84px;max-width:88vw;left:20px;line-height:1.05}
       .nx-hero__belowtitle{top:auto;bottom:160px;left:20px;max-width:90vw}
       .nx-hero__year{font-size:clamp(48px,13vw,80px);margin-bottom:14px;animation-delay:600ms}
@@ -1554,24 +1584,6 @@
         <line x1="58" y1="58" x2="86" y2="86"/>
         <line x1="42" y1="58" x2="14" y2="86"/>
       </svg>
-
-      <!-- Mode selector · dev tool · 5 entry vocabularies per Motion Sketch SPEC §5.2 -->
-      <div class="nx-modes" role="toolbar" aria-label="Bar entry mode">
-        <button type="button" data-mode="cascade"   class="is-on">cascade</button>
-        <button type="button" data-mode="avalanche">avalanche</button>
-        <button type="button" data-mode="construct">construct</button>
-        <button type="button" data-mode="burst">burst</button>
-        <button type="button" data-mode="origami">origami</button>
-      </div>
-
-      <!-- Replay button · restarts the bar entry animation -->
-      <button type="button" class="nx-hero__replay" id="hero-replay" aria-label="Replay hero animation">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M21 12a9 9 0 11-3-6.7L21 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M21 4v4h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <span>replay</span>
-      </button>
 
       <!-- 2025 + Howard Marks quote (left, under title) -->
       <div class="nx-hero__belowtitle">
@@ -1968,6 +1980,17 @@
         <div class="nx-metric"><span class="nx-metric__label" data-i18n="econ.ebitda">EBITDA consolidado</span><span class="nx-metric__value">−2,43<span class="unit">M€</span></span><span class="nx-metric__delta is-down">vs −0,41 M€ em 2024</span></div>
         <div class="nx-metric"><span class="nx-metric__label" data-i18n="econ.services">Prestação de serviços</span><span class="nx-metric__value">2,06<span class="unit">M€</span></span><span class="nx-metric__delta is-down">−41,2% vs 2024</span></div>
       </div>
+    </div>
+  </section>
+
+  <!-- ====== PAUSE · Cadena · transition into chapter 03 (Connect) ====== -->
+  <section class="nx-chainpause" data-reveal aria-label="Transição visual · Capítulo 03 Connect">
+    <div class="nx-chainpause__media" aria-hidden="true"></div>
+    <div class="nx-chainpause__overlay" aria-hidden="true"></div>
+    <div class="nx-chainpause__body">
+      <span class="nx-chainpause__eyebrow" data-i18n="chain.eyebrow">Connect · Invest · Build the future</span>
+      <h2 class="nx-chainpause__quote" data-i18n="chain.quote">Cada elo é uma decisão. Cada decisão, uma direção partilhada.</h2>
+      <span class="nx-chainpause__cap" data-i18n="chain.cap">// Transição · Capítulo 03 · NEXA</span>
     </div>
   </section>
 
@@ -2476,41 +2499,24 @@
       layoutBars();
       addEventListener('resize', layoutBars);
 
-      // ─── 5 entry motion modes (per Motion Sketch SPEC §5.2) ─────────────
-      // cascade = production default · others are validation toggles for MFZ
-      const MODES = {
-        cascade:   (p) => ({ tx:(1-p)*(bW*0.6), ty:0, rotDelta:0,        scaleX:0.3+0.7*p, scaleY:1,           opacity:p,                       origin:'50% 50%' }),
-        avalanche: (p) => ({ tx:0,              ty:-(1-p)*(bH*0.8), rotDelta:(1-p)*540, scaleX:1,         scaleY:1,           opacity:Math.min(1,p*1.4),       origin:'50% 50%' }),
-        construct: (p) => ({ tx:0,              ty:0,               rotDelta:0,        scaleX:p,         scaleY:1,           opacity:p,                       origin:'0% 50%'  }),
-        burst:     (p) => ({ tx:0,              ty:0,               rotDelta:(1-p)*90,  scaleX:0.05+0.95*p, scaleY:0.05+0.95*p, opacity:p,                     origin:'50% 50%' }),
-        origami:   (p) => ({ tx:0,              ty:0,               rotDelta:(1-p)*-110,scaleX:1,         scaleY:0.2+0.8*p,   opacity:p,                       origin:'50% 50%' })
-      };
-      let currentMode = 'cascade';
-      let modeStartTime = performance.now();
-      const ENTRY_DURATION = 1100;
-      const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
-      const easeOutBack  = t => { const c = 1.7, c3 = c + 1; return 1 + c3*Math.pow(t-1,3) + c*Math.pow(t-1,2); };
-      const SPIN_RADIUS = 110, SPIN_ACCEL = 0.85, SPIN_FRICTION = 0.94;
-
-      // Mode selector wiring (dev tool · sutil, top-right del hero)
-      document.querySelectorAll('.nx-modes button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.nx-modes button').forEach(b => b.classList.remove('is-on'));
-          btn.classList.add('is-on');
-          currentMode = btn.dataset.mode;
-          modeStartTime = performance.now();
-          bars.forEach(b => { b.spinVel = 0; b.extraRot = 0; b.touched = false; b.el.classList.remove('is-touched'); });
-        });
+      // ─── COVER entry motion · avalanche fall + construct horizontal scale ─────
+      // Combines two SPEC §5.2 vocabularies: bars fall from above rotating,
+      // and as they land they extend horizontally to their final width.
+      // This matches the PDF cover composition (capa e contracapa_separada-03):
+      // dispersed dark bars descending diagonally into the bottom-right cascade.
+      const coverEntry = (p) => ({
+        tx:       0,
+        ty:       -(1 - p) * (bH * 0.85),       // fall from above (avalanche)
+        rotDelta: (1 - p) * 360,                 // 1 full turn while falling
+        scaleX:   0.25 + 0.75 * p,               // horizontal scale-in (construct)
+        scaleY:   1,
+        opacity:  Math.min(1, p * 1.4),          // appear early in the fall
+        origin:   '50% 50%'
       });
-
-      // Replay button (bottom-right) restarts the entry animation
-      const replayBtn = document.getElementById('hero-replay');
-      if(replayBtn){
-        replayBtn.addEventListener('click', () => {
-          modeStartTime = performance.now();
-          bars.forEach(b => { b.spinVel = 0; b.extraRot = 0; b.touched = false; b.el.classList.remove('is-touched'); });
-        });
-      }
+      const modeStartTime = performance.now();
+      const ENTRY_DURATION = 1400;               // slightly longer for the combined motion
+      const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+      const SPIN_RADIUS = 110, SPIN_ACCEL = 0.85, SPIN_FRICTION = 0.94;
 
       function heroFrame(now){
         // Parallax (±12px) on hero only
@@ -2526,13 +2532,12 @@
           cursorX.style.top  = cyNow + 'px';
         }
 
-        // Bar entry (per active MODE) + cursor proximity spin
-        const motion = MODES[currentMode] || MODES.cascade;
+        // Bar entry (cover combined motion) + cursor proximity spin
         bars.forEach(bar => {
           const elapsed = now - modeStartTime - bar.delay;
           const p = Math.max(0, Math.min(1, elapsed / ENTRY_DURATION));
-          const eased = currentMode === 'burst' ? easeOutBack(p) : easeOutCubic(p);
-          const m = motion(eased);
+          const eased = easeOutCubic(p);
+          const m = coverEntry(eased);
 
           let cursorRot = 0;
           if(p >= 1){
