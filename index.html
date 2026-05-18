@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="nx-tokens.css">
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%2303020C"/><g stroke="%23C85204" stroke-width="14" stroke-linecap="square"><line x1="20" y1="20" x2="44" y2="44"/><line x1="80" y1="20" x2="56" y2="44"/><line x1="56" y1="56" x2="80" y2="80"/><line x1="44" y1="56" x2="20" y2="80"/></g></svg>'>
   <style>
     /* ============ BASE ============ */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -659,6 +660,14 @@
       border-radius:var(--nx-r-md);font-size:var(--nx-size-lg);font-weight:var(--nx-w-light);
       letter-spacing:-.01em;max-width:72ch;
     }
+    .nx-board__pillquote em{color:#fff;font-style:normal;font-weight:var(--nx-w-medium)}
+
+    /* Reusable subhead chip (mono caps, orange) — used across people/targets/persp */
+    .nx-subhead{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      letter-spacing:var(--nx-track-caps);text-transform:uppercase;
+      color:var(--nx-orange);margin-top:32px;display:block;
+    }
     .nx-board__signoff{
       display:flex;justify-content:space-between;align-items:baseline;
       padding-top:24px;border-top:1px solid var(--nx-line);
@@ -750,6 +759,7 @@
     .nx-climate .nx-section__lede{color:var(--nx-mute-on-ink)}
     .nx-climate__chart{margin-top:32px;background:var(--nx-ink-2);border-radius:var(--nx-r-md);padding:32px;overflow:hidden}
     .nx-climate__chart svg{width:100%;height:auto;display:block}
+    .nx-climate__chart svg text{font-family:var(--nx-font-mono)}
 
     /* ============ CONSIDERAÇÕES FINAIS (MFZ closing) ============ */
     .nx-closing{background:var(--nx-paper);position:relative;overflow:hidden}
@@ -1177,7 +1187,7 @@
         <p data-i18n="board.p1">O ano de 2025 representou mais do que a continuidade de um projeto iniciado em 2024 com a criação da Nexa SGOIC, S.A. Foi a afirmação de que uma gestão responsável, transparente e bem fundamentada é essencial para maximizar, de forma sustentada, o potencial dos investimentos imobiliários a longo prazo.</p>
         <p data-i18n="board.p2">Este período consolidou o compromisso da Nexa em defender os interesses das sociedades que administra, reforçando a confiança do mercado através de práticas de governação robustas e elevados padrões de transparência.</p>
       </div>
-      <div class="nx-board__pillquote" data-i18n="board.pull">Outro marco relevante foi a <em style="color:#fff;font-style:normal;font-weight:var(--nx-w-medium)">primeira certificação LEED</em> do Grupo, atribuída a um dos edifícios sob gestão da Castro Capital SIC — evidenciando o compromisso da Nexa com práticas de investimento sustentáveis.</div>
+      <div class="nx-board__pillquote" data-i18n="board.pull">Outro marco relevante foi a <em>primeira certificação LEED</em> do Grupo, atribuída a um dos edifícios sob gestão da Castro Capital SIC — evidenciando o compromisso da Nexa com práticas de investimento sustentáveis.</div>
       <div class="nx-board__body">
         <p data-i18n="board.p3">No âmbito da sustentabilidade, destacam-se avanços que consolidam a integração dos princípios ESG na forma como pensamos, decidimos e investimos. A Análise de Dupla Materialidade permitiu identificar riscos e oportunidades relevantes, reforçando o alinhamento entre exigências regulatórias, expectativas dos investidores e prioridades estratégicas dos fundos sob gestão.</p>
         <p data-i18n="board.p4">A Nexa pretende continuar a ser um ponto de ligação entre investidores e oportunidades, atuando com visão de longo prazo e contribuindo para um setor financeiro mais transparente, responsável e preparado para o futuro.</p>
@@ -1213,7 +1223,7 @@
         <p class="nx-section__lede" data-i18n="people.lede">Na Nexa, reconhecemos que as pessoas constituem o principal vetor de criação de valor sustentável.</p>
       </div>
 
-      <h3 style="font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);letter-spacing:var(--nx-track-caps);text-transform:uppercase;color:var(--nx-orange);margin-top:24px" data-i18n="people.board">Conselho de Administração (Board)</h3>
+      <h3 class="nx-subhead" data-i18n="people.board">Conselho de Administração (Board)</h3>
       <div class="nx-people__board">
         <div class="nx-people__card">
           <div class="nx-people__avatar">PC</div>
@@ -1237,7 +1247,7 @@
         </div>
       </div>
 
-      <h3 style="font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);letter-spacing:var(--nx-track-caps);text-transform:uppercase;color:var(--nx-orange);margin-top:32px" data-i18n="people.org">Organograma · Departamentos</h3>
+      <h3 class="nx-subhead" data-i18n="people.org">Organograma · Departamentos</h3>
       <div class="nx-people__depts">
         <div class="nx-people__dept">
           <span class="nx-people__dept-name" data-i18n="dept.compliance">Compliance / BCFT</span>
@@ -1311,7 +1321,7 @@
         </div>
       </div>
 
-      <h3 style="font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);letter-spacing:var(--nx-track-caps);text-transform:uppercase;color:var(--nx-orange);margin-top:32px" data-i18n="targets.excluded">Investimentos excluídos</h3>
+      <h3 class="nx-subhead" data-i18n="targets.excluded">Investimentos excluídos</h3>
       <div class="nx-targets__excluded">
         <span>Armas controversas</span>
         <span>Tabaco</span>
@@ -1523,7 +1533,7 @@
         </div>
       </div>
 
-      <h3 style="font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);letter-spacing:var(--nx-track-caps);text-transform:uppercase;color:var(--nx-orange);margin-top:40px" data-i18n="persp.objectives">Objetivos 2026</h3>
+      <h3 class="nx-subhead" data-i18n="persp.objectives">Objetivos 2026</h3>
       <ul class="nx-persp__objectives">
         <li><span class="k">→</span><span class="v" data-i18n="obj.1">Fecho das certificações LEED, WELL, WiredScore e SmartScore do SPARK</span><span class="y">2026</span></li>
         <li><span class="k">→</span><span class="v" data-i18n="obj.2">Fecho da certificação LEED do The Breeze</span><span class="y">2026</span></li>
@@ -1550,39 +1560,39 @@
           <line x1="60"  y1="40"  x2="60"  y2="260" stroke="var(--nx-ink-3)" stroke-width="1"/>
           <line x1="60"  y1="260" x2="780" y2="260" stroke="var(--nx-ink-3)" stroke-width="1"/>
           <!-- Y labels -->
-          <text x="55" y="50"  text-anchor="end" font-size="11" font-family="var(--nx-font-mono)" fill="#9A9794">30</text>
-          <text x="55" y="115" text-anchor="end" font-size="11" font-family="var(--nx-font-mono)" fill="#9A9794">22</text>
-          <text x="55" y="180" text-anchor="end" font-size="11" font-family="var(--nx-font-mono)" fill="#9A9794">15</text>
-          <text x="55" y="245" text-anchor="end" font-size="11" font-family="var(--nx-font-mono)" fill="#9A9794">9,4</text>
-          <text x="50" y="160" text-anchor="middle" font-size="9" font-family="var(--nx-font-mono)" fill="#9A9794" transform="rotate(-90 50 160)">TonCO₂e</text>
+          <text x="55" y="50"  text-anchor="end" font-size="11" fill="#9A9794">30</text>
+          <text x="55" y="115" text-anchor="end" font-size="11" fill="#9A9794">22</text>
+          <text x="55" y="180" text-anchor="end" font-size="11" fill="#9A9794">15</text>
+          <text x="55" y="245" text-anchor="end" font-size="11" fill="#9A9794">9,4</text>
+          <text x="50" y="160" text-anchor="middle" font-size="9" fill="#9A9794" transform="rotate(-90 50 160)">TonCO₂e</text>
           <!-- Meta line · -40% in 2030 -->
           <line x1="60" y1="170" x2="780" y2="170" stroke="var(--nx-mid)" stroke-width="1" stroke-dasharray="4 4"/>
-          <text x="770" y="164" text-anchor="end" font-size="10" font-family="var(--nx-font-mono)" fill="#9A9794">Meta −40% · 18 TonCO₂e</text>
+          <text x="770" y="164" text-anchor="end" font-size="10" fill="#9A9794">Meta −40% · 18 TonCO₂e</text>
 
           <!-- Trajectory bars/dots · per year -->
           <g>
             <line x1="120" y1="40"  x2="690" y2="245" stroke="var(--nx-orange)" stroke-width="2.4"/>
             <!-- 2025: 30.0 -->
             <circle cx="120" cy="40"  r="6" fill="var(--nx-orange)"/>
-            <text x="120" y="285" text-anchor="middle" font-size="11" font-family="var(--nx-font-mono)" fill="#fff">2025</text>
-            <text x="120" y="30" text-anchor="middle" font-size="11" font-family="var(--nx-font-mono)" fill="#fff">30,0</text>
+            <text x="120" y="285" text-anchor="middle" font-size="11" fill="#fff">2025</text>
+            <text x="120" y="30" text-anchor="middle" font-size="11" fill="#fff">30,0</text>
             <!-- 2026: 28.4 -->
             <circle cx="234" cy="51"  r="5" fill="var(--nx-orange-soft)"/>
-            <text x="234" y="285" text-anchor="middle" font-size="11" font-family="var(--nx-font-mono)" fill="#9A9794">2026</text>
+            <text x="234" y="285" text-anchor="middle" font-size="11" fill="#9A9794">2026</text>
             <!-- 2027: 26.0 -->
             <circle cx="348" cy="68"  r="5" fill="var(--nx-orange-soft)"/>
-            <text x="348" y="285" text-anchor="middle" font-size="11" font-family="var(--nx-font-mono)" fill="#9A9794">2027</text>
+            <text x="348" y="285" text-anchor="middle" font-size="11" fill="#9A9794">2027</text>
             <!-- 2028: 19.7 -->
             <circle cx="462" cy="113" r="5" fill="var(--nx-orange-soft)"/>
-            <text x="462" y="285" text-anchor="middle" font-size="11" font-family="var(--nx-font-mono)" fill="#9A9794">2028</text>
+            <text x="462" y="285" text-anchor="middle" font-size="11" fill="#9A9794">2028</text>
             <!-- 2029: 18.9 -->
             <circle cx="576" cy="118" r="5" fill="var(--nx-orange-soft)"/>
-            <text x="576" y="285" text-anchor="middle" font-size="11" font-family="var(--nx-font-mono)" fill="#9A9794">2029</text>
+            <text x="576" y="285" text-anchor="middle" font-size="11" fill="#9A9794">2029</text>
             <!-- 2030: 9.4 -->
             <circle cx="690" cy="245" r="7" fill="var(--nx-orange)"/>
-            <text x="690" y="285" text-anchor="middle" font-size="11" font-family="var(--nx-font-mono)" fill="#fff" font-weight="700">2030</text>
-            <text x="690" y="232" text-anchor="middle" font-size="11" font-family="var(--nx-font-mono)" fill="var(--nx-orange)" font-weight="700">9,4</text>
-            <text x="690" y="304" text-anchor="middle" font-size="9" font-family="var(--nx-font-mono)" fill="var(--nx-orange)" font-weight="700">−68,8%</text>
+            <text x="690" y="285" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">2030</text>
+            <text x="690" y="232" text-anchor="middle" font-size="11" fill="#C85204" font-weight="700">9,4</text>
+            <text x="690" y="304" text-anchor="middle" font-size="9" fill="#C85204" font-weight="700">−68,8%</text>
           </g>
         </svg>
       </div>
@@ -1776,6 +1786,8 @@
         'U':[[0,0,0,0.8],[0,0.8,0.15,1],[0.15,1,0.55,1],[0.55,1,0.7,0.8],[0.7,0.8,0.7,0]],
         'N':[[0,0,0,1],[0,0,0.7,1],[0.7,0,0.7,1]],
         'B':[[0,0,0,1],[0,0,0.55,0],[0.55,0,0.7,0.15],[0.7,0.15,0.7,0.35],[0.7,0.35,0.55,0.5],[0,0.5,0.55,0.5],[0.55,0.5,0.7,0.65],[0.7,0.65,0.7,0.85],[0.7,0.85,0.55,1],[0,1,0.55,1]],
+        'P':[[0,0,0,1],[0,0,0.55,0],[0.55,0,0.7,0.15],[0.7,0.15,0.7,0.35],[0.7,0.35,0.55,0.5],[0,0.5,0.55,0.5]],
+        'Y':[[0,0,0.35,0.5],[0.7,0,0.35,0.5],[0.35,0.5,0.35,1]],
         ' ':[]
       };
 
@@ -1797,7 +1809,10 @@
         const lineH   = U * 1.30;
         const startX  = Math.max(24, W * 0.045);
         const startY  = Math.max(24, H * 0.16);
-        const TITLE_LINES = ['RELATÓRIO DE', 'SUSTENTABILIDADE'];
+        const lang = localStorage.getItem('nx-lang') || 'pt';
+        const TITLE_LINES = lang === 'en'
+          ? ['SUSTAINABILITY', 'REPORT']
+          : ['RELATÓRIO DE', 'SUSTENTABILIDADE'];
 
         TITLE_LINES.forEach((line, li) => {
           let cx = startX;
@@ -2200,6 +2215,7 @@
     // ============ Language toggle ============
     const STRINGS = {
       pt: {
+        "doc.title":"NEXA · Relatório de Sustentabilidade 2025",
         "hero.title.l1":"RELATÓRIO DE","hero.title.l2":"SUSTENTABILIDADE",
         "hero.quote.text":"Good governance and long-term thinking are the foundations of sustainable investment.",
         "hero.quote.attr":"Howard Marks",
@@ -2243,7 +2259,7 @@
         "board.eyebrow":"01.1 — Mensagem do Board","board.title":"Caros stakeholders, este é o primeiro ano.","board.greeting":"Caros Stakeholders,",
         "board.p1":"O ano de 2025 representou mais do que a continuidade de um projeto iniciado em 2024 com a criação da Nexa SGOIC, S.A. Foi a afirmação de que uma gestão responsável, transparente e bem fundamentada é essencial para maximizar, de forma sustentada, o potencial dos investimentos imobiliários a longo prazo.",
         "board.p2":"Este período consolidou o compromisso da Nexa em defender os interesses das sociedades que administra, reforçando a confiança do mercado através de práticas de governação robustas e elevados padrões de transparência.",
-        "board.pull":"Outro marco relevante foi a primeira certificação LEED do Grupo, atribuída a um dos edifícios sob gestão da Castro Capital SIC — evidenciando o compromisso da Nexa com práticas de investimento sustentáveis.",
+        "board.pull":"Outro marco relevante foi a <em>primeira certificação LEED</em> do Grupo, atribuída a um dos edifícios sob gestão da Castro Capital SIC — evidenciando o compromisso da Nexa com práticas de investimento sustentáveis.",
         "board.p3":"No âmbito da sustentabilidade, destacam-se avanços que consolidam a integração dos princípios ESG na forma como pensamos, decidimos e investimos. A Análise de Dupla Materialidade permitiu identificar riscos e oportunidades relevantes, reforçando o alinhamento entre exigências regulatórias, expectativas dos investidores e prioridades estratégicas dos fundos sob gestão.",
         "board.p4":"A Nexa pretende continuar a ser um ponto de ligação entre investidores e oportunidades, atuando com visão de longo prazo e contribuindo para um setor financeiro mais transparente, responsável e preparado para o futuro.",
         "board.signoff":"Conselho de Administração",
@@ -2297,7 +2313,8 @@
         "closing.author":"Fernanda Zelaya","closing.role":"Responsável ESG da Nexa"
       },
       en: {
-        "hero.title.l1":"2025","hero.title.l2":"SUSTAINABILITY REPORT",
+        "doc.title":"NEXA · Sustainability Report 2025",
+        "hero.title.l1":"SUSTAINABILITY","hero.title.l2":"REPORT",
         "hero.quote.text":"Good governance and long-term thinking are the foundations of sustainable investment.",
         "hero.quote.attr":"Howard Marks",
         "hero.eyebrow":"Sustainability Report",
@@ -2340,7 +2357,7 @@
         "board.eyebrow":"01.1 — Board Message","board.title":"Dear stakeholders, this is the first year.","board.greeting":"Dear Stakeholders,",
         "board.p1":"2025 represented more than the continuity of a project started in 2024 with the creation of Nexa SGOIC, S.A. It was the affirmation that responsible, transparent and well-grounded management is essential to sustainably maximize the long-term potential of real estate investments.",
         "board.p2":"This period consolidated Nexa's commitment to defend the interests of the companies it manages, reinforcing market trust through robust governance practices and high standards of transparency.",
-        "board.pull":"Another relevant milestone was the Group's first LEED certification, awarded to a building managed by Castro Capital SIC — evidencing Nexa's commitment to sustainable investment practices.",
+        "board.pull":"Another relevant milestone was the Group's <em>first LEED certification</em>, awarded to a building managed by Castro Capital SIC — evidencing Nexa's commitment to sustainable investment practices.",
         "board.p3":"In sustainability, we highlight advances that consolidate the integration of ESG principles into the way we think, decide and invest. The Double Materiality Analysis identified relevant risks and opportunities, reinforcing alignment between regulatory requirements, investor expectations and strategic priorities of the funds under management.",
         "board.p4":"Nexa intends to remain a connection point between investors and opportunities, acting with long-term vision and contributing to a more transparent, responsible and future-ready financial sector.",
         "board.signoff":"Board of Directors",
@@ -2397,6 +2414,7 @@
     function setLang(l){
       document.documentElement.lang = l;
       localStorage.setItem('nx-lang', l);
+      if(STRINGS[l] && STRINGS[l]['doc.title']) document.title = STRINGS[l]['doc.title'];
       document.querySelectorAll('[data-i18n]').forEach(el=>{
         const k = el.getAttribute('data-i18n');
         const v = STRINGS[l][k];
