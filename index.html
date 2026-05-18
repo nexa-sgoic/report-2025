@@ -704,7 +704,8 @@
       font-size:clamp(7rem,16vw,16rem);
       line-height:.85;letter-spacing:-.05em;
       color:rgba(237,204,192,.72);
-      padding:0 clamp(28px,6vw,96px) clamp(24px,5vh,72px) 0;
+      /* Extra right padding so the giant numeral doesn't collide with the lateral rail */
+      padding:0 clamp(96px,10vw,160px) clamp(24px,5vh,72px) 0;
       justify-self:end;
       opacity:0;transform:translateY(40px);
       transition:opacity 1.2s var(--nx-ease-out), transform 1.2s var(--nx-ease-arch);
@@ -767,17 +768,29 @@
     }
     .nx-chapcover__pattern--squares .sq{
       width:62%;aspect-ratio:1;position:relative;
-      opacity:0;transform:scale(.55) rotate(0deg);
+      opacity:0;transform:scale(.55);
       transition:opacity 700ms var(--nx-ease-out), transform 700ms var(--nx-ease-spring);
-      will-change:transform, opacity;
+      will-change:opacity;
     }
     .nx-chapcover.is-in .nx-chapcover__pattern--squares .sq{
-      opacity:1;
-      animation:nxSquarePulse var(--pulse-dur, 5.5s) ease-in-out var(--pulse-delay, 0s) infinite;
+      opacity:1;transform:scale(1);
     }
-    @keyframes nxSquarePulse{
-      0%,100%{transform:scale(1)        rotate(0deg);   opacity:.85}
-      50%   {transform:scale(1.08)      rotate(45deg);  opacity:1   }
+    /* Alternating fade pulse · odd squares peak while even squares dim,
+       intercalated. No rotation. The fade alone gives the field a
+       breathing tempo without spinning the geometry. */
+    .nx-chapcover.is-in .nx-chapcover__pattern--squares .sq:nth-child(odd){
+      animation:nxSquareFadeUp 4.6s ease-in-out infinite;
+    }
+    .nx-chapcover.is-in .nx-chapcover__pattern--squares .sq:nth-child(even){
+      animation:nxSquareFadeDown 4.6s ease-in-out infinite;
+    }
+    @keyframes nxSquareFadeUp{
+      0%,100%{opacity:.65}
+      50%   {opacity:1}
+    }
+    @keyframes nxSquareFadeDown{
+      0%,100%{opacity:1}
+      50%   {opacity:.55}
     }
     .nx-chapcover__pattern--squares .sq svg{
       width:100%;height:100%;display:block;overflow:visible;
@@ -3295,16 +3308,16 @@
       });
     })();
 
-    // Squares pattern: 7 × 4 tiles. Each tile is an SVG frame composed
-    // of 4 thick bars (16% of the side) that protrude 12% past the
-    // square corners so their crossings form little triangles · plus a
-    // central pip. The whole tile pulses + rotates 45°.
+    // Squares pattern: 7 × 4 tiles. Each tile is an SVG frame of 4 bars
+    // that EXTEND 18% past the box so where they cross at the corners
+    // they overlap into visible plus-marks (the cross shape the user
+    // asked for · was triangle-corners before). Plus a central pip.
     (function buildSquaresPatterns(){
-      const SQ_SVG = `<svg viewBox="-12 -12 124 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect x="-12" y="0"   width="124" height="16"/>
-        <rect x="-12" y="84"  width="124" height="16"/>
-        <rect x="0"   y="-12" width="16"  height="124"/>
-        <rect x="84"  y="-12" width="16"  height="124"/>
+      const SQ_SVG = `<svg viewBox="-18 -18 136 136" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="-18" y="0"   width="136" height="16"/>
+        <rect x="-18" y="84"  width="136" height="16"/>
+        <rect x="0"   y="-18" width="16"  height="136"/>
+        <rect x="84"  y="-18" width="16"  height="136"/>
         <rect class="pip" x="38" y="38" width="24" height="24"/>
       </svg>`;
       document.querySelectorAll('.nx-chapcover__pattern--squares').forEach(host => {
@@ -3312,8 +3325,6 @@
         for(let i = 0; i < 28; i++){
           const s = document.createElement('span');
           s.className = 'sq';
-          s.style.setProperty('--pulse-dur',   (5 + Math.random()*3).toFixed(2) + 's');
-          s.style.setProperty('--pulse-delay', (i * 0.08).toFixed(2) + 's');
           s.innerHTML = SQ_SVG;
           host.appendChild(s);
         }
