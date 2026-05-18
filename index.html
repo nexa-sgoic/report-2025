@@ -276,6 +276,50 @@
 
     @keyframes nxFadeIn{to{opacity:1}}
 
+    /* ════════ HERO DEV TOOLS · mode selector + replay (Motion Sketch §5.2) ════════
+       Discreet · only visible on desktop · for visual validation of the 5
+       bar entry vocabularies. Top-right of the hero. */
+    .nx-modes{
+      position:absolute;top:84px;right:clamp(20px,4vw,56px);z-index:6;
+      display:inline-flex;gap:0;
+      background:rgba(20,18,20,.55);
+      backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+      border:1px solid rgba(237,234,227,.10);
+      border-radius:var(--nx-r-sm);
+      padding:2px;
+      opacity:0;animation:nxFadeIn 900ms var(--nx-ease-out) 3600ms forwards;
+    }
+    .nx-modes button{
+      padding:5px 10px;cursor:none;
+      font-family:var(--nx-font-mono);font-size:10px;
+      letter-spacing:.18em;text-transform:uppercase;
+      color:var(--nx-mid);
+      transition:color .2s, background .2s;
+      border-radius:2px;
+    }
+    .nx-modes button:hover{color:var(--nx-on-ink);background:rgba(237,234,227,.04)}
+    .nx-modes button.is-on{
+      color:var(--nx-brand-ink);background:var(--nx-orange);font-weight:500;
+    }
+    .nx-modes button.is-on:hover{background:var(--nx-orange-deep);color:#fff}
+
+    .nx-hero__replay{
+      position:absolute;right:clamp(20px,4vw,56px);bottom:clamp(22px,4vh,40px);z-index:6;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 14px;border-radius:var(--nx-r-pill);
+      background:rgba(20,18,20,.55);
+      backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+      border:1px solid rgba(237,234,227,.14);
+      cursor:none;
+      font-family:var(--nx-font-mono);font-size:10px;
+      letter-spacing:.18em;text-transform:uppercase;
+      color:var(--nx-on-ink);
+      transition:background .25s, border-color .25s, color .25s;
+      opacity:0;animation:nxFadeIn 900ms var(--nx-ease-out) 4000ms forwards;
+    }
+    .nx-hero__replay:hover{background:var(--nx-orange);border-color:var(--nx-orange);color:#fff}
+    .nx-hero__replay svg{width:13px;height:13px;flex-shrink:0}
+
     /* ============ IMPACT (02) — 198M€ ============ */
     .nx-impact{align-items:start;padding-block:7vh}
     .nx-impact__grid{display:grid;grid-template-columns:1fr;gap:clamp(20px,3vh,40px);width:100%;max-width:1440px;margin:0 auto}
@@ -1409,6 +1453,7 @@
       .nx-foot__bottom{flex-direction:column;gap:12px}
       /* Hero mobile · skip strokes animation, simplify layout, hide cursor */
       .nx-hero__titlelayer{display:none}
+      .nx-modes, .nx-hero__replay{display:none}
       .nx-hero__titlefinal{opacity:1;font-size:clamp(28px,7.5vw,46px);top:84px;max-width:88vw;left:20px;line-height:1.05}
       .nx-hero__belowtitle{top:auto;bottom:160px;left:20px;max-width:90vw}
       .nx-hero__year{font-size:clamp(48px,13vw,80px);margin-bottom:14px;animation-delay:600ms}
@@ -1509,6 +1554,24 @@
         <line x1="58" y1="58" x2="86" y2="86"/>
         <line x1="42" y1="58" x2="14" y2="86"/>
       </svg>
+
+      <!-- Mode selector · dev tool · 5 entry vocabularies per Motion Sketch SPEC §5.2 -->
+      <div class="nx-modes" role="toolbar" aria-label="Bar entry mode">
+        <button type="button" data-mode="cascade"   class="is-on">cascade</button>
+        <button type="button" data-mode="avalanche">avalanche</button>
+        <button type="button" data-mode="construct">construct</button>
+        <button type="button" data-mode="burst">burst</button>
+        <button type="button" data-mode="origami">origami</button>
+      </div>
+
+      <!-- Replay button · restarts the bar entry animation -->
+      <button type="button" class="nx-hero__replay" id="hero-replay" aria-label="Replay hero animation">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12a9 9 0 11-3-6.7L21 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M21 4v4h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>replay</span>
+      </button>
 
       <!-- 2025 + Howard Marks quote (left, under title) -->
       <div class="nx-hero__belowtitle">
@@ -2413,10 +2476,41 @@
       layoutBars();
       addEventListener('resize', layoutBars);
 
-      const modeStartTime = performance.now();
+      // ─── 5 entry motion modes (per Motion Sketch SPEC §5.2) ─────────────
+      // cascade = production default · others are validation toggles for MFZ
+      const MODES = {
+        cascade:   (p) => ({ tx:(1-p)*(bW*0.6), ty:0, rotDelta:0,        scaleX:0.3+0.7*p, scaleY:1,           opacity:p,                       origin:'50% 50%' }),
+        avalanche: (p) => ({ tx:0,              ty:-(1-p)*(bH*0.8), rotDelta:(1-p)*540, scaleX:1,         scaleY:1,           opacity:Math.min(1,p*1.4),       origin:'50% 50%' }),
+        construct: (p) => ({ tx:0,              ty:0,               rotDelta:0,        scaleX:p,         scaleY:1,           opacity:p,                       origin:'0% 50%'  }),
+        burst:     (p) => ({ tx:0,              ty:0,               rotDelta:(1-p)*90,  scaleX:0.05+0.95*p, scaleY:0.05+0.95*p, opacity:p,                     origin:'50% 50%' }),
+        origami:   (p) => ({ tx:0,              ty:0,               rotDelta:(1-p)*-110,scaleX:1,         scaleY:0.2+0.8*p,   opacity:p,                       origin:'50% 50%' })
+      };
+      let currentMode = 'cascade';
+      let modeStartTime = performance.now();
       const ENTRY_DURATION = 1100;
       const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+      const easeOutBack  = t => { const c = 1.7, c3 = c + 1; return 1 + c3*Math.pow(t-1,3) + c*Math.pow(t-1,2); };
       const SPIN_RADIUS = 110, SPIN_ACCEL = 0.85, SPIN_FRICTION = 0.94;
+
+      // Mode selector wiring (dev tool · sutil, top-right del hero)
+      document.querySelectorAll('.nx-modes button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.nx-modes button').forEach(b => b.classList.remove('is-on'));
+          btn.classList.add('is-on');
+          currentMode = btn.dataset.mode;
+          modeStartTime = performance.now();
+          bars.forEach(b => { b.spinVel = 0; b.extraRot = 0; b.touched = false; b.el.classList.remove('is-touched'); });
+        });
+      });
+
+      // Replay button (bottom-right) restarts the entry animation
+      const replayBtn = document.getElementById('hero-replay');
+      if(replayBtn){
+        replayBtn.addEventListener('click', () => {
+          modeStartTime = performance.now();
+          bars.forEach(b => { b.spinVel = 0; b.extraRot = 0; b.touched = false; b.el.classList.remove('is-touched'); });
+        });
+      }
 
       function heroFrame(now){
         // Parallax (±12px) on hero only
@@ -2432,14 +2526,13 @@
           cursorX.style.top  = cyNow + 'px';
         }
 
-        // Bar entry (CASCADE) + cursor proximity spin
+        // Bar entry (per active MODE) + cursor proximity spin
+        const motion = MODES[currentMode] || MODES.cascade;
         bars.forEach(bar => {
           const elapsed = now - modeStartTime - bar.delay;
           const p = Math.max(0, Math.min(1, elapsed / ENTRY_DURATION));
-          const eased = easeOutCubic(p);
-          const tx = (1 - eased) * (bW * 0.6);
-          const scaleX = 0.3 + 0.7 * eased;
-          const opacity = eased * 0.9;
+          const eased = currentMode === 'burst' ? easeOutBack(p) : easeOutCubic(p);
+          const m = motion(eased);
 
           let cursorRot = 0;
           if(p >= 1){
@@ -2462,9 +2555,10 @@
               bar.touched = false; bar.el.classList.remove('is-touched');
             }
           }
-          const rot = bar.base.r + cursorRot;
-          bar.el.style.opacity = opacity;
-          bar.el.style.transform = `translate(${tx}px, 0) rotate(${rot}deg) scaleX(${scaleX})`;
+          const rot = bar.base.r + m.rotDelta + cursorRot;
+          bar.el.style.opacity = m.opacity * 0.9;
+          bar.el.style.transform = `translate(${m.tx}px, ${m.ty}px) rotate(${rot}deg) scale(${m.scaleX}, ${m.scaleY})`;
+          bar.el.style.transformOrigin = m.origin;
         });
         requestAnimationFrame(heroFrame);
       }
