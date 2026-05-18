@@ -1432,6 +1432,52 @@
       background:var(--nx-orange);
       width:42px;
     }
+    /* Phil · scatter variant (dashes randomly rotated · forma y frase 02.png) */
+    .nx-phil--scatter{
+      align-items:stretch;justify-items:stretch;text-align:left;
+      padding:clamp(60px,10vh,120px) clamp(28px,5vw,80px);
+      min-height:80vh;
+      position:relative;
+    }
+    .nx-phil__scatter{
+      position:absolute;inset:0;z-index:1;pointer-events:auto;
+    }
+    .nx-phil__scatter span{
+      position:absolute;display:block;
+      width:var(--w,80px);height:var(--h,12px);
+      background:var(--nx-ink-3);border-radius:2px;
+      transform:translate(var(--x,0), var(--y,0)) rotate(var(--rot,0deg)) scale(0);
+      transition:transform 800ms var(--nx-ease-spring), background-color .25s var(--nx-ease-out);
+      cursor:none;
+    }
+    .nx-phil--scatter.is-in .nx-phil__scatter span{
+      transform:translate(var(--x,0), var(--y,0)) rotate(var(--rot,0deg)) scale(1);
+      transition-delay:var(--delay,0s);
+    }
+    .nx-phil--scatter.is-in .nx-phil__scatter span:hover{
+      background:var(--nx-orange);
+      transform:translate(var(--x,0), var(--y,0)) rotate(calc(var(--rot,0deg) + 90deg)) scale(1.25);
+      transition:transform 450ms var(--nx-ease-spring), background-color .2s;
+    }
+    .nx-phil__quote--tl, .nx-phil__quote--br{
+      position:absolute;z-index:3;max-width:min(34ch, 40vw);
+      font-size:clamp(1.1rem,2.2vw,1.9rem) !important;
+      pointer-events:none;
+    }
+    .nx-phil__quote--tl{left:clamp(60px,8vw,140px);top:clamp(60px,16vh,180px);text-align:left}
+    .nx-phil__quote--br{right:clamp(60px,8vw,140px);bottom:clamp(80px,18vh,200px);text-align:right}
+    .nx-phil--scatter .nx-phil__cap{
+      position:absolute;z-index:3;
+      right:clamp(60px,8vw,140px);bottom:clamp(40px,8vh,80px);
+      margin:0;text-align:right;
+    }
+    .nx-phil--scatter .nx-phil__xmark{left:clamp(28px,4vw,72px);top:clamp(36px,6vh,72px)}
+    @media (max-width:880px){
+      .nx-phil__quote--tl{left:24px;right:24px;top:80px;max-width:none;text-align:left}
+      .nx-phil__quote--br{left:24px;right:24px;bottom:120px;top:auto;max-width:none;text-align:left}
+      .nx-phil--scatter .nx-phil__cap{left:24px;right:auto;bottom:48px;text-align:left}
+    }
+
     .nx-phil--orange{background:var(--nx-orange)}
     .nx-phil--orange .nx-phil__quote{color:#fff}
     .nx-phil--orange .nx-phil__cap{color:rgba(255,255,255,.7)}
@@ -2061,19 +2107,18 @@
 
   <!-- (env-detail + orangeband removed · their content now lives inside the KPI data sheets) -->
 
-  <!-- ====== 05 PHILOSOPHY ====== -->
-  <section class="nx-stage nx-stage--ink nx-phil" data-reveal id="phil">
+  <!-- ====== PHILOSOPHY · dashes scattered (forma y frase 02.png) ====== -->
+  <section class="nx-stage nx-stage--ink nx-phil nx-phil--scatter" data-reveal id="phil">
     <svg class="nx-phil__xmark" viewBox="0 0 100 100" aria-hidden="true">
       <line x1="14" y1="14" x2="42" y2="42" stroke="currentColor" stroke-width="8"/>
       <line x1="58" y1="58" x2="86" y2="86" stroke="currentColor" stroke-width="8"/>
       <line x1="86" y1="14" x2="58" y2="42" stroke="currentColor" stroke-width="8"/>
       <line x1="42" y1="58" x2="14" y2="86" stroke="currentColor" stroke-width="8"/>
     </svg>
-    <div class="nx-phil__skyline" id="phil-skyline"></div>
-    <div class="nx-phil__body">
-      <p class="nx-phil__quote" data-i18n="phil.quote">A sustentabilidade não é apenas uma meta a alcançar. É a forma como a NEXA decide, constrói e lidera todos os dias.</p>
-      <p class="nx-phil__cap" data-i18n="phil.cap">// Filosofia · Capítulo 02 · Situação Atual</p>
-    </div>
+    <div class="nx-phil__scatter" data-scatter aria-hidden="true"></div>
+    <p class="nx-phil__quote nx-phil__quote--tl" data-i18n="phil.quote.tl">A sustentabilidade não é apenas uma meta a alcançar.</p>
+    <p class="nx-phil__quote nx-phil__quote--br" data-i18n="phil.quote.br">É a forma como a NEXA decide, constrói e lidera todos os dias.</p>
+    <p class="nx-phil__cap" data-i18n="phil.cap">// Filosofia · Capítulo 02 · Situação Atual</p>
   </section>
 
   <!-- ====== SOCIAL — 4 KPI cards → data sheets ====== -->
@@ -2953,6 +2998,31 @@
             barIdx++;
           }
           host.appendChild(cEl);
+        });
+      });
+
+      // Scatter dashes · phil "scatter" variant (forma y frase 02.png)
+      // 14 dashes at hand-picked positions + random rotations · two
+      // dense clusters (upper-left & lower-right) + a few outliers
+      const SCATTER_POSITIONS = [
+        // [xPct, yPct, widthPx, rotDeg]
+        [10, 18,  90,  -8 ], [22, 28,  78,  90], [16, 38,  85,  68],
+        [28, 52,  70,  -3 ], [36, 56,  95,  45], [44, 48,  75,  86],
+        [52, 32,  82,  -20], [60, 28, 100,  10], [68, 40,  72,  88],
+        [76, 18,  78,  -22], [82, 30,  90,   2], [88, 22,  68,  -5 ],
+        [44, 78,  80,  -90], [62, 82,  92,   8]
+      ];
+      document.querySelectorAll('.nx-phil__scatter[data-scatter]').forEach(host => {
+        host.replaceChildren();
+        SCATTER_POSITIONS.forEach((p, i) => {
+          const d = document.createElement('span');
+          d.style.setProperty('--x', `calc(${p[0]}vw - 50%)`);
+          d.style.setProperty('--y', `${p[1]}vh`);
+          d.style.setProperty('--w', `${p[2]}px`);
+          d.style.setProperty('--h', '12px');
+          d.style.setProperty('--rot', `${p[3]}deg`);
+          d.style.setProperty('--delay', `${(i * 0.07).toFixed(2)}s`);
+          host.appendChild(d);
         });
       });
 
