@@ -293,6 +293,34 @@
       margin-top:0;display:contents;
     }
     .nx-impact__panel{display:grid;align-content:center;gap:clamp(14px,2vh,24px)}
+    .nx-impact__period{
+      margin-top:18px;padding-top:14px;
+      border-top:1px solid var(--nx-line);
+      font-family:var(--nx-font-mono);font-size:11px;
+      letter-spacing:.22em;text-transform:uppercase;
+      color:var(--nx-mute-on-bone);
+      text-align:left;
+    }
+    .nx-impact__metrics--5{
+      grid-template-columns:1fr;gap:0;border:0;background:transparent;border-radius:0;margin-top:0;
+    }
+    .nx-impact__metrics--5 > div{
+      padding:14px 0;background:transparent;
+      border-top:1px solid var(--nx-line);
+      display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:baseline;
+    }
+    .nx-impact__metrics--5 > div:first-child{border-top:0;padding-top:0}
+    .nx-impact__metrics--5 > div:last-child{padding-bottom:0}
+    .nx-impact__metrics--5 b{
+      font-size:clamp(1.7rem,2.6vw,2.3rem);font-weight:var(--nx-w-light);
+      letter-spacing:-.025em;line-height:1;
+    }
+    .nx-impact__metrics--5 b .unit{font-size:.42em;margin-left:3px}
+    .nx-impact__metrics--5 span{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      letter-spacing:var(--nx-track-caps);text-transform:uppercase;
+      color:var(--nx-mute-on-bone);
+    }
     .nx-impact__num{
       font-size:clamp(3rem, 8vw, 6.4rem);
       font-weight:var(--nx-w-light);
@@ -1436,7 +1464,7 @@
 
   <!-- Scroll-rail (right side · chapter spy · 3 chapters) -->
   <aside class="nx-rail" id="rail" aria-label="Capítulos do relatório">
-    <a class="nx-rail__item" href="#ch01" data-from="ch01" data-to="ch02" title="Nexa">
+    <a class="nx-rail__item" href="#ch01" data-from="ch01" data-to="ch02" title="NEXA">
       <span class="nx-rail__num">01</span><span class="nx-rail__bar" aria-hidden="true"></span>
     </a>
     <a class="nx-rail__item" href="#ch02" data-from="ch02" data-to="ch03" title="Situação Atual">
@@ -1526,9 +1554,9 @@
       <line x1="42" y1="58" x2="14" y2="86" stroke="currentColor" stroke-width="7"/>
     </svg>
     <div class="nx-impact__grid">
-      <span class="nx-impact__eyebrow" data-i18n="impact.eyebrow">Universo Nexa</span>
+      <span class="nx-impact__eyebrow" data-i18n="impact.eyebrow">Universo NEXA</span>
 
-      <!-- Hero row: map (left) + headline + lede + 4 KPIs (right) -->
+      <!-- Hero row: map (left) + 5 KPIs stacked (right) -->
       <div class="nx-impact__hero">
         <div class="nx-map" id="portugal-map" data-reveal>
           <span class="nx-map__bracket-tr"></span>
@@ -1539,23 +1567,25 @@
           <svg id="portugal-svg" viewBox="0 0 300 400" aria-label="Mapa de Portugal continental" preserveAspectRatio="xMidYMid meet"></svg>
         </div>
         <div class="nx-impact__panel">
-          <div class="nx-impact__num" data-count="198" data-suffix="M€" data-decimals="0">198<span class="unit">M€</span></div>
-          <div class="nx-impact__lede" data-i18n="impact.lede">Ativos imobiliários sob gestão, distribuídos por <em>8 cidades em Portugal</em> através de <em>3 fundos regulados</em> pela CMVM.</div>
-          <div class="nx-impact__metrics">
-            <div><b data-count="18" data-decimals="0">18</b><span data-i18n="impact.assets">Ativos imobiliários</span></div>
-            <div><b data-count="8"  data-decimals="0">8</b><span data-i18n="map.cities">Cidades em Portugal</span></div>
-            <div><b data-count="10" data-decimals="0">10</b><span data-i18n="impact.team">Colaboradores</span></div>
-            <div><b data-count="3"  data-decimals="0">3</b><span data-i18n="impact.funds">OIC sob gestão</span></div>
+          <div class="nx-impact__metrics nx-impact__metrics--5">
+            <div><b data-count="198" data-decimals="0">198<span class="unit">M€</span></b><span data-i18n="map.aum">Ativos sob gestão</span></div>
+            <div><b data-count="18"  data-decimals="0">18</b><span data-i18n="impact.assets">Ativos imobiliários</span></div>
+            <div><b data-count="8"   data-decimals="0">8</b><span data-i18n="map.cities">Cidades em Portugal</span></div>
+            <div><b data-count="10"  data-decimals="0">10</b><span data-i18n="impact.team">Colaboradores</span></div>
+            <div><b data-count="3"   data-decimals="0">3</b><span data-i18n="impact.funds">OIC sob gestão</span></div>
           </div>
         </div>
       </div>
+
+      <!-- Período de análise · footnote -->
+      <div class="nx-impact__period" data-i18n="impact.period">ANÁLISE DE 1 DE JANEIRO A 31 DE DEZEMBRO DE 2025</div>
     </div>
   </section>
 
   <!-- Chapter divider 01 -->
   <div class="nx-chapdiv" id="ch01">
     <span class="nx-chapdiv__num">01</span>
-    <span class="nx-chapdiv__title" data-i18n="chap1.title">Nexa</span>
+    <span class="nx-chapdiv__title" data-i18n="chap1.title">NEXA</span>
     <span class="nx-chapdiv__arrow">→</span>
   </div>
 
@@ -1568,13 +1598,13 @@
       </div>
       <p class="nx-board__greeting" data-i18n="board.greeting">Caros Stakeholders,</p>
       <div class="nx-board__body">
-        <p data-i18n="board.p1">O ano de 2025 representou mais do que a continuidade de um projeto iniciado em 2024 com a criação da Nexa SGOIC, S.A. Foi a afirmação de que uma gestão responsável, transparente e bem fundamentada é essencial para maximizar, de forma sustentada, o potencial dos investimentos imobiliários a longo prazo.</p>
-        <p data-i18n="board.p2">Este período consolidou o compromisso da Nexa em defender os interesses das sociedades que administra, reforçando a confiança do mercado através de práticas de governação robustas e elevados padrões de transparência.</p>
+        <p data-i18n="board.p1">O ano de 2025 representou mais do que a continuidade de um projeto iniciado em 2024 com a criação da NEXA SGOIC, S.A. Foi a afirmação de que uma gestão responsável, transparente e bem fundamentada é essencial para maximizar, de forma sustentada, o potencial dos investimentos imobiliários a longo prazo.</p>
+        <p data-i18n="board.p2">Este período consolidou o compromisso da NEXA em defender os interesses das sociedades que administra, reforçando a confiança do mercado através de práticas de governação robustas e elevados padrões de transparência.</p>
       </div>
-      <div class="nx-board__pillquote" data-i18n="board.pull">Outro marco relevante foi a <em>primeira certificação LEED</em> do Grupo, atribuída a um dos edifícios sob gestão da Castro Capital SIC — evidenciando o compromisso da Nexa com práticas de investimento sustentáveis.</div>
+      <div class="nx-board__pillquote" data-i18n="board.pull">Outro marco relevante foi a <em>primeira certificação LEED</em> do Grupo, atribuída a um dos edifícios sob gestão da Castro Capital SIC — evidenciando o compromisso da NEXA com práticas de investimento sustentáveis.</div>
       <div class="nx-board__body">
         <p data-i18n="board.p3">No âmbito da sustentabilidade, destacam-se avanços que consolidam a integração dos princípios ESG na forma como pensamos, decidimos e investimos. A Análise de Dupla Materialidade permitiu identificar riscos e oportunidades relevantes, reforçando o alinhamento entre exigências regulatórias, expectativas dos investidores e prioridades estratégicas dos fundos sob gestão.</p>
-        <p data-i18n="board.p4">A Nexa pretende continuar a ser um ponto de ligação entre investidores e oportunidades, atuando com visão de longo prazo e contribuindo para um setor financeiro mais transparente, responsável e preparado para o futuro.</p>
+        <p data-i18n="board.p4">A NEXA pretende continuar a ser um ponto de ligação entre investidores e oportunidades, atuando com visão de longo prazo e contribuindo para um setor financeiro mais transparente, responsável e preparado para o futuro.</p>
       </div>
       <div class="nx-board__signoff">
         <span data-i18n="board.signoff">Conselho de Administração</span>
@@ -1594,7 +1624,7 @@
     <div class="nx-phil__skyline" data-skyline="1"></div>
     <div class="nx-phil__body">
       <p class="nx-phil__quote" data-i18n="phil1.quote">Analisar com rigor. Gerir com propósito. Construir para durar. Cada fundo, cada ativo, cada decisão reflete uma visão de longo prazo sobre aquilo que o mercado imobiliário pode e deve ser.</p>
-      <p class="nx-phil__cap" data-i18n="phil1.cap">// Filosofia · Capítulo 01 · Nexa</p>
+      <p class="nx-phil__cap" data-i18n="phil1.cap">// Filosofia · Capítulo 01 · NEXA</p>
     </div>
   </section>
 
@@ -1604,10 +1634,10 @@
       <div class="nx-section__head">
         <span class="nx-section__eyebrow" data-i18n="people.eyebrow">01.2 — As nossas pessoas</span>
         <h2 class="nx-section__title" data-i18n="people.title">Uma equipa especializada, alinhada com as melhores práticas do setor.</h2>
-        <p class="nx-section__lede" data-i18n="people.lede">Na Nexa, reconhecemos que as pessoas constituem o principal vetor de criação de valor sustentável.</p>
+        <p class="nx-section__lede" data-i18n="people.lede">Na NEXA, reconhecemos que as pessoas constituem o principal vetor de criação de valor sustentável.</p>
       </div>
 
-      <h3 class="nx-subhead" data-i18n="people.board">Conselho de Administração (Board)</h3>
+      <h3 class="nx-subhead" data-i18n="people.board">Conselho de Administração</h3>
       <div class="nx-people__board">
         <div class="nx-people__card">
           <div class="nx-people__avatar">PC</div>
@@ -1704,7 +1734,7 @@
       <div class="nx-env__head">
         <span class="nx-env__sub" data-i18n="env.eyebrow">02.2 — Environmental</span>
         <h2 class="nx-env__title" data-i18n="env.title">Energia, água, resíduos, mobilidade.</h2>
-        <p class="nx-env__lede" data-i18n="env.lede">Quatro indicadores ambientais geridos diretamente pela Nexa. Toque num indicador para abrir o detalhe completo: distribuição, evolução e contexto.</p>
+        <p class="nx-env__lede" data-i18n="env.lede">Quatro indicadores ambientais geridos diretamente pela NEXA. Toque num indicador para abrir o detalhe completo: distribuição, evolução e contexto.</p>
       </div>
 
       <div class="nx-kpi-grid">
@@ -1765,7 +1795,7 @@
     </svg>
     <div class="nx-phil__skyline" id="phil-skyline"></div>
     <div class="nx-phil__body">
-      <p class="nx-phil__quote" data-i18n="phil.quote">A sustentabilidade não é apenas uma meta a alcançar. É a forma como a Nexa decide, constrói e lidera todos os dias.</p>
+      <p class="nx-phil__quote" data-i18n="phil.quote">A sustentabilidade não é apenas uma meta a alcançar. É a forma como a NEXA decide, constrói e lidera todos os dias.</p>
       <p class="nx-phil__cap" data-i18n="phil.cap">// Filosofia · Capítulo 02 · Situação Atual</p>
     </div>
   </section>
@@ -1838,7 +1868,7 @@
     </div>
   </section>
 
-  <!-- ====== PHILOSOPHY pg 28 · "Para a Nexa, o investimento sustentável..." ====== -->
+  <!-- ====== PHILOSOPHY pg 28 · "Para a NEXA, o investimento sustentável..." ====== -->
   <section class="nx-stage nx-stage--ink nx-phil nx-phil--wheat" data-reveal id="phil-2">
     <svg class="nx-phil__xmark" viewBox="0 0 100 100" aria-hidden="true">
       <line x1="14" y1="14" x2="42" y2="42" stroke="currentColor" stroke-width="8"/>
@@ -1848,7 +1878,7 @@
     </svg>
     <div class="nx-phil__wheat" data-wheat="1"></div>
     <div class="nx-phil__body">
-      <p class="nx-phil__quote" data-i18n="phil2.quote">Para a Nexa, o investimento sustentável assenta em dois pilares: boa governação e visão de longo prazo.</p>
+      <p class="nx-phil__quote" data-i18n="phil2.quote">Para a NEXA, o investimento sustentável assenta em dois pilares: boa governação e visão de longo prazo.</p>
       <p class="nx-phil__cap" data-i18n="phil2.cap">// Filosofia · Capítulo 02 · Governance</p>
     </div>
   </section>
@@ -2102,7 +2132,7 @@
     </svg>
     <div class="nx-phil__skyline" data-skyline="3"></div>
     <div class="nx-phil__body">
-      <p class="nx-phil__quote" style="color:#fff" data-i18n="phil3.quote">A confiança é o resultado da ética, inovação, sustentabilidade, compromisso e excelência. Cinco valores que a Nexa assume, em cada decisão, todos os dias.</p>
+      <p class="nx-phil__quote" style="color:#fff" data-i18n="phil3.quote">A confiança é o resultado da ética, inovação, sustentabilidade, compromisso e excelência. Cinco valores que a NEXA assume, em cada decisão, todos os dias.</p>
       <p class="nx-phil__cap" style="color:rgba(255,255,255,.7)" data-i18n="phil3.cap">// Filosofia · Capítulo 03 · Connect, Invest, Build the future</p>
     </div>
   </section>
@@ -2121,56 +2151,20 @@
         <h2 class="nx-section__title" data-i18n="closing.title">O início de um compromisso.</h2>
       </div>
       <div class="nx-closing__paragraphs">
-        <p data-i18n="closing.p1">É com enorme orgulho que partilhamos o primeiro Relatório de Sustentabilidade da Nexa. O início de um compromisso que assumimos com convicção e que pretendemos honrar a cada ano com foco na criação de valor sustentável para os investidores enquanto gestora de veículos de investimento regulados.</p>
+        <p data-i18n="closing.p1">É com enorme orgulho que partilhamos o primeiro Relatório de Sustentabilidade da NEXA. O início de um compromisso que assumimos com convicção e que pretendemos honrar a cada ano com foco na criação de valor sustentável para os investidores enquanto gestora de veículos de investimento regulados.</p>
         <p data-i18n="closing.p2">Acreditamos que gerir bem não é suficiente. É preciso gerir de forma eficiente, transparente e personalizada. Com o cuidado de quem sabe que os ativos são também espaços de vida, de trabalho e de comunidade.</p>
         <p data-i18n="closing.p3">Sabemos que o contexto não é fácil. As guerras, a instabilidade geopolítica e os governos que nem sempre fazem desta agenda uma prioridade tornam a transição mais lenta e mais exigente. Mas é precisamente em contextos de incerteza que o compromisso estruturado faz a diferença.</p>
-        <em data-i18n="closing.pull">A Nexa quer liderar.</em>
+        <em data-i18n="closing.pull">A NEXA quer liderar.</em>
         <p data-i18n="closing.p4">Continuaremos a acompanhar e a apoiar o crescimento de Portugal e da Europa nesta matéria. A mudar, de dentro para fora, a forma como o mercado imobiliário pensa a sua responsabilidade. E a fazê-lo com a certeza de que as ações de hoje fazem diferença no futuro que estamos a construir.</p>
       </div>
       <div class="nx-closing__signoff">
-        <span><strong data-i18n="closing.author">Fernanda Zelaya</strong> · <span data-i18n="closing.role">Responsável ESG da Nexa</span></span>
+        <span><strong data-i18n="closing.author">Fernanda Zelaya</strong> · <span data-i18n="closing.role">Responsável ESG da NEXA</span></span>
         <span>2026</span>
       </div>
     </div>
   </section>
 
-  <!-- ====== 07 EXPLORE ====== -->
-  <section class="nx-stage nx-stage--paper nx-explore" data-reveal id="explore">
-    <div class="nx-explore__head">
-      <span class="nx-explore__eyebrow" data-i18n="explore.eyebrow">→ Continuar a leitura</span>
-      <h2 class="nx-explore__title" data-i18n="explore.title">O relatório completo, em sete movimentos.</h2>
-    </div>
-    <div class="nx-explore__grid">
-      <a class="nx-explore__card" href="#impact">
-        <span class="k">01 · NEXA</span>
-        <h4 data-i18n="card.1.t">Mensagem, fundos, ativos, pessoas.</h4>
-        <div class="stat">18<span class="u">ativos</span></div>
-        <span class="meta" data-i18n="card.1.m">198 M€ AUM · 3 OIC · 10 colaboradores</span>
-        <span class="arrow">Ler →</span>
-      </a>
-      <a class="nx-explore__card" href="#env">
-        <span class="k">02 · Situação Atual</span>
-        <h4 data-i18n="card.2.t">Environmental, Social, Governance, Economic.</h4>
-        <div class="stat">17,2<span class="u">%</span></div>
-        <span class="meta" data-i18n="card.2.m">Renováveis · −21% energia · 0 TonCO₂e operação</span>
-        <span class="arrow">Ler →</span>
-      </a>
-      <a class="nx-explore__card" href="#phil">
-        <span class="k">03 · Connect, Invest, Build</span>
-        <h4 data-i18n="card.3.t">Plano climático 2025–2030.</h4>
-        <div class="stat">−40<span class="u">%</span></div>
-        <span class="meta" data-i18n="card.3.m">Scope 1+2 até 2030 · LEED Gold portfolio</span>
-        <span class="arrow">Ler →</span>
-      </a>
-      <a class="nx-explore__card" href="#matrix">
-        <span class="k">04 · Dupla Materialidade</span>
-        <h4 data-i18n="card.4.t">17 temas ESG, dois ângulos.</h4>
-        <div class="stat">17<span class="u">temas</span></div>
-        <span class="meta" data-i18n="card.4.m">Inside-Out × Outside-In · Pilotos 2026</span>
-        <span class="arrow">Ler →</span>
-      </a>
-    </div>
-  </section>
+  <!-- (Explore "7 movimentos" section removed per user feedback) -->
 
   <!-- ====== FOOTER · CONTACTO ====== -->
   <footer class="nx-stage nx-stage--ink nx-foot" id="contact">
@@ -2717,7 +2711,7 @@
         "hero.quote":"“Good governance and long-term thinking are the foundations of sustainable investment.”",
         "verb.connect":"Connect","verb.invest":"Invest","verb.build":"Build the future",
         "verb.from":"Mensagem do Board","verb.fromName":"Conselho de Administração · 2025","verb.cap":"Tagline",
-        "impact.eyebrow":"Universo Nexa",
+        "impact.eyebrow":"Universo NEXA",
         "impact.lede":"Ativos imobiliários sob gestão, distribuídos por 8 cidades em Portugal através de 3 fundos regulados pela CMVM.",
         "impact.assets":"Ativos imobiliários","impact.team":"Colaboradores","impact.funds":"OIC sob gestão",
         "matrix.eyebrow":"02 — Análise de Dupla Materialidade",
@@ -2727,7 +2721,7 @@
         "env.eyebrow":"03 — Environmental","env.title":"Energia renovável integrada na carteira em 2025.",
         "env.lede":"Contratos verdes com Garantias de Origem mais produção fotovoltaica on-site. Em paralelo, redução de −21,1% no consumo total e fleet 66,7% elétrica.",
         "env.energy":"consumo total","env.fleet":"frota elétrica","env.waste":"resíduos valorizados",
-        "phil.quote":"A sustentabilidade não é apenas uma meta a alcançar. É a forma como a Nexa decide, constrói e lidera todos os dias.",
+        "phil.quote":"A sustentabilidade não é apenas uma meta a alcançar. É a forma como a NEXA decide, constrói e lidera todos os dias.",
         "phil.cap":"// Filosofia · Capítulo 03 · Connect, Invest, Build the future",
         "chap.title":"Connect,\nInvest,\nBuild the future.",
         "chap.lede":"Plano de transição climático 2025–2030, estratégia de certificação da carteira, e perspetivas futuras para a próxima década de gestão sustentável.",
@@ -2746,21 +2740,21 @@
         "foot.regulator":"Regulada pela CMVM",
         "foot.privacy":"Política de Privacidade","foot.cookies":"Política de Cookies","foot.institutional":"Informação Institucional",
         "foot.easter":"// efeito surpresa",
-        "chap1.title":"Nexa","chap2.title":"Situação Atual","chap3.title":"Connect, Invest, Build the future",
+        "chap1.title":"NEXA","chap2.title":"Situação Atual","chap3.title":"Connect, Invest, Build the future",
         "map.hint":"Clique numa cidade →",
         "map.aum":"Ativos sob gestão","map.cities":"Cidades em Portugal","map.assets":"Ativos imobiliários","map.funds":"OIC em gestão",
         "board.eyebrow":"01.1 — Mensagem do Board","board.title":"Caros stakeholders, este é o primeiro ano.","board.greeting":"Caros Stakeholders,",
-        "board.p1":"O ano de 2025 representou mais do que a continuidade de um projeto iniciado em 2024 com a criação da Nexa SGOIC, S.A. Foi a afirmação de que uma gestão responsável, transparente e bem fundamentada é essencial para maximizar, de forma sustentada, o potencial dos investimentos imobiliários a longo prazo.",
-        "board.p2":"Este período consolidou o compromisso da Nexa em defender os interesses das sociedades que administra, reforçando a confiança do mercado através de práticas de governação robustas e elevados padrões de transparência.",
-        "board.pull":"Outro marco relevante foi a <em>primeira certificação LEED</em> do Grupo, atribuída a um dos edifícios sob gestão da Castro Capital SIC — evidenciando o compromisso da Nexa com práticas de investimento sustentáveis.",
+        "board.p1":"O ano de 2025 representou mais do que a continuidade de um projeto iniciado em 2024 com a criação da NEXA SGOIC, S.A. Foi a afirmação de que uma gestão responsável, transparente e bem fundamentada é essencial para maximizar, de forma sustentada, o potencial dos investimentos imobiliários a longo prazo.",
+        "board.p2":"Este período consolidou o compromisso da NEXA em defender os interesses das sociedades que administra, reforçando a confiança do mercado através de práticas de governação robustas e elevados padrões de transparência.",
+        "board.pull":"Outro marco relevante foi a <em>primeira certificação LEED</em> do Grupo, atribuída a um dos edifícios sob gestão da Castro Capital SIC — evidenciando o compromisso da NEXA com práticas de investimento sustentáveis.",
         "board.p3":"No âmbito da sustentabilidade, destacam-se avanços que consolidam a integração dos princípios ESG na forma como pensamos, decidimos e investimos. A Análise de Dupla Materialidade permitiu identificar riscos e oportunidades relevantes, reforçando o alinhamento entre exigências regulatórias, expectativas dos investidores e prioridades estratégicas dos fundos sob gestão.",
-        "board.p4":"A Nexa pretende continuar a ser um ponto de ligação entre investidores e oportunidades, atuando com visão de longo prazo e contribuindo para um setor financeiro mais transparente, responsável e preparado para o futuro.",
+        "board.p4":"A NEXA pretende continuar a ser um ponto de ligação entre investidores e oportunidades, atuando com visão de longo prazo e contribuindo para um setor financeiro mais transparente, responsável e preparado para o futuro.",
         "board.signoff":"Conselho de Administração",
         "phil1.quote":"Analisar com rigor. Gerir com propósito. Construir para durar. Cada fundo, cada ativo, cada decisão reflete uma visão de longo prazo sobre aquilo que o mercado imobiliário pode e deve ser.",
-        "phil1.cap":"// Filosofia · Capítulo 01 · Nexa",
+        "phil1.cap":"// Filosofia · Capítulo 01 · NEXA",
         "people.eyebrow":"01.2 — As nossas pessoas","people.title":"Uma equipa especializada, alinhada com as melhores práticas do setor.",
-        "people.lede":"Na Nexa, reconhecemos que as pessoas constituem o principal vetor de criação de valor sustentável.",
-        "people.board":"Conselho de Administração (Board)","people.org":"Organograma · Departamentos",
+        "people.lede":"Na NEXA, reconhecemos que as pessoas constituem o principal vetor de criação de valor sustentável.",
+        "people.board":"Conselho de Administração","people.org":"Organograma · Departamentos",
         "dept.compliance":"Compliance / BCFT","dept.risk":"Gestão de Risco","dept.finance":"Financeiro e Suporte","dept.ops":"Operações & Gestão Imobiliária","dept.esg":"Responsável ESG",
         "targets.eyebrow":"02.1 — Metas e estratégia ESG","targets.title":"Três pilares. Critérios duros.","targets.lede":"A gestão de OIC integra critérios ESG nas decisões de investimento, alinhada com a Taxonomia da UE.",
         "target.e.t":"Green Asset Ratio","target.e.l":"% do investimento alinhado com mitigação climática, adaptação, água, economia circular, biodiversidade e poluição. Meta a definir em 2026.",
@@ -2778,7 +2772,7 @@
         "gov.p2.t":"Compliance · BCFT · RGPD","gov.p2.l":"Compliance Officer autónomo. Reclamações analisadas em 10 dias úteis, resposta final em 30. Privacidade conforme RGPD.",
         "gov.p3.t":"Estratégia e Gestão de Risco","gov.p3.l":"Riscos de mercado, liquidez, contraparte e operacionais. Política rejeita explicitamente greenwashing.",
         "gov.condemn":"Condenações 2025","gov.reviews":"Reclamações","gov.retention":"Retenção arquivos",
-        "phil2.quote":"Para a Nexa, o investimento sustentável assenta em dois pilares: boa governação e visão de longo prazo.",
+        "phil2.quote":"Para a NEXA, o investimento sustentável assenta em dois pilares: boa governação e visão de longo prazo.",
         "phil2.cap":"// Filosofia · Capítulo 02 · Governance",
         "econ.eyebrow":"02.5 — Economic","econ.title":"Valor económico gerado e distribuído.","econ.lede":"O contexto de 2025 reflete uma fase estrutural inicial. O valor distribuído supera o gerado, resultando em valor económico acumulado negativo.",
         "econ.gen":"Valor gerado","econ.dist":"Valor distribuído","econ.ebitda":"EBITDA consolidado","econ.services":"Prestação de serviços",
@@ -2795,15 +2789,15 @@
         "obj.6":"Análise de Dupla Materialidade Externa com stakeholders",
         "obj.7":"Análise de risco físico climático (pilot)",
         "climate.eyebrow":"03.2 — Trajetória climática","climate.title":"Scope 1+2: de 30,0 a 9,4 TonCO₂e (−68,8%).","climate.lede":"Projeção anual 2025–2030. A meta de −40% é largamente ultrapassada.",
-        "phil3.quote":"A confiança é o resultado da ética, inovação, sustentabilidade, compromisso e excelência. Cinco valores que a Nexa assume, em cada decisão, todos os dias.",
+        "phil3.quote":"A confiança é o resultado da ética, inovação, sustentabilidade, compromisso e excelência. Cinco valores que a NEXA assume, em cada decisão, todos os dias.",
         "phil3.cap":"// Filosofia · Capítulo 03 · Connect, Invest, Build the future",
         "closing.eyebrow":"03.3 — Considerações Finais","closing.title":"O início de um compromisso.",
-        "closing.p1":"É com enorme orgulho que partilhamos o primeiro Relatório de Sustentabilidade da Nexa. O início de um compromisso que assumimos com convicção e que pretendemos honrar a cada ano com foco na criação de valor sustentável para os investidores enquanto gestora de veículos de investimento regulados.",
+        "closing.p1":"É com enorme orgulho que partilhamos o primeiro Relatório de Sustentabilidade da NEXA. O início de um compromisso que assumimos com convicção e que pretendemos honrar a cada ano com foco na criação de valor sustentável para os investidores enquanto gestora de veículos de investimento regulados.",
         "closing.p2":"Acreditamos que gerir bem não é suficiente. É preciso gerir de forma eficiente, transparente e personalizada. Com o cuidado de quem sabe que os ativos são também espaços de vida, de trabalho e de comunidade.",
         "closing.p3":"Sabemos que o contexto não é fácil. As guerras, a instabilidade geopolítica e os governos que nem sempre fazem desta agenda uma prioridade tornam a transição mais lenta e mais exigente. Mas é precisamente em contextos de incerteza que o compromisso estruturado faz a diferença.",
-        "closing.pull":"A Nexa quer liderar.",
+        "closing.pull":"A NEXA quer liderar.",
         "closing.p4":"Continuaremos a acompanhar e a apoiar o crescimento de Portugal e da Europa nesta matéria. A mudar, de dentro para fora, a forma como o mercado imobiliário pensa a sua responsabilidade. E a fazê-lo com a certeza de que as ações de hoje fazem diferença no futuro que estamos a construir.",
-        "closing.author":"Fernanda Zelaya","closing.role":"Responsável ESG da Nexa"
+        "closing.author":"Fernanda Zelaya","closing.role":"Responsável ESG da NEXA"
       },
       en: {
         "doc.title":"NEXA · Sustainability Report 2025",
@@ -2815,7 +2809,7 @@
         "hero.quote":"“Good governance and long-term thinking are the foundations of sustainable investment.”",
         "verb.connect":"Connect","verb.invest":"Invest","verb.build":"Build the future",
         "verb.from":"Board Message","verb.fromName":"Board of Directors · 2025","verb.cap":"Tagline",
-        "impact.eyebrow":"The Nexa Universe",
+        "impact.eyebrow":"The NEXA Universe",
         "impact.lede":"Real estate assets under management, across 8 cities in Portugal, through 3 CMVM-regulated funds.",
         "impact.assets":"Real estate assets","impact.team":"Team members","impact.funds":"Funds under management",
         "matrix.eyebrow":"02 — Double Materiality Analysis",
@@ -2825,7 +2819,7 @@
         "env.eyebrow":"03 — Environmental","env.title":"Renewable energy integrated in the portfolio, 2025.",
         "env.lede":"Green contracts with Guarantees of Origin plus on-site photovoltaic production. In parallel, a −21.1% reduction in total consumption and a 66.7% electric fleet.",
         "env.energy":"total consumption","env.fleet":"electric fleet","env.waste":"waste recovered",
-        "phil.quote":"Sustainability is not just a goal to reach. It is the way Nexa decides, builds, and leads every day.",
+        "phil.quote":"Sustainability is not just a goal to reach. It is the way NEXA decides, builds, and leads every day.",
         "phil.cap":"// Philosophy · Chapter 03 · Connect, Invest, Build the future",
         "chap.title":"Connect,\nInvest,\nBuild the future.",
         "chap.lede":"2025–2030 climate transition plan, portfolio certification strategy, and outlook for the next decade of sustainable management.",
@@ -2844,20 +2838,20 @@
         "foot.regulator":"Regulated by CMVM",
         "foot.privacy":"Privacy Policy","foot.cookies":"Cookie Policy","foot.institutional":"Institutional Information",
         "foot.easter":"// surprise effect",
-        "chap1.title":"Nexa","chap2.title":"Current State","chap3.title":"Connect, Invest, Build the future",
+        "chap1.title":"NEXA","chap2.title":"Current State","chap3.title":"Connect, Invest, Build the future",
         "map.hint":"Click a city →",
         "map.aum":"Assets under management","map.cities":"Cities in Portugal","map.assets":"Real estate assets","map.funds":"Funds under management",
         "board.eyebrow":"01.1 — Board Message","board.title":"Dear stakeholders, this is the first year.","board.greeting":"Dear Stakeholders,",
-        "board.p1":"2025 represented more than the continuity of a project started in 2024 with the creation of Nexa SGOIC, S.A. It was the affirmation that responsible, transparent and well-grounded management is essential to sustainably maximize the long-term potential of real estate investments.",
-        "board.p2":"This period consolidated Nexa's commitment to defend the interests of the companies it manages, reinforcing market trust through robust governance practices and high standards of transparency.",
-        "board.pull":"Another relevant milestone was the Group's <em>first LEED certification</em>, awarded to a building managed by Castro Capital SIC — evidencing Nexa's commitment to sustainable investment practices.",
+        "board.p1":"2025 represented more than the continuity of a project started in 2024 with the creation of NEXA SGOIC, S.A. It was the affirmation that responsible, transparent and well-grounded management is essential to sustainably maximize the long-term potential of real estate investments.",
+        "board.p2":"This period consolidated NEXA's commitment to defend the interests of the companies it manages, reinforcing market trust through robust governance practices and high standards of transparency.",
+        "board.pull":"Another relevant milestone was the Group's <em>first LEED certification</em>, awarded to a building managed by Castro Capital SIC — evidencing NEXA's commitment to sustainable investment practices.",
         "board.p3":"In sustainability, we highlight advances that consolidate the integration of ESG principles into the way we think, decide and invest. The Double Materiality Analysis identified relevant risks and opportunities, reinforcing alignment between regulatory requirements, investor expectations and strategic priorities of the funds under management.",
-        "board.p4":"Nexa intends to remain a connection point between investors and opportunities, acting with long-term vision and contributing to a more transparent, responsible and future-ready financial sector.",
+        "board.p4":"NEXA intends to remain a connection point between investors and opportunities, acting with long-term vision and contributing to a more transparent, responsible and future-ready financial sector.",
         "board.signoff":"Board of Directors",
         "phil1.quote":"Analyze with rigor. Manage with purpose. Build to last. Every fund, every asset, every decision reflects a long-term vision of what the real estate market can and should be.",
-        "phil1.cap":"// Philosophy · Chapter 01 · Nexa",
+        "phil1.cap":"// Philosophy · Chapter 01 · NEXA",
         "people.eyebrow":"01.2 — Our people","people.title":"A specialised team, aligned with the best practices in the sector.",
-        "people.lede":"At Nexa, we recognise that people are the main driver of sustainable value creation.",
+        "people.lede":"At NEXA, we recognise that people are the main driver of sustainable value creation.",
         "people.board":"Board of Directors","people.org":"Organisation · Departments",
         "dept.compliance":"Compliance / AML","dept.risk":"Risk Management","dept.finance":"Finance & Support","dept.ops":"Operations & Real Estate","dept.esg":"ESG Officer",
         "targets.eyebrow":"02.1 — ESG goals and strategy","targets.title":"Three pillars. Hard criteria.","targets.lede":"Fund management integrates ESG criteria in investment decisions, aligned with the EU Taxonomy.",
@@ -2876,7 +2870,7 @@
         "gov.p2.t":"Compliance · AML · GDPR","gov.p2.l":"Independent Compliance Officer. Complaints analysed in 10 business days, final response in 30. Privacy per GDPR.",
         "gov.p3.t":"Strategy and Risk Management","gov.p3.l":"Market, liquidity, counterparty and operational risks. Policy explicitly rejects greenwashing.",
         "gov.condemn":"Convictions 2025","gov.reviews":"Complaints","gov.retention":"File retention",
-        "phil2.quote":"For Nexa, sustainable investment rests on two pillars: good governance and long-term vision.",
+        "phil2.quote":"For NEXA, sustainable investment rests on two pillars: good governance and long-term vision.",
         "phil2.cap":"// Philosophy · Chapter 02 · Governance",
         "econ.eyebrow":"02.5 — Economic","econ.title":"Economic value generated and distributed.","econ.lede":"The 2025 context reflects an initial structural phase. Distributed value exceeds generated, resulting in negative accumulated economic value.",
         "econ.gen":"Value generated","econ.dist":"Value distributed","econ.ebitda":"Consolidated EBITDA","econ.services":"Services revenue",
@@ -2893,15 +2887,15 @@
         "obj.6":"External Double Materiality Analysis with stakeholders",
         "obj.7":"Physical climate risk analysis (pilot)",
         "climate.eyebrow":"03.2 — Climate trajectory","climate.title":"Scope 1+2: from 30.0 to 9.4 TonCO₂e (−68.8%).","climate.lede":"Annual projection 2025–2030. The −40% target is largely exceeded.",
-        "phil3.quote":"Trust is the result of ethics, innovation, sustainability, commitment and excellence. Five values that Nexa upholds, every single day.",
+        "phil3.quote":"Trust is the result of ethics, innovation, sustainability, commitment and excellence. Five values that NEXA upholds, every single day.",
         "phil3.cap":"// Philosophy · Chapter 03 · Connect, Invest, Build the future",
         "closing.eyebrow":"03.3 — Final Considerations","closing.title":"The beginning of a commitment.",
-        "closing.p1":"It is with great pride that we share Nexa's first Sustainability Report. The beginning of a commitment we have taken on with conviction, and that we intend to honour every year with a focus on creating sustainable value for investors as managers of regulated investment vehicles.",
+        "closing.p1":"It is with great pride that we share NEXA's first Sustainability Report. The beginning of a commitment we have taken on with conviction, and that we intend to honour every year with a focus on creating sustainable value for investors as managers of regulated investment vehicles.",
         "closing.p2":"We believe that managing well is not enough. It must be done efficiently, transparently and personally. With the care of those who know that assets are also spaces for living, working and community.",
         "closing.p3":"We know the context is not easy. Wars, geopolitical instability and governments that don't always prioritise this agenda make the transition slower and more demanding. But it is precisely in uncertain times that structured commitment makes the difference.",
-        "closing.pull":"Nexa wants to lead.",
+        "closing.pull":"NEXA wants to lead.",
         "closing.p4":"We will continue to support the growth of Portugal and Europe in this matter. To change, from the inside out, how the real estate market thinks about its responsibility. With the certainty that today's actions make a difference for the future we are building.",
-        "closing.author":"Fernanda Zelaya","closing.role":"Nexa's ESG Officer"
+        "closing.author":"Fernanda Zelaya","closing.role":"NEXA's ESG Officer"
       }
     };
     // Snapshot the rich PT markup as cloned childNodes \u2014 the HTML default is the
@@ -3000,7 +2994,7 @@
       {id:'destaque-recarei', name:'Destaque Recarei', type:'Residencial', area:9323, city:'Matosinhos', district:'Porto', owner:'Icon SIC', status:'Landbank'},
       {id:'casa-do-rio', name:'Casa do Rio', type:'Residencial', area:7500, city:'Matosinhos', district:'Porto', owner:'Icon SIC', status:'Landbank'},
       {id:'valpark', name:'Valpark', type:'Logística', area:13200, city:'Valongo', district:'Porto', owner:'Icon SIC', status:'Em construção', photo:'uploads/projects/Valpark.jpg'},
-      {id:'palacete-31-janeiro', name:'Palacete 31 de Janeiro', type:'Escritório', area:1207, city:'Braga', district:'Braga', owner:'Castro Capital SIC', status:'Sede Nexa · GdO', photo:'uploads/projects/palacete.jpg'},
+      {id:'palacete-31-janeiro', name:'Palacete 31 de Janeiro', type:'Escritório', area:1207, city:'Braga', district:'Braga', owner:'Castro Capital SIC', status:'Sede NEXA · GdO', photo:'uploads/projects/palacete.jpg'},
       {id:'moradia-de-fao', name:'Moradia de Fão', type:'Residencial', area:798, city:'Esposende', district:'Braga', owner:'Castro Capital SIC', status:'Em operação'}
     ];
 
@@ -3133,26 +3127,52 @@
       ASSETS.forEach(a => { (byCity[a.city] = byCity[a.city] || []).push(a); });
       const cityNames = Object.keys(CITIES);
 
+      // Per-city label placement — explicit offsets resolve the dense Porto cluster
+      // (5 cities within ~10km radius) and place coastal/border labels safely.
+      // dx,dy = offset from dot in SVG units · anchor = text-anchor · leader = draw a hairline
+      const LABELS = {
+        'Esposende':           {dx:-7,  dy: 0,  anchor:'end'},
+        'Braga':               {dx: 7,  dy: 1.6,anchor:'start'},
+        'Maia':                {dx: 7,  dy:-3,  anchor:'start', leader:true},
+        'Porto':               {dx:-7,  dy: 0,  anchor:'end',   leader:true},
+        'Matosinhos':          {dx:-7,  dy: 6,  anchor:'end',   leader:true},
+        'Valongo':             {dx: 7,  dy: 4,  anchor:'start', leader:true},
+        'Vila Nova de Gaia':   {dx: 7,  dy: 10, anchor:'start', leader:true},
+        'Vila Franca de Xira': {dx:-7,  dy:-2,  anchor:'end',   leader:true},
+        'Lisboa':              {dx:-7,  dy: 4,  anchor:'end'},
+        'Loulé':               {dx: 0,  dy:-6,  anchor:'middle'},
+        'Faro':                {dx: 0,  dy: 9,  anchor:'middle'}
+      };
+
       cityNames.forEach((cityName, i) => {
         const c = CITIES[cityName];
         const p = project(c.lat, c.lon);
         const count = (byCity[cityName] || []).length;
+        const L = LABELS[cityName] || {dx:5, dy:1.6, anchor:'start'};
 
         const g = sv('g', {class:'nx-map__city' + (count > 1 ? ' is-multi' : ''), 'data-city':cityName, tabindex:'0'});
         g.style.animationDelay = (i * 80) + 'ms';
         g.appendChild(sv('circle', {class:'ring', cx:p.x.toFixed(2), cy:p.y.toFixed(2), r:(3 + Math.sqrt(Math.max(1,count)) * 1.6).toFixed(2)}));
         g.appendChild(sv('circle', {class:'pip',  cx:p.x.toFixed(2), cy:p.y.toFixed(2), r:(1.2 + Math.sqrt(Math.max(1,count)) * 0.6).toFixed(2)}));
 
-        // label: right side except for Algarve (label below), and Lisboa/V.F.Xira (label left, coast is to west)
-        const labelLeft = (cityName === 'Lisboa' || cityName === 'Vila Franca de Xira' || cityName === 'Esposende');
-        const dx = labelLeft ? -5 : 5;
-        const anchor = labelLeft ? 'end' : 'start';
-        const dy = (cityName === 'Loulé' || cityName === 'Faro') ? 7 : 1.6;
-        const t = sv('text', {x:(p.x + dx).toFixed(2), y:(p.y + dy).toFixed(2), 'text-anchor':anchor});
+        // optional leader line to disambiguate dense clusters
+        if(L.leader){
+          const lx = p.x + L.dx;
+          const ly = p.y + L.dy;
+          const lead = sv('line', {
+            x1:p.x.toFixed(2), y1:p.y.toFixed(2),
+            x2:lx.toFixed(2),  y2:ly.toFixed(2),
+            stroke:'#C85204', 'stroke-width':'.4', opacity:'.6'
+          });
+          g.appendChild(lead);
+        }
+
+        const t = sv('text', {x:(p.x + L.dx).toFixed(2), y:(p.y + L.dy).toFixed(2), 'text-anchor':L.anchor});
         t.textContent = cityName.toUpperCase();
         g.appendChild(t);
         if(count > 0){
-          const cT = sv('text', {class:'count', x:(p.x + dx).toFixed(2), y:(p.y + dy - 6).toFixed(2), 'text-anchor':anchor});
+          // count goes above the city name (offset -6 from name's y)
+          const cT = sv('text', {class:'count', x:(p.x + L.dx).toFixed(2), y:(p.y + L.dy - 6).toFixed(2), 'text-anchor':L.anchor});
           cT.textContent = count + (count === 1 ? ' ativo' : ' ativos');
           g.appendChild(cT);
         }
@@ -3609,7 +3629,7 @@
         eyebrow: '02.2 — Environmental · Mobilidade',
         title: 'Frota elétrica · 66,7%',
         titleAccent: '4 de 6 veículos',
-        lede: 'Caracterização da frota Nexa em 2025: composta por veículos de duas categorias — elétricos e a gasolina. Plano 2026–2030: 100% eléctrica.',
+        lede: 'Caracterização da frota NEXA em 2025: composta por veículos de duas categorias — elétricos e a gasolina. Plano 2026–2030: 100% eléctrica.',
         build: () => {
           const frag = document.createDocumentFragment();
           const r1 = document.createElement('div');
@@ -3986,11 +4006,11 @@
 
     function openCityModal(cityName, assets){
       modalContent.replaceChildren();
-      modalContent.appendChild(el('span', 'nx-modal__eyebrow', `Universo Nexa · ${cityName}`));
+      modalContent.appendChild(el('span', 'nx-modal__eyebrow', `Universo NEXA · ${cityName}`));
       const title = el('h2', 'nx-modal__title', `${assets.length} ${assets.length === 1 ? 'ativo' : 'ativos'} em ${cityName}`);
       title.id = 'modal-title';
       modalContent.appendChild(title);
-      modalContent.appendChild(el('p', 'nx-modal__lede', `Distrito de ${assets[0].district}. Carteira gerida por OIC sob responsabilidade da Nexa.`));
+      modalContent.appendChild(el('p', 'nx-modal__lede', `Distrito de ${assets[0].district}. Carteira gerida por OIC sob responsabilidade da NEXA.`));
       const grid = el('div', 'nx-citymodal__assets');
       assets.forEach(a => {
         const card = el('div', 'nx-citymodal__asset');
@@ -4049,7 +4069,7 @@
         'Consumo energético':'1.501,5 MWh em 2025 (vs 1.902,5 MWh em 2024). Redução de 21,1% impulsionada principalmente pela operação direta dos OIC (−29,5%).',
         'Consumo de água':'9.933 m³ em 2025 (vs 11.622 m³ em 2024). Construção respondeu por 32,0%, com SPARK como principal consumidor.',
         'Resíduos valorizados':'97,3% dos resíduos foram valorizados em 2025. 100% dos resíduos de construção foram encaminhados para valorização.',
-        'Frota elétrica':'4 dos 6 veículos da Nexa são elétricos. Em 2025, evitaram-se 59,9% das emissões associadas à mobilidade — equivalente a 14,1 TonCO₂e.',
+        'Frota elétrica':'4 dos 6 veículos da NEXA são elétricos. Em 2025, evitaram-se 59,9% das emissões associadas à mobilidade — equivalente a 14,1 TonCO₂e.',
         'Colaboradores':'10 colaboradores em 2025 (3 mulheres, 7 homens). Crescimento moderado vs. 2024 (9 colaboradores), em fase de consolidação organizacional.',
         'Turnover 2025':'Zero saídas de colaboradores durante o período. 1 nova contratação, demonstrando uma abordagem criteriosa à gestão de recursos humanos.',
         'Salário médio':'Salário médio dos colaboradores: 2.686,8 € (vs. 870 € de salário mínimo nacional) — 3,1× acima do mínimo.',
