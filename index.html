@@ -1415,22 +1415,33 @@
     .nx-phil--wheat .nx-phil__skyline{display:none}
     .nx-phil--wheat .nx-phil__wheat{
       position:absolute;inset:0;display:grid;
-      grid-template-columns:repeat(14,1fr);grid-template-rows:repeat(8,1fr);
-      opacity:.5;pointer-events:none;
+      grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(7,1fr);
+      opacity:.6;pointer-events:auto;
+      padding:clamp(40px,8vh,120px) clamp(40px,8vw,140px);
     }
-    .nx-phil--wheat .nx-phil__wheat{pointer-events:auto}
     .nx-phil--wheat .nx-phil__wheat span{
       align-self:center;justify-self:center;
-      width:32px;height:2px;background:var(--nx-ink-3);
+      width:48px;height:3px;background:var(--nx-ink-3);
       transform-origin:center;
       transform:rotate(var(--orig-rot, 0deg));
       transition:transform .45s var(--nx-ease-spring), background-color .2s var(--nx-ease-out), width .35s var(--nx-ease-out);
       cursor:none;
+      will-change:transform;
+    }
+    /* Idle sway · each dash oscillates ±4° around its base rotation,
+       desynchronized via per-dash --sway-dur / --sway-delay */
+    .nx-phil--wheat.is-in .nx-phil__wheat span{
+      animation:nxDashSway var(--sway-dur, 6s) ease-in-out var(--sway-delay, 0s) infinite;
+    }
+    @keyframes nxDashSway{
+      0%,100%{transform:rotate(var(--orig-rot, 0deg))}
+      50%   {transform:rotate(calc(var(--orig-rot, 0deg) + 4deg))}
     }
     .nx-phil--wheat .nx-phil__wheat span:hover{
+      animation:none;
       transform:rotate(calc(var(--orig-rot, 0deg) + 90deg));
       background:var(--nx-orange);
-      width:42px;
+      width:60px;
     }
     /* Phil · scatter variant (dashes randomly rotated · forma y frase 02.png) */
     .nx-phil--scatter{
@@ -3026,15 +3037,20 @@
         });
       });
 
-      // Wheat grid · rotated dashes (phil-2) · same as before
+      // Wheat grid · 10×7 dashes (forma y frase 03.png density)
+      // Rotation progresses left→right and top→bottom · idle sway
+      // animation pulses ±4° per dash, desynchronized
       document.querySelectorAll('.nx-phil__wheat[data-wheat]').forEach(host => {
-        const cols=14, rows=8;
+        const cols=10, rows=7;
+        host.replaceChildren();
         for(let i=0;i<cols*rows;i++){
           const s = document.createElement('span');
           const col = i % cols;
           const row = Math.floor(i/cols);
-          const angle = (col*3 + row*5) - 30;
+          const angle = (col*4 + row*6) - 30;
           s.style.setProperty('--orig-rot', angle + 'deg');
+          s.style.setProperty('--sway-dur',   (4.5 + Math.random()*3.5).toFixed(2) + 's');
+          s.style.setProperty('--sway-delay', (Math.random()*3).toFixed(2) + 's');
           host.appendChild(s);
         }
       });
