@@ -176,16 +176,19 @@
     }
     .nx-hero__titlelayer.is-faded .nx-ts{opacity:0!important;transition:opacity 900ms ease}
 
-    /* Clean Montserrat title · fades in after strokes settle */
+    /* Clean Montserrat title · fades in after strokes settle.
+       Smaller size for a more natural crossfade from the assembled
+       sticks animation (the sticks are thinner than the heavy display
+       weight; matching sizes makes the transition feel seamless). */
     .nx-hero__titlefinal{
       position:absolute;
       left:clamp(28px,4.5vw,96px);top:clamp(80px,14vh,160px);
       font-family:var(--nx-font-sans);font-weight:400;
-      font-size:clamp(38px,5.6vw,92px);
-      line-height:1.04;letter-spacing:-.015em;
+      font-size:clamp(28px,4.2vw,68px);
+      line-height:1.05;letter-spacing:-.012em;
       color:var(--nx-on-ink);text-transform:uppercase;
       opacity:0;transition:opacity 900ms var(--nx-ease-out);
-      z-index:5;pointer-events:none;max-width:60vw;
+      z-index:5;pointer-events:none;max-width:64vw;
     }
     .nx-hero__titlefinal.is-shown{opacity:1}
     .nx-hero__titlefinal .l2{display:block}
@@ -306,27 +309,40 @@
       content:"";display:inline-block;width:24px;height:1px;
       background:var(--nx-orange);vertical-align:middle;margin-right:12px;
     }
-    .nx-impact__metrics--5{
+    /* nx-impact__metrics--5 · doubled specificity to win cascade vs base rule below */
+    .nx-impact__metrics.nx-impact__metrics--5{
       grid-template-columns:1fr;gap:0;border:0;background:transparent;border-radius:0;margin-top:0;
       align-self:center;
     }
-    .nx-impact__metrics--5 > div{
+    .nx-impact__metrics.nx-impact__metrics--5 > div{
       padding:18px 0;background:transparent;
       border-top:1px solid var(--nx-line);
       display:flex;flex-direction:column;gap:6px;
+      transform:none;opacity:1;
     }
-    .nx-impact__metrics--5 > div:first-child{border-top:0;padding-top:0}
-    .nx-impact__metrics--5 > div:last-child{padding-bottom:0}
-    .nx-impact__metrics--5 b{
+    .nx-impact__metrics.nx-impact__metrics--5 > div:first-child{border-top:0;padding-top:0}
+    .nx-impact__metrics.nx-impact__metrics--5 > div:last-child{padding-bottom:0}
+    .nx-impact__metrics.nx-impact__metrics--5 b{
       font-size:clamp(2.4rem,4.2vw,3.6rem);font-weight:var(--nx-w-light);
-      letter-spacing:-.03em;line-height:1;color:var(--nx-ink);
+      letter-spacing:-.03em;line-height:1;color:var(--nx-ink);display:block;
     }
-    .nx-impact__metrics--5 b .unit{font-size:.36em;margin-left:4px;color:var(--nx-orange)}
-    .nx-impact__metrics--5 span{
+    .nx-impact__metrics.nx-impact__metrics--5 b .unit{font-size:.36em;margin-left:4px;color:var(--nx-orange)}
+    .nx-impact__metrics.nx-impact__metrics--5 span{
       font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
       letter-spacing:var(--nx-track-caps);text-transform:uppercase;
       color:var(--nx-mute-on-bone);
     }
+    /* Restore stagger reveal for the vertical 5-stack */
+    .nx-impact.is-in .nx-impact__metrics.nx-impact__metrics--5 > div{opacity:1;transform:none}
+    .nx-impact__metrics.nx-impact__metrics--5 > div{
+      opacity:0;transform:translateY(14px);
+      transition:transform .8s var(--nx-ease-arch), opacity .8s var(--nx-ease-out);
+    }
+    .nx-impact.is-in .nx-impact__metrics.nx-impact__metrics--5 > div:nth-child(1){transition-delay:.45s}
+    .nx-impact.is-in .nx-impact__metrics.nx-impact__metrics--5 > div:nth-child(2){transition-delay:.55s}
+    .nx-impact.is-in .nx-impact__metrics.nx-impact__metrics--5 > div:nth-child(3){transition-delay:.65s}
+    .nx-impact.is-in .nx-impact__metrics.nx-impact__metrics--5 > div:nth-child(4){transition-delay:.75s}
+    .nx-impact.is-in .nx-impact__metrics.nx-impact__metrics--5 > div:nth-child(5){transition-delay:.85s}
     .nx-impact__num{
       font-size:clamp(3rem, 8vw, 6.4rem);
       font-weight:var(--nx-w-light);
@@ -706,6 +722,21 @@
     }
     .nx-chapcover.is-in .nx-chapcover__pattern--lines .bar{transform:scaleY(1)}
 
+    /* — Suns pattern (Cap 03 cover) — */
+    .nx-chapcover__pattern--suns{
+      display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,1fr);
+      gap:clamp(10px,1.4vw,24px);place-items:center;
+      padding:clamp(24px,4vh,56px) clamp(28px,5vw,72px);
+    }
+    .nx-chapcover__pattern--suns .sun{
+      width:72%;aspect-ratio:1;
+      opacity:0;animation:nxSpin var(--spin-dur, 20s) linear infinite, nxSunFadeIn 1.2s var(--nx-ease-out) forwards;
+    }
+    .nx-chapcover__pattern--suns .sun:nth-child(even){animation-direction:reverse, normal}
+    .nx-chapcover__pattern--suns .sun svg{width:100%;height:100%}
+    .nx-chapcover__pattern--suns .sun svg line{stroke:rgba(237,204,192,.55);stroke-width:3}
+    @keyframes nxSunFadeIn{to{opacity:1}}
+
     /* — Squares pattern (Cap 02) — */
     .nx-chapcover__pattern--squares{
       display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(4,1fr);
@@ -725,10 +756,29 @@
       content:"";width:22%;aspect-ratio:1;background:rgba(237,204,192,.65);
     }
 
+    /* Diretrizes 2025–2050 · ribbon between persp head and the 3 pillars */
+    .nx-persp__marks{
+      list-style:none;margin:0 0 16px;padding:0;
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:1px;background:var(--nx-line);border:1px solid var(--nx-line);
+      border-radius:var(--nx-r-sm);overflow:hidden;
+    }
+    .nx-persp__marks li{
+      display:flex;align-items:flex-start;gap:10px;
+      padding:14px 18px;background:var(--nx-paper);
+      font-size:var(--nx-size-sm);color:var(--nx-ink);line-height:1.35;
+    }
+    .nx-persp__marks .k{
+      font-family:var(--nx-font-mono);color:var(--nx-orange);font-weight:var(--nx-w-medium);
+      flex-shrink:0;
+    }
+    .nx-persp__marks .v{font-weight:var(--nx-w-medium);letter-spacing:-.005em}
+
     @media (max-width:880px){
       .nx-chapcover{min-height:42vh;aspect-ratio:auto}
       .nx-chapcover__pattern--squares{grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(3,1fr)}
       .nx-chapcover__pattern--lines .row{grid-template-columns:repeat(18,1fr)}
+      .nx-chapcover__pattern--suns{grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr)}
     }
 
     /* ============ CHAPTER COVER (05) — HALF-BLEED ORANGE ============ */
@@ -2112,23 +2162,10 @@
     <span class="nx-chapdiv__arrow">→</span>
   </div>
 
-  <!-- ====== 06 CHAPTER COVER ====== -->
-  <section class="nx-stage nx-chap">
-    <div class="nx-chap__left">
-      <div class="nx-chap__suns" id="suns"></div>
-      <div class="nx-chap__num">03</div>
-    </div>
-    <div class="nx-chap__right">
-      <span class="nx-chap__eyebrow">Capítulo 03</span>
-      <h2 class="nx-chap__title" data-i18n="chap.title">Connect,<br>Invest,<br>Build the future<span class="dot">.</span></h2>
-      <p class="nx-chap__lede" data-i18n="chap.lede">Plano de transição climático 2025–2030, estratégia de certificação da carteira, e perspetivas futuras para a próxima década de gestão sustentável.</p>
-      <ul class="nx-chap__list">
-        <li><span class="k">→</span><span class="v" data-i18n="chap.l1">Meta: −40% emissões Scope 1+2 até 2030</span></li>
-        <li><span class="k">→</span><span class="v" data-i18n="chap.l2">98,0% do GFA alinhado com estratégia de certificação</span></li>
-        <li><span class="k">→</span><span class="v" data-i18n="chap.l3">1ª certificação LEED Gold® · Edifício La Movida</span></li>
-        <li><span class="k">→</span><span class="v" data-i18n="chap.l4">Neutralidade climática até 2050</span></li>
-      </ul>
-    </div>
+  <!-- Chapter cover 03 · full-bleed orange + suns pattern + numeral (matches 03.png) -->
+  <section class="nx-chapcover" data-reveal aria-label="Capítulo 03 · Connect, Invest, Build the future">
+    <div class="nx-chapcover__pattern nx-chapcover__pattern--suns" data-pattern="suns" id="suns" aria-hidden="true"></div>
+    <div class="nx-chapcover__num">03</div>
   </section>
 
   <!-- ====== CERTIFICAÇÃO DE ATIVOS (cap 03 · PDF p.31) ====== -->
@@ -2217,6 +2254,15 @@
         <h2 class="nx-section__title" data-i18n="persp.title">Plano climático 2025–2030.</h2>
         <p class="nx-section__lede" data-i18n="persp.lede">Três pilares operacionais para reduzir −68,8% das emissões Scope 1+2 até 2030, ultrapassando a meta de −40%.</p>
       </div>
+
+      <!-- Diretrizes do capítulo 03 (moved from former chapter cover right-column) -->
+      <ul class="nx-persp__marks" aria-label="Diretrizes 2025–2050">
+        <li><span class="k">→</span><span class="v" data-i18n="chap.l1">Meta: −40% emissões Scope 1+2 até 2030</span></li>
+        <li><span class="k">→</span><span class="v" data-i18n="chap.l2">98,0% do GFA alinhado com estratégia de certificação</span></li>
+        <li><span class="k">→</span><span class="v" data-i18n="chap.l3">1ª certificação LEED Gold® · Edifício La Movida</span></li>
+        <li><span class="k">→</span><span class="v" data-i18n="chap.l4">Neutralidade climática até 2050</span></li>
+      </ul>
+
       <div class="nx-persp__pillars">
         <div class="nx-persp__pillar">
           <span class="nx-persp__pillar-num">01 · 2025–2030</span>
@@ -2910,7 +2956,7 @@
       }
     })();
 
-    // ============ Suns (chapter cover 03) ============
+    // ============ Suns (chapter cover 03 · 6×4 grid) ============
     (function(){
       const host = document.getElementById('suns'); if(!host) return;
       function sunSVG(){
@@ -2920,15 +2966,16 @@
           const a=(i/rays)*Math.PI*2;
           const x1=c+Math.cos(a)*r1, y1=c+Math.sin(a)*r1;
           const x2=c+Math.cos(a)*r2, y2=c+Math.sin(a)*r2;
-          lines += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#C2531A" stroke-width="3"/>`;
+          lines += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
         }
         return `<svg viewBox="0 0 100 100">${lines}</svg>`;
       }
-      for(let i=0;i<25;i++){
+      for(let i=0;i<24;i++){
         const w = document.createElement('div');
         w.className = 'sun';
         w.innerHTML = sunSVG();
-        w.style.animationDuration = (12 + Math.random()*14).toFixed(1)+'s';
+        w.style.setProperty('--spin-dur', (14 + Math.random()*12).toFixed(1)+'s');
+        w.style.animationDelay = (i * 50) + 'ms, ' + (i * 80) + 'ms';
         host.appendChild(w);
       }
     })();
