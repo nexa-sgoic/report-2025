@@ -1008,9 +1008,14 @@
     }
     .nx-rail__item.is-active{opacity:1;color:var(--nx-orange)}
     .nx-rail__item.is-active .nx-rail__bar{width:42px;background:var(--nx-orange)}
-    /* tint switching for sections over bone */
+    /* tint switching · bone surfaces (light) */
     .nx-rail.on-bone .nx-rail__item{color:var(--nx-ink)}
     .nx-rail.on-bone .nx-rail__item.is-active{color:var(--nx-orange)}
+    /* tint switching · orange surfaces (chapter covers / dividers / chain pause
+       with orange overlay) · flip to dark ink so the rail stays visible */
+    .nx-rail.on-orange .nx-rail__item{color:rgba(3,2,12,.5)}
+    .nx-rail.on-orange .nx-rail__item.is-active{color:var(--nx-brand-ink)}
+    .nx-rail.on-orange .nx-rail__item.is-active .nx-rail__bar{background:var(--nx-brand-ink)}
 
     /* ============ BACK TO TOP ============ */
     .nx-backtotop{
@@ -2977,8 +2982,22 @@
     const backtop = document.getElementById('backtotop');
     if(backtop) backtop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 
-    // Detect when rail sits over a bone/light section to flip its color
-    const lightSurfaces = Array.from(document.querySelectorAll('.nx-stage--bone, .nx-stage--paper, .nx-stage--orange, .nx-esg-strip, .nx-section, .nx-orangeband, .nx-chapdiv'));
+    // Surfaces the rail flies over · split into two buckets so the rail
+    // can flip its color depending on whether the surface is light (bone/
+    // paper · rail → ink) or orange (chapter covers/dividers/chain pause ·
+    // rail → dark ink). Ink-dark sections (.nx-stage--ink, nx-climate)
+    // are NOT in either list — rail stays cream + orange-active there.
+    const lightSurfaces = Array.from(document.querySelectorAll(
+      '.nx-stage--bone, .nx-stage--paper, .nx-esg-strip, ' +
+      '.nx-section.nx-stage--bone, .nx-section.nx-stage--paper, ' +
+      '.nx-certs, .nx-env, .nx-board, .nx-people, .nx-targets, ' +
+      '.nx-persp, .nx-section[id="social"], .nx-section[id="gov"], ' +
+      '.nx-section[id="econ"], .nx-closing, .nx-explore'
+    ));
+    const orangeSurfaces = Array.from(document.querySelectorAll(
+      '.nx-chapcover, .nx-chapdiv, .nx-orangeband, ' +
+      '.nx-chainpause, .nx-stage--orange'
+    ));
 
     function onScroll(){
       const h = document.documentElement.scrollHeight - innerHeight;
@@ -3002,19 +3021,28 @@
         // rail tint based on what surface sits behind the rail (right side)
         const railCenterY = innerHeight * 0.5;
         const railX = innerWidth - 40;
-        let onLight = false;
-        lightSurfaces.forEach(s => {
+        let onLight = false, onOrange = false;
+        // Check orange surfaces first so they win in case of overlap
+        orangeSurfaces.forEach(s => {
           const r = s.getBoundingClientRect();
           if(r.top <= railCenterY && r.bottom > railCenterY && railX > r.left && railX < r.right){
-            // bone/paper/orange (light) — but orange band/chapdiv have white text on orange
-            if(s.classList.contains('nx-stage--orange') || s.classList.contains('nx-orangeband') || s.classList.contains('nx-chapdiv')){
-              onLight = false; // orange — keep white rail
-            } else {
-              onLight = true;
-            }
+            onOrange = true;
           }
         });
+        if(!onOrange){
+          lightSurfaces.forEach(s => {
+            const r = s.getBoundingClientRect();
+            if(r.top <= railCenterY && r.bottom > railCenterY && railX > r.left && railX < r.right){
+              // Skip if this section is actually ink-dark (e.g. .nx-climate
+              // is a .nx-section but its background is var(--nx-ink))
+              const bg = getComputedStyle(s).backgroundColor;
+              if(bg && /rgb\((4[0-9]|5[0-9]),/.test(bg)) return; // ~ink #2D2D2C-ish
+              onLight = true;
+            }
+          });
+        }
         rail.classList.toggle('on-bone', onLight);
+        rail.classList.toggle('on-orange', onOrange);
       }
     }
     addEventListener('scroll', onScroll, {passive:true});
