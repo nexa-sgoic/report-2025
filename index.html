@@ -643,10 +643,19 @@
     @media (max-width:720px){
       .nx-sheet__row--2col, .nx-sheet__row--3col{grid-template-columns:1fr}
     }
+    /* All sheet panels share the same height + alignment so the grids of
+       2-col / 3-col rows read as a uniform card system, not a patchwork
+       of taller/shorter tiles. */
     .nx-sheet__panel{
       padding:18px;background:var(--nx-paper);border:1px solid var(--nx-line);border-radius:var(--nx-r-md);
       display:flex;flex-direction:column;gap:12px;
+      min-height:240px;
+      justify-content:flex-start;
     }
+    .nx-sheet__row .nx-sheet__panel,
+    .nx-sheet__row .nx-pill{height:100%}
+    /* Push hbars block to the bottom so all panels align baselines */
+    .nx-sheet__panel .nx-hbars{margin-top:auto}
     .nx-sheet__panel-title{
       font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
       letter-spacing:var(--nx-track-caps);text-transform:uppercase;color:var(--nx-orange);
@@ -4311,12 +4320,13 @@
           r2.appendChild(buildPanel({
             title:'Por categoria profissional',
             stat:'4 níveis',
+            note:'Categorias do regulamento interno NEXA · valores específicos por categoria em revisão para o exercício 2026.',
             body: buildHbars({
               rows:[
-                {cat:'Direção',     val:'2', unit:'', w:20, strong:true},
-                {cat:'Coordenação', val:'2', unit:'', w:20},
-                {cat:'Técnico',     val:'4', unit:'', w:40},
-                {cat:'Suporte',     val:'2', unit:'', w:20}
+                {cat:'Administração', val:'—', unit:'', w:0},
+                {cat:'Direção',       val:'—', unit:'', w:0},
+                {cat:'Gestão',        val:'—', unit:'', w:0},
+                {cat:'Técnico',       val:'—', unit:'', w:0}
               ]
             })
           }));
@@ -4358,22 +4368,6 @@
             note:'88,9% dos colaboradores receberam prémio em 2025. Os 10% restantes não eram elegíveis por entrada nesse ano.'
           }));
           frag.appendChild(r1);
-          const r2 = document.createElement('div');
-          r2.className = 'nx-sheet__row';
-          r2.appendChild(buildPanel({
-            title:'Distribuição salarial por categoria',
-            stat:'amplitude controlada',
-            note:'Faixas pré-definidas alinhadas com benchmark setor financeiro/gestão de ativos em Portugal.',
-            body: buildHbars({
-              rows:[
-                {cat:'Direção',     val:'5.400', unit:'€', w:90, strong:true},
-                {cat:'Coordenação', val:'3.200', unit:'€', w:55},
-                {cat:'Técnico',     val:'2.100', unit:'€', w:35},
-                {cat:'Suporte',     val:'1.350', unit:'€', w:22}
-              ]
-            })
-          }));
-          frag.appendChild(r2);
           return frag;
         }
       },
@@ -4442,22 +4436,6 @@
             note:'Plano de ação para neutralidade remuneratória — gap salarial 37,1% → 0% até 2030. Objetivo O5 do plano 2026.'
           }));
           frag.appendChild(r1);
-          const r2 = document.createElement('div');
-          r2.className = 'nx-sheet__row';
-          r2.appendChild(buildPanel({
-            title:'Composição por género e categoria',
-            note:'Distribuição atual — 3 mulheres em 10 pessoas, todas em categorias técnicas e de suporte.',
-            body: buildHbars({
-              label:'Mulheres por categoria',
-              rows:[
-                {cat:'Direção',     val:'0', unit:'/2', w:0},
-                {cat:'Coordenação', val:'0', unit:'/2', w:0},
-                {cat:'Técnico',     val:'2', unit:'/4', w:50, strong:true},
-                {cat:'Suporte',     val:'1', unit:'/2', w:50}
-              ]
-            })
-          }));
-          frag.appendChild(r2);
           return frag;
         }
       },
@@ -4658,7 +4636,7 @@
         'Retenção arquivos':'5 anos de retenção mínima de arquivos conforme regulamentação CMVM aplicável às sociedades gestoras de OIC.',
         'Valor gerado':'Valor económico gerado: 2,23 M€ em 2025 (vs 17,60 M€ em 2024). Redução reflete a fase de transição estrutural do exercício.',
         'Valor distribuído':'Valor económico distribuído: 8,25 M€ em 2025 (vs 3,41 M€ em 2024). Composição: 7,36M (fornecedores e opex) + 0,54M (Estado) + 0,36M (pessoal).',
-        'EBITDA consolidado':'EBITDA consolidado: −2,43 M€ em 2025 (vs −0,41 M€ em 2024). Maior pressão sobre o desempenho operacional do Grupo no ano de estabilização.',
+        'EBITDA consolidado':'EBITDA consolidado: −2,43 M€ em 2025 (vs −0,41 M€ em 2024). Maior pressão sobre o desempenho operacional do universo NEXA no ano de estabilização.',
         'Prestação de serviços':'Receitas de prestação de serviços: 2,06 M€ em 2025 (vs 3,50 M€ em 2024). Redução de 41,2% reflete o volume de atividade no período.'
       };
       return m[label] || 'Mais detalhe sobre este indicador disponível na publicação completa.';
