@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEXA · Liquid Data — Title Emergence</title>
+  <style>
+    html, body { margin:0; padding:0; background:#3D3D3B; overflow:hidden; height:100%; }
+    canvas { display:block; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+</head>
+<body>
+  <script src="shared/liquid-data.js"></script>
+  <script>
+    /* Title-liquid · hero
+       Particles drift in the title bounding box, biased toward the letterforms
+       of RELATÓRIO DE SUSTENTABILIDADE / SUSTAINABILITY REPORT.
+       After ~3500ms the canvas fades and the parent <h1> takes over. */
+    let SC = null;
+    let mask = null;
+    const sketch = (p) => {
+      p.setup = () => {
+        const c = p.createCanvas(p.windowWidth, p.windowHeight);
+        c.parent(document.body);
+
+        // Title text from URL param (so the iframe can be re-used PT/EN)
+        const lang = new URLSearchParams(location.search).get('lang') || 'pt';
+        const title = lang === 'en' ? 'SUSTAINABILITY\nREPORT' : 'RELATÓRIO DE\nSUSTENTABILIDADE';
+
+        // Title bounding box · matches the hero CSS layout
+        const W = p.width, H = p.height;
+        const area = {
+          x: Math.max(24, W * 0.045),
+          y: Math.max(24, H * 0.16),
+          w: Math.min(W * 0.62, W - 80),
+          h: Math.min(H * 0.32, 280)
+        };
+
+        // Build the letterform mask · drives the attractor
+        mask = NEXALiquidData.buildTitleMask(p, title, Math.floor(area.w), Math.floor(area.h), 0.34);
+
+        SC = NEXALiquidData.scene({
+          bg:           '#3D3D3B',
+          accent:       '#EDEAE3',           // cream · matches final h1 color
+          neutral:      '#EDEAE3',           // homogeneous · no bursts
+          kpiBag:       'title',
+          N:            3000,
+          strokeAlpha:  10,
+          strokeAlphaStart: 4,
+          strokeAlphaEnd:   12,
+          strokeAlphaRampMs: 1800,
+          washAlpha:    1.6,
+          washEvery:    260,
+          timeStep:     0.0014,
+          baseSpeed:    1.1,
+          weightDamp:   0.4,
+          maxLife:      400,
+          noBursts:     true,
+          area:         area,
+          attractorMask: mask,
+          attractorWeight: 0.45,
+          // Spawn distributed across the title area
+          spawn: () => [
+            area.x + Math.random() * area.w,
+            area.y + Math.random() * area.h
+          ],
+          respawn: () => [
+            area.x + Math.random() * area.w,
+            area.y + Math.random() * area.h
+          ],
+          lifeEnd: 3500,
+          onEnd: () => {
+            // Tell the parent the title has settled
+            try {
+              window.parent.postMessage({ type: 'nx-title-settled' }, '*');
+            } catch (e) {}
+            SC && SC.stop();
+          }
+        });
+        SC.init(p);
+      };
+      p.draw = () => SC && SC.tick(p);
+      p.windowResized = () => {
+        p.resizeCanvas(p.windowWidth, p.windowHeight);
+        SC && SC.init(p);
+      };
+    };
+    new p5(sketch);
+
+    window.addEventListener('message', (e) => {
+      if (!e.data || !SC) return;
+      if (e.data.type === 'pause')  SC.pause();
+      if (e.data.type === 'resume') SC.resume();
+    });
+  </script>
+</body>
+</html>

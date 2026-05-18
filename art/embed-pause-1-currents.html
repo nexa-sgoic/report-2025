@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEXA · Liquid Data — Currents</title>
+  <style>
+    html, body { margin:0; padding:0; background:#03020C; overflow:hidden; height:100%; }
+    canvas { display:block; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+</head>
+<body>
+  <script src="shared/liquid-data.js"></script>
+  <script>
+    /* Currents · between hero and KPIs · "weight" sensation
+       Slow horizontal currents · ink + orange bursts (brand palette) */
+    let SC = null;
+    const sketch = (p) => {
+      p.setup = () => {
+        const c = p.createCanvas(p.windowWidth, p.windowHeight);
+        c.parent(document.body);
+        SC = NEXALiquidData.scene({
+          bg:           '#03020C',
+          accent:       '#C85204',
+          neutral:      '#5C5A55',
+          kpiBag:       'emissions',
+          N:            6500,
+          strokeAlpha:  10,
+          washAlpha:    1.4,
+          washEvery:    360,
+          timeStep:     0.0008,
+          baseSpeed:    0.85,
+          weightDamp:   0.65,
+          maxLife:      900,
+          burstThreshold: 0.82,
+          // Slight horizontal drift so the field reads as "currents flowing east"
+          biasFn: () => [0.05, 0],
+          // Respawn on the left edge so currents keep coming from off-screen
+          respawn: (W, H) => [Math.random() * W * 0.10, Math.random() * H]
+        });
+        SC.init(p);
+      };
+      p.draw = () => SC && SC.tick(p);
+      p.windowResized = () => {
+        p.resizeCanvas(p.windowWidth, p.windowHeight);
+        SC && SC.init(p);
+      };
+    };
+    new p5(sketch);
+
+    /* postMessage API · host pauses/resumes when iframe enters/leaves viewport */
+    window.addEventListener('message', (e) => {
+      if (!e.data || !SC) return;
+      if (e.data.type === 'pause')  SC.pause();
+      if (e.data.type === 'resume') SC.resume();
+    });
+  </script>
+</body>
+</html>
