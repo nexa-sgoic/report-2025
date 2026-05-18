@@ -719,8 +719,17 @@
       justify-self:start;
       transform:scaleY(0);transform-origin:center;
       transition:transform 700ms var(--nx-ease-arch);
+      will-change:transform;
     }
     .nx-chapcover.is-in .nx-chapcover__pattern--lines .bar{transform:scaleY(1)}
+    /* Idle wave · each bar pulses vertical scale, delay propagates left→right */
+    .nx-chapcover.is-in .nx-chapcover__pattern--lines .bar{
+      animation:nxLineWave var(--wave-dur,4.5s) ease-in-out var(--wave-delay,0s) infinite;
+    }
+    @keyframes nxLineWave{
+      0%,100%{transform:scaleY(1)}
+      50%   {transform:scaleY(1.18)}
+    }
 
     /* — Suns pattern (Cap 03 cover) — */
     .nx-chapcover__pattern--suns{
@@ -748,12 +757,21 @@
       width:58%;aspect-ratio:1;
       border:2.5px solid rgba(237,204,192,.55);
       display:grid;place-items:center;
-      opacity:0;transform:scale(.6);
+      opacity:0;transform:scale(.6) rotate(0deg);
       transition:opacity 700ms var(--nx-ease-out), transform 700ms var(--nx-ease-spring);
+      will-change:transform, opacity;
     }
-    .nx-chapcover.is-in .nx-chapcover__pattern--squares .sq{opacity:1;transform:scale(1)}
+    .nx-chapcover.is-in .nx-chapcover__pattern--squares .sq{
+      opacity:1;
+      animation:nxSquarePulse var(--pulse-dur, 5.5s) ease-in-out var(--pulse-delay, 0s) infinite;
+    }
+    @keyframes nxSquarePulse{
+      0%,100%{transform:scale(1)        rotate(0deg);   opacity:.85}
+      50%   {transform:scale(1.06)      rotate(45deg);  opacity:1   }
+    }
     .nx-chapcover__pattern--squares .sq::before{
       content:"";width:22%;aspect-ratio:1;background:rgba(237,204,192,.65);
+      transition:transform 700ms var(--nx-ease-out);
     }
 
     /* Diretrizes 2025–2050 · ribbon between persp head and the 3 pillars */
@@ -1821,13 +1839,13 @@
 
   <!-- Scroll-rail (right side · chapter spy · 3 chapters) -->
   <aside class="nx-rail" id="rail" aria-label="Capítulos do relatório">
-    <a class="nx-rail__item" href="#ch01" data-from="ch01" data-to="ch02" title="NEXA">
+    <a class="nx-rail__item" href="#cover01" data-from="cover01" data-to="cover02" title="NEXA">
       <span class="nx-rail__num">01</span><span class="nx-rail__bar" aria-hidden="true"></span>
     </a>
-    <a class="nx-rail__item" href="#ch02" data-from="ch02" data-to="ch03" title="Situação Atual">
+    <a class="nx-rail__item" href="#cover02" data-from="cover02" data-to="cover03" title="Situação Atual">
       <span class="nx-rail__num">02</span><span class="nx-rail__bar" aria-hidden="true"></span>
     </a>
-    <a class="nx-rail__item" href="#ch03" data-from="ch03" data-to="explore" title="Connect, Invest, Build">
+    <a class="nx-rail__item" href="#cover03" data-from="cover03" data-to="closing" title="Connect, Invest, Build">
       <span class="nx-rail__num">03</span><span class="nx-rail__bar" aria-hidden="true"></span>
     </a>
   </aside>
@@ -1941,7 +1959,7 @@
   </section>
 
   <!-- Chapter cover 01 · full-bleed orange + lines pattern + numeral -->
-  <section class="nx-chapcover" data-reveal aria-label="Capítulo 01 · NEXA">
+  <section class="nx-chapcover" id="cover01" data-reveal aria-label="Capítulo 01 · NEXA">
     <div class="nx-chapcover__pattern nx-chapcover__pattern--lines" data-pattern="lines" aria-hidden="true"></div>
     <div class="nx-chapcover__num">01</div>
   </section>
@@ -2029,7 +2047,7 @@
   </section>
 
   <!-- Chapter cover 02 · full-bleed orange + squares pattern + numeral -->
-  <section class="nx-chapcover" data-reveal aria-label="Capítulo 02 · Situação Atual">
+  <section class="nx-chapcover" id="cover02" data-reveal aria-label="Capítulo 02 · Situação Atual">
     <div class="nx-chapcover__pattern nx-chapcover__pattern--squares" data-pattern="squares" aria-hidden="true"></div>
     <div class="nx-chapcover__num">02</div>
   </section>
@@ -2288,7 +2306,7 @@
   </div>
 
   <!-- Chapter cover 03 · full-bleed orange + suns pattern + numeral (matches 03.png) -->
-  <section class="nx-chapcover" data-reveal aria-label="Capítulo 03 · Connect, Invest, Build the future">
+  <section class="nx-chapcover" id="cover03" data-reveal aria-label="Capítulo 03 · Connect, Invest, Build the future">
     <div class="nx-chapcover__pattern nx-chapcover__pattern--suns" data-pattern="suns" id="suns" aria-hidden="true"></div>
     <div class="nx-chapcover__num">03</div>
   </section>
@@ -3205,10 +3223,12 @@
 
     // ============ Chapter cover patterns (01 lines · 02 squares) ============
     // Lines pattern: 5 rows × 26 vertical bars · alternating heights
-    // per row offset so each row has a slightly different rhythm
+    // per row offset · each bar gets a per-column wave delay so the
+    // idle animation propagates horizontally left → right
     (function buildLinesPatterns(){
       const heights = [22,32,42,32,22,32,42,22,32,32,42,22,32,42,32,22,32,42,32,22,32,42,22,32,42,32];
       document.querySelectorAll('.nx-chapcover__pattern--lines').forEach(host => {
+        host.replaceChildren();
         for(let r = 0; r < 5; r++){
           const row = document.createElement('div');
           row.className = 'row';
@@ -3217,6 +3237,8 @@
             const b = document.createElement('span');
             b.className = 'bar';
             b.style.height = heights[(i + offset) % heights.length] + 'px';
+            b.style.setProperty('--wave-dur',   (3.8 + Math.random()*2.4).toFixed(2) + 's');
+            b.style.setProperty('--wave-delay', ((i * 0.06) + (r * 0.18)).toFixed(2) + 's');
             row.appendChild(b);
           }
           host.appendChild(row);
@@ -3224,12 +3246,16 @@
       });
     })();
 
-    // Squares pattern: 7 × 4 frame+dot tiles
+    // Squares pattern: 7 × 4 frame+dot tiles · each tile pulses scale +
+    // 45° rotation continuous, staggered per-tile delay
     (function buildSquaresPatterns(){
       document.querySelectorAll('.nx-chapcover__pattern--squares').forEach(host => {
+        host.replaceChildren();
         for(let i = 0; i < 28; i++){
           const s = document.createElement('span');
           s.className = 'sq';
+          s.style.setProperty('--pulse-dur',   (5 + Math.random()*3).toFixed(2) + 's');
+          s.style.setProperty('--pulse-delay', (i * 0.08).toFixed(2) + 's');
           host.appendChild(s);
         }
       });
