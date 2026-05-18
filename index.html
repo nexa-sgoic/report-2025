@@ -216,8 +216,9 @@
       color:var(--nx-mid);max-width:380px;
       opacity:0;animation:nxFadeIn 900ms var(--nx-ease-out) 3400ms forwards;
     }
-    .nx-hero__quote::before{content:'"';color:var(--nx-orange);margin-right:2px}
-    .nx-hero__quote::after {content:'"';color:var(--nx-orange);margin-left:2px}
+    /* Closing quote sits AFTER the period and BEFORE the byline (— Howard Marks) */
+    .nx-hero__quote-text::before{content:'"';color:var(--nx-orange);margin-right:2px}
+    .nx-hero__quote-text::after {content:'"';color:var(--nx-orange);margin-left:2px}
     .nx-hero__quoteattr{
       display:block;margin-top:14px;
       font-family:var(--nx-font-mono);font-style:normal;
@@ -309,21 +310,22 @@
       content:"";display:inline-block;width:24px;height:1px;
       background:var(--nx-orange);vertical-align:middle;margin-right:12px;
     }
-    /* nx-impact__metrics--5 · doubled specificity to win cascade vs base rule below */
+    /* nx-impact__metrics--5 · 5 framed cards stacked vertically (one over the other) */
     .nx-impact__metrics.nx-impact__metrics--5{
-      grid-template-columns:1fr;gap:0;border:0;background:transparent;border-radius:0;margin-top:0;
+      grid-template-columns:1fr;gap:10px;border:0;background:transparent;border-radius:0;margin-top:0;
       align-self:center;
     }
     .nx-impact__metrics.nx-impact__metrics--5 > div{
-      padding:18px 0;background:transparent;
-      border-top:1px solid var(--nx-line);
-      display:flex;flex-direction:column;gap:6px;
-      transform:none;opacity:1;
+      padding:16px 22px;background:var(--nx-paper);
+      border:1px solid var(--nx-line);border-radius:var(--nx-r-md);
+      display:flex;flex-direction:column;gap:4px;
+      transition:transform .35s var(--nx-ease-arch), border-color .25s, background .25s;
     }
-    .nx-impact__metrics.nx-impact__metrics--5 > div:first-child{border-top:0;padding-top:0}
-    .nx-impact__metrics.nx-impact__metrics--5 > div:last-child{padding-bottom:0}
+    .nx-impact__metrics.nx-impact__metrics--5 > div:hover{
+      transform:translateX(-3px);border-color:var(--nx-orange);background:var(--nx-bone);
+    }
     .nx-impact__metrics.nx-impact__metrics--5 b{
-      font-size:clamp(2.4rem,4.2vw,3.6rem);font-weight:var(--nx-w-light);
+      font-size:clamp(2rem,3.6vw,3rem);font-weight:var(--nx-w-light);
       letter-spacing:-.03em;line-height:1;color:var(--nx-ink);display:block;
     }
     .nx-impact__metrics.nx-impact__metrics--5 b .unit{font-size:.36em;margin-left:4px;color:var(--nx-orange)}
@@ -857,7 +859,7 @@
       height:100%;flex-shrink:0;
     }
     .nx-phil__skyline .bar{
-      width:clamp(8px,.9vw,16px);
+      width:12px;
       background:var(--nx-ink-3);transform-origin:bottom;transform:scaleY(0);
       cursor:none;border-radius:2px 2px 0 0;
       will-change:transform,background-color;
@@ -1439,7 +1441,7 @@
     }
     .nx-phil--wheat .nx-phil__wheat span{
       align-self:center;justify-self:center;
-      width:48px;height:3px;background:var(--nx-ink-3);
+      width:62px;height:12px;background:var(--nx-ink-3);border-radius:2px;
       transform-origin:center;
       transform:rotate(var(--orig-rot, 0deg));
       transition:transform .45s var(--nx-ease-spring), background-color .2s var(--nx-ease-out), width .35s var(--nx-ease-out);
@@ -1459,7 +1461,7 @@
       animation:none;
       transform:rotate(calc(var(--orig-rot, 0deg) + 90deg));
       background:var(--nx-orange);
-      width:60px;
+      width:78px;
     }
     /* Phil · scatter variant (dashes randomly rotated · forma y frase 02.png) */
     .nx-phil--scatter{
@@ -1533,9 +1535,10 @@
     @keyframes nxSunSpin{to{transform:translate(var(--x,0), var(--y,0)) scale(1) rotate(360deg)}}
     .nx-phil--suns .nx-phil__suns .sun svg{width:100%;height:100%}
     .nx-phil--suns .nx-phil__suns .sun svg line{
-      stroke:var(--nx-ink-3);stroke-width:5;
-      transition:stroke .25s var(--nx-ease-out);
+      stroke:var(--nx-ink-3);stroke-width:9;stroke-linecap:square;
+      transition:stroke .25s var(--nx-ease-out), stroke-width .25s var(--nx-ease-out);
     }
+    .nx-phil--suns .nx-phil__suns .sun:hover svg line{stroke-width:11}
     .nx-phil--suns .nx-phil__suns .sun:hover svg line{stroke:var(--nx-orange)}
     .nx-phil--suns .nx-phil__suns .sun:hover{
       animation-play-state:paused;
@@ -1882,7 +1885,7 @@
       <div class="nx-hero__belowtitle">
         <div class="nx-hero__year">2025</div>
         <div class="nx-hero__quote">
-          <span data-i18n="hero.quote.text">Good governance and long-term thinking are the foundations of sustainable investment.</span>
+          <span class="nx-hero__quote-text" data-i18n="hero.quote.text">Good governance and long-term thinking are the foundations of sustainable investment.</span>
           <span class="nx-hero__quoteattr" data-i18n="hero.quote.attr">Howard Marks</span>
         </div>
       </div>
