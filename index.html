@@ -1754,7 +1754,7 @@
         </button>
         <button type="button" class="nx-kpi-card" data-sheet="agua">
           <span class="nx-kpi-card__cat" data-i18n="env.kpi.water">Água</span>
-          <span class="nx-kpi-card__val">9.933<span class="unit">m³</span></span>
+          <span class="nx-kpi-card__val">9.933,2<span class="unit">m³</span></span>
           <span class="nx-kpi-card__delta is-down">−14,5% vs 2024</span>
           <span class="nx-kpi-card__cta" data-i18n="kpi.open">Ver gráficos →</span>
         </button>
@@ -2477,7 +2477,7 @@
       if(!host) return;
       const TOPICS = [
         {id:'E1.1', cat:'e', label:'Energia & Emissões',     pri:.92},
-        {id:'E1.2', cat:'e', label:'Adaptação Climática',    pri:.88},
+        {id:'E1.2', cat:'e', label:'Alterações Climáticas',  pri:.88},
         {id:'E2',   cat:'e', label:'Poluição',               pri:.45},
         {id:'E3',   cat:'e', label:'Recursos Hídricos',      pri:.55},
         {id:'E4',   cat:'e', label:'Biodiversidade',         pri:.35},
@@ -2488,7 +2488,7 @@
         {id:'S1.4', cat:'s', label:'Diversidade',            pri:.42},
         {id:'S2',   cat:'s', label:'Direitos Humanos',       pri:.83},
         {id:'S3',   cat:'s', label:'Comunidades',            pri:.52},
-        {id:'S4',   cat:'s', label:'Utilizadores Finais',    pri:.78},
+        {id:'S4',   cat:'s', label:'Consumidores Finais',    pri:.78},
         {id:'G1.1', cat:'g', label:'Segurança Edifícios',     pri:.65},
         {id:'G1.2', cat:'g', label:'Cibersegurança',         pri:.72},
         {id:'G1.3', cat:'g', label:'Compliance & Ética',     pri:.95},
@@ -3506,61 +3506,61 @@
 
       agua: {
         eyebrow: '02.2 — Environmental · Água',
-        title: 'Consumo de água · 9.933 m³',
+        title: 'Consumo de água · 9.933,2 m³',
         titleAccent: '−14,5%',
-        lede: 'Redução face a 2024 (11.622 m³). Construção representa ~32% do consumo, com o SPARK como principal contribuinte.',
+        lede: 'Redução face a 2024 (11.622 m³). Distribuição balanceada entre Operação OIC, Operação Terceiros e Construção — cada um próximo de 1/3 do consumo.',
         build: () => {
           const frag = document.createDocumentFragment();
           const r1 = document.createElement('div');
           r1.className = 'nx-sheet__row nx-sheet__row--2col';
           r1.appendChild(buildPanel({
             title: 'Consumo de água por atividade · 2025',
-            stat: '9.933', unit: 'm³',
+            stat: '9.933,2', unit: 'm³',
             body: buildDonut([
-              {label:'Operação OIC',         pct:54.4, color:'#C85204'},
-              {label:'Construção',           pct:32.0, color:'#A8420A'},
-              {label:'Operação Terceiros',   pct:13.6, color:'#EDCCC0'}
-            ], '9.933')
+              {label:'Operação OIC',         pct:36.3, color:'#C85204'},
+              {label:'Operação Terceiros',   pct:32.0, color:'#A8420A'},
+              {label:'Construção',           pct:31.8, color:'#EDCCC0'}
+            ], '9.933 m³')
           }));
           r1.appendChild(buildPill({
             year:'2025',
             cap:'Água reutilizada',
-            num:'0', unit:'%',
+            num:'0,0', unit:'%',
             note:'Sem sistemas de reutilização ativos em 2025. Em avaliação para SPARK II e La Movida.'
           }));
           frag.appendChild(r1);
           const r2 = document.createElement('div');
           r2.className = 'nx-sheet__row nx-sheet__row--3col';
           r2.appendChild(buildPanel({
-            title:'Construção', stat:'3.176', unit:'m³',
-            note:'SPARK II (3.063 m³) + The Breeze (113 m³) — uso intensivo em obra.',
-            body: buildHbars({
-              label:'Por projeto',
-              rows:[
-                {cat:'SPARK II',   val:'3.063', unit:'m³', w:96, strong:true},
-                {cat:'The Breeze', val:'113',   unit:'m³', w:4}
-              ]
-            })
-          }));
-          r2.appendChild(buildPanel({
-            title:'Operação · OIC', stat:'5.403', unit:'m³',
+            title:'Operação · OIC', stat:'3.602,0', unit:'m³',
             note:'Castro Capital SIC — operação direta dos ativos sob gestão.',
             body: buildHbars({
               label:'Top consumidores',
               rows:[
-                {cat:'Bloom Living', val:'2.180', unit:'m³', w:60, strong:true},
-                {cat:'BUZ',          val:'1.840', unit:'m³', w:48},
-                {cat:'Outros',       val:'1.383', unit:'m³', w:30}
+                {cat:'BUZ',          val:'1.640,0', unit:'m³', w:46, strong:true},
+                {cat:'La Movida',    val:'1.180,0', unit:'m³', w:33},
+                {cat:'Outros',       val:'782,0',   unit:'m³', w:22}
               ]
             })
           }));
           r2.appendChild(buildPanel({
-            title:'Operação · Terceiros', stat:'1.354', unit:'m³',
-            note:'Estimativa baseada em capacidade de contadores e medições partilhadas.',
+            title:'Operação · Terceiros', stat:'3.176,2', unit:'m³',
+            note:'Estimativa baseada em capacidade de contadores e medições partilhadas pelos condóminos.',
             body: buildHbars({
               label:'Por ativo',
               rows:[
-                {cat:'Conjunto',     val:'1.354', unit:'m³', w:74, strong:true}
+                {cat:'Conjunto',     val:'3.176,2', unit:'m³', w:88, strong:true}
+              ]
+            })
+          }));
+          r2.appendChild(buildPanel({
+            title:'Construção', stat:'3.155,0', unit:'m³',
+            note:'SPARK II + The Breeze em obra — uso intensivo, padrão de consumo elevado durante o período de obra.',
+            body: buildHbars({
+              label:'Por projeto',
+              rows:[
+                {cat:'SPARK II',   val:'3.042,0', unit:'m³', w:96, strong:true},
+                {cat:'The Breeze', val:'113,0',   unit:'m³', w:4}
               ]
             })
           }));
@@ -3572,59 +3572,59 @@
       residuos: {
         eyebrow: '02.2 — Environmental · Resíduos',
         title: 'Resíduos valorizados · 97,3%',
-        titleAccent: 'Construção: 100%',
-        lede: 'Gestão da produção e encaminhamento — operação direta e obras seguem políticas de separação, valorização e rastreabilidade.',
+        titleAccent: 'Construção: 100,0%',
+        lede: 'Gestão da produção e encaminhamento — operação direta e obras seguem políticas de separação, valorização e rastreabilidade. Construção representa quase a totalidade do volume gerado.',
         build: () => {
           const frag = document.createDocumentFragment();
           const r1 = document.createElement('div');
           r1.className = 'nx-sheet__row nx-sheet__row--2col';
           r1.appendChild(buildPanel({
             title: 'Distribuição de resíduos por atividade · 2025',
-            stat: '38,7', unit: 'Ton',
+            stat: '39,9', unit: 'Ton',
             body: buildDonut([
-              {label:'Construção',  pct:95.2, color:'#C85204'},
-              {label:'Operação',    pct: 4.8, color:'#EDCCC0'}
-            ], '38,7 Ton')
+              {label:'Construção',  pct:97.0, color:'#C85204'},
+              {label:'Operação',    pct: 3.0, color:'#EDCCC0'}
+            ], '39,9 Ton')
           }));
           r1.appendChild(buildPill({
             year:'2025',
             cap:'Resíduos recuperados',
             num:'57,2', unit:'%',
-            note:'Materiais separados e encaminhados para reciclagem, reutilização ou compostagem.'
+            note:'Materiais separados e encaminhados para reciclagem, reutilização ou compostagem. Construção respondeu por 100% dos resíduos valorizados em obra.'
           }));
           frag.appendChild(r1);
           const r2 = document.createElement('div');
           r2.className = 'nx-sheet__row nx-sheet__row--3col';
           r2.appendChild(buildPanel({
-            title:'Produção por atividade', stat:'38,7', unit:'Ton',
+            title:'Produção por atividade', stat:'39,9', unit:'Ton',
             note:'Quase totalidade vem de obra — operação contribui de forma residual.',
             body: buildHbars({
               label:'Toneladas geradas',
               rows:[
-                {cat:'Construção', val:'36,87', unit:'Ton', w:95, strong:true},
-                {cat:'Operação',   val:'1,85',  unit:'Ton', w:5}
+                {cat:'Construção', val:'38,7', unit:'Ton', w:97, strong:true},
+                {cat:'Operação',   val:'1,2',  unit:'Ton', w:3}
               ]
             })
           }));
           r2.appendChild(buildPanel({
-            title:'Construção · destino', stat:'100', unit:'%',
+            title:'Construção · destino', stat:'100,0', unit:'%',
             note:'Totalidade dos resíduos de construção foi encaminhada para valorização.',
             body: buildHbars({
               label:'Destinos',
               rows:[
-                {cat:'Reciclagem',  val:'82', unit:'%', w:82, strong:true},
-                {cat:'Reutilização',val:'18', unit:'%', w:18}
+                {cat:'Reciclagem',  val:'82,0', unit:'%', w:82, strong:true},
+                {cat:'Reutilização',val:'18,0', unit:'%', w:18}
               ]
             })
           }));
           r2.appendChild(buildPanel({
-            title:'Operação · destino', stat:'46', unit:'%',
+            title:'Operação · destino', stat:'46,0', unit:'%',
             note:'Recuperação parcial — em consolidação no plano 2026 (Código de Conduta ESG fornecedores).',
             body: buildHbars({
               label:'Destinos',
               rows:[
-                {cat:'Recuperados', val:'46', unit:'%', w:46, strong:true},
-                {cat:'Aterro',      val:'54', unit:'%', w:54}
+                {cat:'Recuperados', val:'46,0', unit:'%', w:46, strong:true},
+                {cat:'Aterro',      val:'54,0', unit:'%', w:54}
               ]
             })
           }));
