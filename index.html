@@ -817,7 +817,11 @@
     }
     .nx-map__city circle{fill:var(--nx-orange);transition:r .25s var(--nx-ease-spring),fill .25s var(--nx-ease-out)}
     .nx-map__city:hover circle{r:10;fill:var(--nx-orange-deep)}
-    .nx-map__city text{font-family:var(--nx-font-mono);font-size:9px;fill:var(--nx-ink);letter-spacing:.05em;text-transform:uppercase}
+    .nx-map__city text{
+      font-family:var(--nx-font-mono);font-size:9px;fill:var(--nx-ink);
+      letter-spacing:.05em;text-transform:uppercase;
+      paint-order:stroke fill;stroke:var(--nx-paper);stroke-width:2.5px;stroke-linejoin:round;
+    }
     .nx-map__sidestats{display:grid;gap:12px}
     .nx-map__sidestats .nx-metric{cursor:none}
     /* override: keep map asset counts in bone style by default */
@@ -2411,24 +2415,53 @@
         "closing.author":"Fernanda Zelaya","closing.role":"Nexa's ESG Officer"
       }
     };
+    // Snapshot the rich PT markup as cloned childNodes \u2014 the HTML default is the
+    // PT source-of-truth; STRINGS.pt is only a fallback for keys missing in markup.
+    const PT_DEFAULTS = new Map();
+    document.querySelectorAll('[data-i18n]').forEach(node => {
+      PT_DEFAULTS.set(
+        node.getAttribute('data-i18n'),
+        Array.from(node.childNodes).map(n => n.cloneNode(true))
+      );
+    });
+
+    // Parse a translation string into safe DOM nodes (honors only <em> and \n\u2192<br>).
+    function buildI18nNodes(text){
+      const out = [];
+      text.split(/(<em>.*?<\/em>)/g).forEach(chunk => {
+        const m = chunk.match(/^<em>(.*?)<\/em>$/);
+        if(m){
+          const em = document.createElement('em');
+          em.textContent = m[1];
+          out.push(em);
+        } else if(chunk){
+          chunk.split('\n').forEach((s, i) => {
+            if(i > 0) out.push(document.createElement('br'));
+            if(s) out.push(document.createTextNode(s));
+          });
+        }
+      });
+      return out;
+    }
+
     function setLang(l){
       document.documentElement.lang = l;
       localStorage.setItem('nx-lang', l);
       if(STRINGS[l] && STRINGS[l]['doc.title']) document.title = STRINGS[l]['doc.title'];
-      document.querySelectorAll('[data-i18n]').forEach(el=>{
-        const k = el.getAttribute('data-i18n');
-        const v = STRINGS[l][k];
-        if(v==null) return;
-        // Preserve any inner spans (dot, em). Replace text only if no children.
-        if(el.children.length===0){ el.textContent = v.replace(/\n/g,'\u00A0'); }
-        else {
-          // Just replace direct text content keeping the first child intact
-          // Simplest: re-render with raw text for matrix/title nodes
-          el.innerHTML = v.replace(/\n/g, '<br>');
+      document.querySelectorAll('[data-i18n]').forEach(node => {
+        const k = node.getAttribute('data-i18n');
+        if(l === 'pt'){
+          const snap = PT_DEFAULTS.get(k);
+          if(!snap) return;
+          node.replaceChildren(...snap.map(n => n.cloneNode(true)));
+          return;
         }
+        const v = STRINGS[l] && STRINGS[l][k];
+        if(v == null) return;
+        node.replaceChildren(...buildI18nNodes(v));
       });
-      document.querySelectorAll('.nx-chrome__lang button').forEach(b=>{
-        b.classList.toggle('is-on', b.dataset.lang===l);
+      document.querySelectorAll('.nx-chrome__lang button').forEach(b => {
+        b.classList.toggle('is-on', b.dataset.lang === l);
       });
     }
     document.querySelectorAll('.nx-chrome__lang button').forEach(b=>{
