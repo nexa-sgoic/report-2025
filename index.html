@@ -285,37 +285,43 @@
       vertical-align:middle;margin-right:10px;
     }
 
-    /* Hero row: map (left) + headline number + lede + 4 metrics (right) */
+    /* Hero row: map (left) + 5 macro KPIs vertical (right) */
     .nx-impact__hero{
-      display:grid;grid-template-columns:0.85fr 1fr;gap:clamp(24px,4vw,64px);align-items:stretch;
+      display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,72px);align-items:stretch;
     }
     .nx-impact__hero .nx-mapwrap{
       margin-top:0;display:contents;
     }
     .nx-impact__panel{display:grid;align-content:center;gap:clamp(14px,2vh,24px)}
-    .nx-impact__period{
-      margin-top:18px;padding-top:14px;
-      border-top:1px solid var(--nx-line);
-      font-family:var(--nx-font-mono);font-size:11px;
+    /* Hero footnote (bottom-left, dark hero) */
+    .nx-hero__period{
+      position:absolute;left:clamp(28px,5vw,96px);
+      bottom:clamp(28px,5vh,56px);z-index:8;
+      font-family:var(--nx-font-mono);font-size:10.5px;
       letter-spacing:.22em;text-transform:uppercase;
-      color:var(--nx-mute-on-bone);
-      text-align:left;
+      color:var(--nx-mid);
+      opacity:0;animation:nxFadeIn 1s var(--nx-ease-out) 3800ms forwards;
+    }
+    .nx-hero__period::before{
+      content:"";display:inline-block;width:24px;height:1px;
+      background:var(--nx-orange);vertical-align:middle;margin-right:12px;
     }
     .nx-impact__metrics--5{
       grid-template-columns:1fr;gap:0;border:0;background:transparent;border-radius:0;margin-top:0;
+      align-self:center;
     }
     .nx-impact__metrics--5 > div{
-      padding:14px 0;background:transparent;
+      padding:18px 0;background:transparent;
       border-top:1px solid var(--nx-line);
-      display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:baseline;
+      display:flex;flex-direction:column;gap:6px;
     }
     .nx-impact__metrics--5 > div:first-child{border-top:0;padding-top:0}
     .nx-impact__metrics--5 > div:last-child{padding-bottom:0}
     .nx-impact__metrics--5 b{
-      font-size:clamp(1.7rem,2.6vw,2.3rem);font-weight:var(--nx-w-light);
-      letter-spacing:-.025em;line-height:1;
+      font-size:clamp(2.4rem,4.2vw,3.6rem);font-weight:var(--nx-w-light);
+      letter-spacing:-.03em;line-height:1;color:var(--nx-ink);
     }
-    .nx-impact__metrics--5 b .unit{font-size:.42em;margin-left:3px}
+    .nx-impact__metrics--5 b .unit{font-size:.36em;margin-left:4px;color:var(--nx-orange)}
     .nx-impact__metrics--5 span{
       font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
       letter-spacing:var(--nx-track-caps);text-transform:uppercase;
@@ -1178,12 +1184,13 @@
     .nx-phil--orange .nx-phil__wheat span{background:rgba(255,255,255,.32)}
 
     /* ============ MAP PORTUGAL — aviation-chart style, WGS84 coords ============ */
-    .nx-mapwrap{display:grid;grid-template-columns:0.85fr 1fr;gap:clamp(24px,4vw,64px);align-items:stretch;margin-top:32px}
+    .nx-mapwrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,72px);align-items:stretch;margin-top:32px}
     .nx-map{
       position:relative;aspect-ratio:5/7;background:var(--nx-paper);
       border-radius:var(--nx-r-md);overflow:hidden;border:1px solid var(--nx-line);
-      padding:clamp(14px,2.4vh,28px);
-      max-width:380px;justify-self:start;width:100%;
+      padding:clamp(16px,2.4vh,32px);
+      max-width:520px;justify-self:start;width:100%;
+      box-shadow:0 1px 0 rgba(3,2,12,.04), 0 28px 60px -32px rgba(3,2,12,.18);
     }
     /* corner brackets (aviation chart frame) */
     .nx-map::before, .nx-map::after,
@@ -1511,6 +1518,9 @@
           <span class="nx-hero__quoteattr" data-i18n="hero.quote.attr">Howard Marks</span>
         </div>
       </div>
+
+      <!-- Período de análise · footnote bottom-left of the dark hero -->
+      <div class="nx-hero__period" data-i18n="hero.period">ANÁLISE DE 1 DE JANEIRO A 31 DE DEZEMBRO DE 2025</div>
     </div>
   </section>
 
@@ -1577,8 +1587,6 @@
         </div>
       </div>
 
-      <!-- Período de análise · footnote -->
-      <div class="nx-impact__period" data-i18n="impact.period">ANÁLISE DE 1 DE JANEIRO A 31 DE DEZEMBRO DE 2025</div>
     </div>
   </section>
 
@@ -1825,7 +1833,7 @@
         <button type="button" class="nx-kpi-card" data-sheet="formacao">
           <span class="nx-kpi-card__cat" data-i18n="social.kpi.training">Formação · horas/pessoa</span>
           <span class="nx-kpi-card__val">28,6<span class="unit">h</span></span>
-          <span class="nx-kpi-card__delta">70% colaboradores · 88,9% prémios</span>
+          <span class="nx-kpi-card__delta">70,0% cobertura · 88,9% prémios</span>
           <span class="nx-kpi-card__cta" data-i18n="kpi.open">Ver gráficos →</span>
         </button>
         <button type="button" class="nx-kpi-card" data-sheet="igualdade">
@@ -1919,7 +1927,7 @@
       <p class="nx-chap__lede" data-i18n="chap.lede">Plano de transição climático 2025–2030, estratégia de certificação da carteira, e perspetivas futuras para a próxima década de gestão sustentável.</p>
       <ul class="nx-chap__list">
         <li><span class="k">→</span><span class="v" data-i18n="chap.l1">Meta: −40% emissões Scope 1+2 até 2030</span></li>
-        <li><span class="k">→</span><span class="v" data-i18n="chap.l2">98% do GFA alinhado com estratégia de certificação</span></li>
+        <li><span class="k">→</span><span class="v" data-i18n="chap.l2">98,0% do GFA alinhado com estratégia de certificação</span></li>
         <li><span class="k">→</span><span class="v" data-i18n="chap.l3">1ª certificação LEED Gold® · Edifício La Movida</span></li>
         <li><span class="k">→</span><span class="v" data-i18n="chap.l4">Neutralidade climática até 2050</span></li>
       </ul>
@@ -1932,7 +1940,7 @@
       <div class="nx-section__head">
         <span class="nx-planning" data-i18n="planning.tag">Plano sujeito a ajustes · 2026</span>
         <span class="nx-section__eyebrow" data-i18n="certs.eyebrow">03.1 — Estratégia de Certificação de Ativos</span>
-        <h2 class="nx-section__title" data-i18n="certs.title">98% do GFA alinhado com a estratégia de certificação.</h2>
+        <h2 class="nx-section__title" data-i18n="certs.title">98,0% do GFA alinhado com a estratégia de certificação.</h2>
         <p class="nx-section__lede" data-i18n="certs.lede">A carteira atual (243.552 m², 14 ativos sem landbank) inclui-se progressivamente em LEED, BREEAM, WELL, WiredScore e SmartScore. O primeiro selo LEED Gold® foi atribuído ao edifício La Movida em 2025.</p>
       </div>
 
