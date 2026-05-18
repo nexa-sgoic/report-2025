@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="nx-tokens.css">
-  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%2303020C"/><g stroke="%23C85204" stroke-width="14" stroke-linecap="square"><line x1="20" y1="20" x2="44" y2="44"/><line x1="80" y1="20" x2="56" y2="44"/><line x1="56" y1="56" x2="80" y2="80"/><line x1="44" y1="56" x2="20" y2="80"/></g></svg>'>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23C85204"/><g stroke="%23FFFFFF" stroke-width="14" stroke-linecap="square"><line x1="20" y1="20" x2="44" y2="44"/><line x1="80" y1="20" x2="56" y2="44"/><line x1="56" y1="56" x2="80" y2="80"/><line x1="44" y1="56" x2="20" y2="80"/></g></svg>'>
   <style>
     /* ============ BASE ============ */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -285,9 +285,9 @@
       vertical-align:middle;margin-right:10px;
     }
 
-    /* Hero row: map (left) + 5 macro KPIs vertical (right) */
+    /* Hero row: map (left, more weight) + 5 macro KPIs vertical (right) */
     .nx-impact__hero{
-      display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,72px);align-items:stretch;
+      display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(28px,4vw,64px);align-items:stretch;
     }
     .nx-impact__hero .nx-mapwrap{
       margin-top:0;display:contents;
@@ -1008,6 +1008,26 @@
       flex-wrap:wrap;
     }
     .nx-foot__bottom > div{display:flex;gap:18px;flex-wrap:wrap}
+
+    /* Footer · back-to-site CTA */
+    .nx-foot__cta{
+      max-width:1200px;margin:32px auto 0;padding:0 clamp(20px,5vw,80px);
+      position:relative;z-index:2;
+    }
+    .nx-foot__sitelink{
+      display:inline-flex;align-items:center;gap:14px;
+      padding:14px 22px;border-radius:var(--nx-r-pill);
+      background:var(--nx-orange);color:#fff;cursor:none;
+      font-family:var(--nx-font-mono);font-size:11.5px;
+      letter-spacing:.22em;text-transform:uppercase;
+      transition:background .25s var(--nx-ease-out), transform .25s var(--nx-ease-arch), gap .25s var(--nx-ease-out);
+    }
+    .nx-foot__sitelink:hover{background:var(--nx-orange-deep);transform:translateY(-2px);gap:18px}
+    .nx-foot__sitelink-url{
+      padding:3px 9px;border-radius:2px;background:rgba(0,0,0,.18);
+      color:#fff;font-weight:500;letter-spacing:.12em;
+    }
+    .nx-foot__sitelink svg{width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none}
     .nx-foot__easter{
       max-width:1200px;margin:24px auto 0;padding:0 clamp(20px,5vw,80px);
       font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);color:var(--nx-ink-3);
@@ -1163,7 +1183,8 @@
     /* Climate trajectory chart (inline SVG) */
     .nx-climate{background:var(--nx-ink);color:var(--nx-on-ink)}
     .nx-climate .nx-section__title{color:var(--nx-on-ink)}
-    .nx-climate .nx-section__lede{color:var(--nx-mute-on-ink)}
+    .nx-climate .nx-section__lede{color:var(--nx-mute-on-ink);margin-top:14px}
+    .nx-climate .nx-section__head{gap:18px}
     .nx-climate__chart{
       margin-top:24px;background:var(--nx-ink-2);border-radius:var(--nx-r-md);
       padding:clamp(18px, 2.4vw, 28px) clamp(20px, 3vw, 32px);
@@ -1477,13 +1498,13 @@
     .nx-modal__lede{font-size:var(--nx-size-md);color:var(--nx-mute-on-bone);line-height:1.55;margin-bottom:24px;max-width:62ch}
 
     /* City modal: assets grid */
-    .nx-citymodal__assets{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+    .nx-citymodal__assets{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
     .nx-citymodal__asset{
       background:var(--nx-paper);border:1px solid var(--nx-line);border-radius:var(--nx-r-md);
-      overflow:hidden;display:grid;
+      overflow:hidden;display:grid;grid-template-rows:auto 1fr;
     }
     .nx-citymodal__photo{
-      width:100%;aspect-ratio:16/10;background:var(--nx-mist);
+      width:100%;aspect-ratio:4/3;background:var(--nx-mist);
       background-size:cover;background-position:center;
     }
     .nx-citymodal__photo.placeholder{display:grid;place-items:center;color:var(--nx-mid);font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);letter-spacing:var(--nx-track-loose)}
@@ -1864,7 +1885,7 @@
     <div class="nx-section__inner">
       <div class="nx-section__head">
         <span class="nx-section__eyebrow" data-i18n="targets.eyebrow">02.1 — Metas e estratégia ESG</span>
-        <h2 class="nx-section__title" data-i18n="targets.title">Três pilares. Critérios duros.</h2>
+        <h2 class="nx-section__title" data-i18n="targets.title">Três pilares.</h2>
         <p class="nx-section__lede" data-i18n="targets.lede">A gestão de OIC integra critérios ESG nas decisões de investimento, alinhada com a Taxonomia da UE e excluindo setores e práticas contrárias.</p>
       </div>
       <div class="nx-targets__list">
@@ -2014,6 +2035,17 @@
   </section>
 
   <!-- ====== GOVERNANCE ====== -->
+  <!-- ====== PAUSE · Cadena horizontal · transição antes de Governance (PDF) ====== -->
+  <section class="nx-chainpause" data-reveal aria-label="Transição visual · cadeia de valor">
+    <div class="nx-chainpause__media" aria-hidden="true"></div>
+    <div class="nx-chainpause__overlay" aria-hidden="true"></div>
+    <div class="nx-chainpause__body">
+      <span class="nx-chainpause__eyebrow" data-i18n="chain.eyebrow">Cadeia de valor · governance</span>
+      <h2 class="nx-chainpause__quote" data-i18n="chain.quote">Cada elo é uma decisão. Cada decisão, uma direção partilhada.</h2>
+      <span class="nx-chainpause__cap" data-i18n="chain.cap">// Transição · Capítulo 02 · NEXA</span>
+    </div>
+  </section>
+
   <section class="nx-section nx-stage--paper" data-reveal id="gov">
     <div class="nx-section__inner">
       <div class="nx-section__head">
@@ -2070,17 +2102,6 @@
         <div class="nx-metric"><span class="nx-metric__label" data-i18n="econ.ebitda">EBITDA consolidado</span><span class="nx-metric__value">−2,43<span class="unit">M€</span></span><span class="nx-metric__delta is-down">vs −0,41 M€ em 2024</span></div>
         <div class="nx-metric"><span class="nx-metric__label" data-i18n="econ.services">Prestação de serviços</span><span class="nx-metric__value">2,06<span class="unit">M€</span></span><span class="nx-metric__delta is-down">−41,2% vs 2024</span></div>
       </div>
-    </div>
-  </section>
-
-  <!-- ====== PAUSE · Cadena · transition into chapter 03 (Connect) ====== -->
-  <section class="nx-chainpause" data-reveal aria-label="Transição visual · Capítulo 03 Connect">
-    <div class="nx-chainpause__media" aria-hidden="true"></div>
-    <div class="nx-chainpause__overlay" aria-hidden="true"></div>
-    <div class="nx-chainpause__body">
-      <span class="nx-chainpause__eyebrow" data-i18n="chain.eyebrow">Connect · Invest · Build the future</span>
-      <h2 class="nx-chainpause__quote" data-i18n="chain.quote">Cada elo é uma decisão. Cada decisão, uma direção partilhada.</h2>
-      <span class="nx-chainpause__cap" data-i18n="chain.cap">// Transição · Capítulo 03 · NEXA</span>
     </div>
   </section>
 
@@ -2266,12 +2287,11 @@
           <!-- Y axis grid -->
           <line x1="60"  y1="40"  x2="60"  y2="260" stroke="var(--nx-ink-3)" stroke-width="1"/>
           <line x1="60"  y1="260" x2="780" y2="260" stroke="var(--nx-ink-3)" stroke-width="1"/>
-          <!-- Y labels -->
+          <!-- Y axis grid · no unit label (units live on the endpoint values) -->
           <text x="55" y="50"  text-anchor="end" font-size="11" fill="#9A9794">30</text>
           <text x="55" y="115" text-anchor="end" font-size="11" fill="#9A9794">22</text>
           <text x="55" y="180" text-anchor="end" font-size="11" fill="#9A9794">15</text>
           <text x="55" y="245" text-anchor="end" font-size="11" fill="#9A9794">9,4</text>
-          <text x="50" y="160" text-anchor="middle" font-size="9" fill="#9A9794" transform="rotate(-90 50 160)">TonCO₂e</text>
           <!-- Meta line · -40% in 2030 -->
           <line x1="60" y1="170" x2="780" y2="170" stroke="var(--nx-mid)" stroke-width="1" stroke-dasharray="4 4"/>
           <text x="770" y="164" text-anchor="end" font-size="10" fill="#9A9794">Meta −40% · 18 TonCO₂e</text>
@@ -2279,10 +2299,10 @@
           <!-- Trajectory bars/dots · per year -->
           <g>
             <line x1="120" y1="40"  x2="690" y2="245" stroke="var(--nx-orange)" stroke-width="2.4"/>
-            <!-- 2025: 30.0 -->
+            <!-- 2025: 30.0 TonCO₂e -->
             <circle cx="120" cy="40"  r="6" fill="var(--nx-orange)"/>
             <text x="120" y="285" text-anchor="middle" font-size="11" fill="#fff">2025</text>
-            <text x="120" y="30" text-anchor="middle" font-size="11" fill="#fff">30,0</text>
+            <text x="120" y="28" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">30,0 TonCO₂e</text>
             <!-- 2026: 28.4 -->
             <circle cx="234" cy="51"  r="5" fill="var(--nx-orange-soft)"/>
             <text x="234" y="285" text-anchor="middle" font-size="11" fill="#9A9794">2026</text>
@@ -2295,10 +2315,10 @@
             <!-- 2029: 18.9 -->
             <circle cx="576" cy="118" r="5" fill="var(--nx-orange-soft)"/>
             <text x="576" y="285" text-anchor="middle" font-size="11" fill="#9A9794">2029</text>
-            <!-- 2030: 9.4 -->
+            <!-- 2030: 9.4 TonCO₂e -->
             <circle cx="690" cy="245" r="7" fill="var(--nx-orange)"/>
             <text x="690" y="285" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">2030</text>
-            <text x="690" y="232" text-anchor="middle" font-size="11" fill="#C85204" font-weight="700">9,4</text>
+            <text x="690" y="232" text-anchor="middle" font-size="11" fill="#C85204" font-weight="700">9,4 TonCO₂e</text>
             <text x="690" y="304" text-anchor="middle" font-size="9" fill="#C85204" font-weight="700">−68,8%</text>
           </g>
         </svg>
@@ -2382,6 +2402,16 @@
         <span>·</span>
         <span data-i18n="foot.institutional">Informação Institucional</span>
       </div>
+    </div>
+
+    <div class="nx-foot__cta">
+      <a href="https://www.nexa-sgoic.pt/" target="_blank" rel="noopener" class="nx-foot__sitelink">
+        <span data-i18n="foot.backsite">Voltar ao site da NEXA</span>
+        <span class="nx-foot__sitelink-url">nexa-sgoic.pt</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
     </div>
 
     <div class="nx-foot__easter" data-i18n="foot.easter">// efeito surpresa</div>
@@ -2993,7 +3023,7 @@
         "people.lede":"Na NEXA, reconhecemos que as pessoas constituem o principal vetor de criação de valor sustentável.",
         "people.board":"Conselho de Administração","people.org":"Organograma · Departamentos",
         "dept.compliance":"Compliance / BCFT","dept.risk":"Gestão de Risco","dept.finance":"Financeiro e Suporte","dept.ops":"Operações & Gestão Imobiliária","dept.esg":"Responsável ESG",
-        "targets.eyebrow":"02.1 — Metas e estratégia ESG","targets.title":"Três pilares. Critérios duros.","targets.lede":"A gestão de OIC integra critérios ESG nas decisões de investimento, alinhada com a Taxonomia da UE.",
+        "targets.eyebrow":"02.1 — Metas e estratégia ESG","targets.title":"Três pilares.","targets.lede":"A gestão de OIC integra critérios ESG nas decisões de investimento, alinhada com a Taxonomia da UE.",
         "target.e.t":"Green Asset Ratio","target.e.l":"% do investimento alinhado com mitigação climática, adaptação, água, economia circular, biodiversidade e poluição. Meta a definir em 2026.",
         "target.s.t":"Condições de trabalho dignas","target.s.l":"Igualdade de oportunidades, progressão de carreira, redução do turnover. Inclui também os trabalhadores na cadeia de valor.",
         "target.g.t":"Código de Conduta ESG","target.g.l":"% de resposta dos OIC sob gestão. Plano de formação dos colaboradores em ESG, compliance e BCFT.",
@@ -3091,7 +3121,7 @@
         "people.lede":"At NEXA, we recognise that people are the main driver of sustainable value creation.",
         "people.board":"Board of Directors","people.org":"Organisation · Departments",
         "dept.compliance":"Compliance / AML","dept.risk":"Risk Management","dept.finance":"Finance & Support","dept.ops":"Operations & Real Estate","dept.esg":"ESG Officer",
-        "targets.eyebrow":"02.1 — ESG goals and strategy","targets.title":"Three pillars. Hard criteria.","targets.lede":"Fund management integrates ESG criteria in investment decisions, aligned with the EU Taxonomy.",
+        "targets.eyebrow":"02.1 — ESG goals and strategy","targets.title":"Three pillars.","targets.lede":"Fund management integrates ESG criteria in investment decisions, aligned with the EU Taxonomy.",
         "target.e.t":"Green Asset Ratio","target.e.l":"% of investment aligned with climate mitigation, adaptation, water, circular economy, biodiversity and pollution. Target to be defined in 2026.",
         "target.s.t":"Decent working conditions","target.s.l":"Equal opportunities, career progression, turnover reduction. Also covers value chain workers.",
         "target.g.t":"ESG Code of Conduct","target.g.l":"% of response from funds under management. Training plan for staff in ESG, compliance and AML.",
@@ -3220,7 +3250,8 @@
       {id:'spark-ii', name:'SPARK II', type:'Escritórios / Comércio', area:17357, city:'Matosinhos', district:'Porto', owner:'Icon SIC', status:'Em operação', photo:'uploads/projects/SPARK II.jpg'},
       {id:'la-movida', name:'La Movida', type:'Escritório', area:1660, city:'Matosinhos', district:'Porto', owner:'Castro Capital SIC', status:'Em operação · LEED Gold', photo:'uploads/projects/BUZ.jpg', leed:true},
       {id:'bloom-living', name:'Bloom Living', type:'Residencial', area:67160, city:'Maia', district:'Porto', owner:'Castro Capital SIC', status:'Em desenvolvimento', photo:'uploads/projects/BLOOM LIVING.jpg'},
-      {id:'fitness-hut', name:'Fitness Hut', type:'Comércio', area:1785, city:'Braga', district:'Braga', owner:'Castro Capital SIC', status:'Em operação'},
+      {id:'palacete-31-janeiro', name:'Palacete 31 de Janeiro', type:'Escritório', area:1207, city:'Braga', district:'Braga', owner:'Castro Capital SIC', status:'Sede NEXA · GdO', photo:'uploads/projects/palacete.jpg'},
+      {id:'vivagym', name:'VivaGym', type:'Comércio', area:1785, city:'Braga', district:'Braga', owner:'Castro Capital SIC', status:'Em operação'},
       {id:'alverca', name:'Alverca', type:'Residencial', area:55200, city:'Vila Franca de Xira', district:'Lisboa', owner:'Icon SIC', status:'Landbank'},
       {id:'aldi', name:'ALDI', type:'Indústria / Retalho', area:1950, city:'Matosinhos', district:'Porto', owner:'Castro Capital SIC', status:'Em operação', photo:'uploads/projects/ALDI.jpg'},
       {id:'valongo', name:'Valongo', type:'Retalho', area:6000, city:'Valongo', district:'Porto', owner:'Icon SIC', status:'Em desenvolvimento'},
@@ -3231,7 +3262,6 @@
       {id:'destaque-recarei', name:'Destaque Recarei', type:'Residencial', area:9323, city:'Matosinhos', district:'Porto', owner:'Icon SIC', status:'Landbank'},
       {id:'casa-do-rio', name:'Casa do Rio', type:'Residencial', area:7500, city:'Matosinhos', district:'Porto', owner:'Icon SIC', status:'Landbank'},
       {id:'valpark', name:'Valpark', type:'Logística', area:13200, city:'Valongo', district:'Porto', owner:'Icon SIC', status:'Em construção', photo:'uploads/projects/Valpark.jpg'},
-      {id:'palacete-31-janeiro', name:'Palacete 31 de Janeiro', type:'Escritório', area:1207, city:'Braga', district:'Braga', owner:'Castro Capital SIC', status:'Sede NEXA · GdO', photo:'uploads/projects/palacete.jpg'},
       {id:'moradia-de-fao', name:'Moradia de Fão', type:'Residencial', area:798, city:'Esposende', district:'Braga', owner:'Castro Capital SIC', status:'Em operação'}
     ];
 
@@ -4052,46 +4082,27 @@
             })
           }));
           frag.appendChild(r1);
-          const r2 = document.createElement('div');
-          r2.className = 'nx-sheet__row';
-          r2.appendChild(buildPanel({
-            title:'Temas-chave · 2025',
-            note:'Compliance, BCFT, ESG, gestão de risco e literacia digital.',
-            body: buildHbars({
-              label:'Distribuição estimada',
-              rows:[
-                {cat:'Compliance',  val:'30', unit:'%', w:30, strong:true},
-                {cat:'ESG',         val:'25', unit:'%', w:25},
-                {cat:'Risco',       val:'20', unit:'%', w:20},
-                {cat:'Digital',     val:'15', unit:'%', w:15},
-                {cat:'Outros',      val:'10', unit:'%', w:10}
-              ]
-            })
-          }));
-          frag.appendChild(r2);
           return frag;
         }
       },
 
       igualdade: {
         eyebrow: '02.3 — Social · Igualdade',
-        title: 'Gap salarial por categoria · 37,1%',
+        title: 'Gap salarial global · 37,1%',
         titleAccent: 'Plano fecho 2030',
-        lede: 'Em 2025 o gap salarial entre homens e mulheres é de 37,1% global. Em algumas categorias o gap é 0,0%. Plano de neutralidade remuneratória em construção (Objetivo O5).',
+        lede: 'Em 2025 o gap salarial global entre homens e mulheres é de 37,1%. Plano de neutralidade remuneratória em construção (Objetivo O5 do plano 2026).',
         build: () => {
           const frag = document.createDocumentFragment();
           const r1 = document.createElement('div');
           r1.className = 'nx-sheet__row nx-sheet__row--2col';
           r1.appendChild(buildPanel({
-            title:'Gap salarial por categoria · 2025',
+            title:'Gap salarial · 2025',
             stat:'37,1', unit:'% global',
-            note:'Diferença média ponderada entre salário masculino e feminino na mesma categoria.',
+            note:'Diferença média ponderada entre salário masculino e feminino. O detalhe por categoria profissional está em revisão e será publicado no exercício 2026.',
             body: buildHbars({
               rows:[
-                {cat:'Direção',     val:'37,7', unit:'%', w:75, strong:true},
-                {cat:'Coordenação', val:'12,4', unit:'%', w:24},
-                {cat:'Técnico',     val:'0,0',  unit:'%', w:1},
-                {cat:'Suporte',     val:'0,0',  unit:'%', w:1}
+                {cat:'Global', val:'37,1', unit:'%', w:75, strong:true},
+                {cat:'Meta 2030', val:'0,0',  unit:'%', w:1}
               ]
             })
           }));
