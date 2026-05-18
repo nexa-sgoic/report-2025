@@ -127,6 +127,16 @@
     }
     /* Sections that genuinely need full-viewport presence (hero, chapter cover) keep it explicitly */
     .nx-hero, .nx-chap{min-height:100vh}
+
+    /* Right-side breathing space so section content never collides with the scroll-rail
+       (rail sits at right:clamp(16px, 2.4vw, 36px) and is ~80px wide w/ labels) */
+    @media (min-width: 881px){
+      .nx-stage, .nx-section, .nx-esg-strip, .nx-orangeband, .nx-foot{
+        padding-right:clamp(96px, 9vw, 140px);
+      }
+      /* Sections that span edge-to-edge intentionally (hero, chapter cover, chapter dividers) */
+      .nx-hero, .nx-chap, .nx-chapdiv{padding-right:clamp(20px, 5vw, 80px)}
+    }
     .nx-stage--ink{background:var(--nx-ink);color:var(--nx-on-ink)}
     .nx-stage--bone{background:var(--nx-bone);color:var(--nx-ink)}
     .nx-stage--orange{background:var(--nx-orange);color:var(--nx-on-orange)}
@@ -386,38 +396,209 @@
     .nx-radial.is-in .nx-radial__map .sector--s{transition-delay:.1s}
     .nx-radial.is-in .nx-radial__map .sector--g{transition-delay:.2s}
 
-    /* ============ ENVIRONMENTAL (04) — 17,2% ============ */
-    .nx-env{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(28px,5vw,100px);align-items:center;padding-block:9vh}
-    .nx-env__big{
-      font-size:clamp(4rem,12vw,11rem);
-      font-weight:var(--nx-w-light);line-height:.86;letter-spacing:-.04em;
-      color:var(--nx-ink);
-      display:inline-flex;align-items:flex-start;
-      opacity:0;transform:translateX(-40px);transition:transform 1.2s var(--nx-ease-arch),opacity 1.2s var(--nx-ease-out);
-    }
-    .nx-env.is-in .nx-env__big{opacity:1;transform:translateX(0)}
-    .nx-env__big .unit{font-size:.42em;color:var(--nx-orange)}
-    .nx-env__caption{display:grid;gap:24px;max-width:42ch}
-    .nx-env__caption h3{font-size:clamp(1.6rem,2.6vw,2rem);font-weight:var(--nx-w-light);letter-spacing:-.01em}
-    .nx-env__caption p{color:var(--nx-mute-on-bone)}
-    .nx-env__chips{display:flex;flex-wrap:wrap;gap:8px}
-    .nx-env__chip{
-      padding:6px 12px;border-radius:var(--nx-r-pill);
-      background:var(--nx-paper);border:1px solid var(--nx-line);
-      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);color:var(--nx-ink);
-    }
-    .nx-env__chip b{color:var(--nx-orange);font-weight:var(--nx-w-medium);margin-right:6px}
+    /* ============ ENVIRONMENTAL · faithful to PDF p.18 ============ */
+    /* Reusable: donut + legend / hbars / big pill stat */
 
-    /* mini bar chart */
-    .nx-env__bars{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;height:140px;align-items:end;margin-top:18px}
-    .nx-env__bars span{background:var(--nx-orange-soft);border-radius:3px 3px 0 0;transform-origin:bottom;transform:scaleY(0);transition:transform 1.2s var(--nx-ease-arch)}
-    .nx-env.is-in .nx-env__bars span{transform:scaleY(1)}
-    .nx-env__bars span:nth-child(1){transition-delay:.6s;background:var(--nx-orange)}
-    .nx-env__bars span:nth-child(2){transition-delay:.7s}
-    .nx-env__bars span:nth-child(3){transition-delay:.8s}
-    .nx-env__bars span:nth-child(4){transition-delay:.9s}
-    .nx-env__bars span:nth-child(5){transition-delay:1s}
-    .nx-env__bars span:nth-child(6){transition-delay:1.1s;background:var(--nx-orange)}
+    /* Donut (small / medium / large) */
+    .nx-donut{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+    .nx-donut__svg{width:140px;height:140px;flex-shrink:0}
+    .nx-donut__svg circle{transition:stroke-width .25s, opacity .25s}
+    .nx-donut__svg g:hover circle{stroke-width:22}
+    .nx-donut__legend{
+      display:grid;gap:7px;font-family:var(--nx-font-mono);
+      font-size:var(--nx-size-2xs);color:var(--nx-mute-on-bone);letter-spacing:.05em;
+    }
+    .nx-donut__legend div{display:grid;grid-template-columns:12px 1fr auto;align-items:center;gap:8px}
+    .nx-donut__legend i{display:block;width:9px;height:9px;border-radius:2px}
+    .nx-donut__legend strong{color:var(--nx-ink);font-weight:var(--nx-w-medium)}
+
+    /* Horizontal bars block (label + bar with value at the end) */
+    .nx-hbars{display:grid;gap:10px;margin-top:10px}
+    .nx-hbars__label{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      letter-spacing:.10em;color:var(--nx-mute-on-bone);margin-bottom:4px;text-transform:uppercase;
+    }
+    .nx-hbars__row{display:grid;grid-template-columns:90px 1fr auto;align-items:center;gap:12px}
+    .nx-hbars__cat{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);color:var(--nx-ink);
+      letter-spacing:.06em;text-transform:uppercase;text-align:right;
+    }
+    .nx-hbars__bar{
+      position:relative;height:14px;background:rgba(45,45,44,.06);border-radius:2px;overflow:hidden;
+    }
+    .nx-hbars__fill{
+      position:absolute;left:0;top:0;bottom:0;width:0;background:var(--nx-orange-soft);
+      transform-origin:left;transform:scaleX(0);
+      transition:transform 1.1s cubic-bezier(.7,0,.2,1);
+    }
+    .nx-hbars__fill.is-strong{background:var(--nx-orange)}
+    [data-reveal].is-in .nx-hbars__fill{transform:scaleX(1)}
+    .nx-hbars__row .nx-hbars__fill{width:var(--w, 50%)}
+    .nx-hbars__val{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-xs);color:var(--nx-ink);
+      font-weight:var(--nx-w-medium);min-width:84px;text-align:right;letter-spacing:-.005em;
+    }
+    .nx-hbars__val .unit{color:var(--nx-orange);margin-left:3px;font-size:.85em}
+
+    /* Big pill stat (e.g. 17,2% renovável, 97,3% resíduos) */
+    .nx-pill{
+      position:relative;background:var(--nx-ink);color:var(--nx-on-ink);
+      border-radius:var(--nx-r-md);padding:clamp(24px,3vh,40px) clamp(24px,3vw,36px);
+      display:grid;grid-template-rows:auto 1fr;gap:8px;
+      min-height:160px;overflow:hidden;
+    }
+    .nx-pill__year{
+      position:absolute;top:14px;right:14px;
+      padding:3px 9px;border-radius:var(--nx-r-pill);
+      background:rgba(237,234,227,.10);border:1px solid rgba(237,234,227,.18);
+      font-family:var(--nx-font-mono);font-size:10px;letter-spacing:.18em;color:var(--nx-on-ink);
+    }
+    .nx-pill__cap{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);color:var(--nx-orange);
+      letter-spacing:var(--nx-track-caps);text-transform:uppercase;
+    }
+    .nx-pill__num{
+      font-size:clamp(3rem,6vw,5rem);font-weight:var(--nx-w-light);
+      letter-spacing:-.04em;line-height:1;align-self:end;
+    }
+    .nx-pill__num .unit{font-size:.45em;color:var(--nx-orange);margin-left:5px;font-weight:var(--nx-w-regular)}
+    .nx-pill__note{
+      font-family:var(--nx-font-sans);font-size:var(--nx-size-sm);
+      color:var(--nx-mute-on-ink);max-width:36ch;line-height:1.45;
+    }
+
+    /* Environmental section · panel layout */
+    .nx-env{
+      background:var(--nx-bone);
+      padding-block:8vh;
+    }
+    .nx-env__head{display:grid;gap:8px;max-width:62ch;margin-bottom:36px}
+    .nx-env__title{
+      font-size:clamp(2rem,4vw,3rem);font-weight:var(--nx-w-light);
+      letter-spacing:-.025em;line-height:1.04;color:var(--nx-ink);
+    }
+    .nx-env__sub{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);color:var(--nx-orange);
+      letter-spacing:var(--nx-track-caps);text-transform:uppercase;
+    }
+    .nx-env__lede{color:var(--nx-mute-on-bone);max-width:54ch;font-size:var(--nx-size-md)}
+    /* Sub-panels grid: 2-col with overview donut + side stack */
+    .nx-env__panels{
+      display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(20px,3vw,40px);
+    }
+    .nx-env__panel{
+      background:var(--nx-paper);border:1px solid var(--nx-line);border-radius:var(--nx-r-md);
+      padding:clamp(20px,2.4vw,28px);display:grid;gap:14px;
+    }
+    .nx-env__panel-title{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      letter-spacing:var(--nx-track-caps);text-transform:uppercase;color:var(--nx-orange);
+    }
+    .nx-env__panel-sub{
+      font-family:var(--nx-font-sans);font-size:1.1rem;font-weight:var(--nx-w-light);
+      color:var(--nx-ink);letter-spacing:-.01em;line-height:1.2;
+    }
+    .nx-env__panel-stat{
+      font-size:clamp(1.5rem,2.6vw,2rem);font-weight:var(--nx-w-light);
+      color:var(--nx-ink);letter-spacing:-.025em;line-height:1;margin-top:4px;
+    }
+    .nx-env__panel-stat .unit{font-size:.45em;color:var(--nx-orange);margin-left:4px;font-weight:var(--nx-w-regular)}
+    .nx-env__panel-note{color:var(--nx-mute-on-bone);font-size:var(--nx-size-sm);line-height:1.45;max-width:42ch}
+
+    .nx-env__grid{
+      display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:clamp(14px,1.6vw,20px);
+      margin-top:18px;
+    }
+    .nx-env__grid > *{min-width:0}
+
+    /* KPI grid · clickable cards that open data sheets */
+    .nx-kpi-grid{
+      display:grid;grid-template-columns:repeat(4, minmax(0,1fr));gap:clamp(12px,1.4vw,18px);
+      margin-bottom:18px;
+    }
+    .nx-kpi-grid--2col{grid-template-columns:1.2fr 1fr}
+    .nx-kpi-card{
+      position:relative;text-align:left;
+      padding:22px 22px 18px;background:var(--nx-paper);border:1px solid var(--nx-line);
+      border-radius:var(--nx-r-md);
+      display:flex;flex-direction:column;gap:6px;min-height:170px;
+      cursor:none;overflow:hidden;font:inherit;color:inherit;
+      transition:transform .3s var(--nx-ease-arch), border-color .25s, background .25s;
+    }
+    .nx-kpi-card::before{
+      content:"";position:absolute;top:0;left:0;width:32px;height:2px;background:var(--nx-orange);
+      transition:width .3s var(--nx-ease-out);
+    }
+    .nx-kpi-card:hover{transform:translateY(-3px);border-color:var(--nx-orange);background:var(--nx-bone)}
+    .nx-kpi-card:hover::before{width:100%}
+    .nx-kpi-card__cat{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      color:var(--nx-orange);letter-spacing:var(--nx-track-caps);text-transform:uppercase;
+    }
+    .nx-kpi-card__val{
+      font-size:clamp(1.8rem,3vw,2.6rem);font-weight:var(--nx-w-light);
+      letter-spacing:-.025em;line-height:1;color:var(--nx-ink);margin-top:6px;
+    }
+    .nx-kpi-card__val .unit{font-size:.42em;color:var(--nx-orange);margin-left:5px;font-weight:var(--nx-w-regular)}
+    .nx-kpi-card__delta{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);color:var(--nx-mute-on-bone);
+      letter-spacing:.06em;
+    }
+    .nx-kpi-card__delta.is-down{color:var(--nx-orange-deep)}
+    .nx-kpi-card__cta{
+      margin-top:auto;font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      color:var(--nx-orange);letter-spacing:.14em;text-transform:uppercase;
+      opacity:0;transform:translateY(4px);transition:opacity .25s, transform .25s;
+    }
+    .nx-kpi-card:hover .nx-kpi-card__cta{opacity:1;transform:translateY(0)}
+    .nx-kpi-card--ink{background:var(--nx-ink);color:var(--nx-on-ink);border-color:var(--nx-ink)}
+    .nx-kpi-card--ink .nx-kpi-card__val{color:var(--nx-on-ink)}
+    .nx-kpi-card--ink .nx-kpi-card__delta{color:var(--nx-mute-on-ink)}
+    .nx-kpi-card--ink:hover{background:#1A1A18;border-color:var(--nx-orange)}
+
+    /* Data sheet inside modal */
+    .nx-sheet{display:flex;flex-direction:column;gap:24px}
+    .nx-sheet__eyebrow{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      color:var(--nx-orange);letter-spacing:var(--nx-track-caps);text-transform:uppercase;
+    }
+    .nx-sheet__title{
+      font-size:clamp(1.8rem,3vw,2.4rem);font-weight:var(--nx-w-light);
+      letter-spacing:-.025em;line-height:1.05;color:var(--nx-ink);
+    }
+    .nx-sheet__title em{color:var(--nx-orange);font-style:normal;font-weight:var(--nx-w-regular)}
+    .nx-sheet__lede{color:var(--nx-mute-on-bone);max-width:60ch;font-size:var(--nx-size-md);line-height:1.5}
+    .nx-sheet__row{
+      display:grid;gap:18px;margin-top:8px;
+    }
+    .nx-sheet__row--2col{grid-template-columns:1.2fr 1fr;align-items:start}
+    .nx-sheet__row--3col{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:720px){
+      .nx-sheet__row--2col, .nx-sheet__row--3col{grid-template-columns:1fr}
+    }
+    .nx-sheet__panel{
+      padding:18px;background:var(--nx-paper);border:1px solid var(--nx-line);border-radius:var(--nx-r-md);
+      display:flex;flex-direction:column;gap:12px;
+    }
+    .nx-sheet__panel-title{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      letter-spacing:var(--nx-track-caps);text-transform:uppercase;color:var(--nx-orange);
+    }
+    .nx-sheet__panel-stat{
+      font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:var(--nx-w-light);color:var(--nx-ink);
+      letter-spacing:-.025em;line-height:1;
+    }
+    .nx-sheet__panel-stat .unit{font-size:.45em;color:var(--nx-orange);margin-left:4px;font-weight:var(--nx-w-regular)}
+    .nx-sheet__panel-note{color:var(--nx-mute-on-bone);font-size:var(--nx-size-sm);line-height:1.45}
+    .nx-sheet .nx-pill{min-height:140px}
+
+    @media (max-width:880px){
+      .nx-kpi-grid{grid-template-columns:repeat(2,1fr)}
+      .nx-kpi-grid--2col{grid-template-columns:1fr}
+    }
+    @media (max-width:560px){
+      .nx-kpi-grid{grid-template-columns:1fr}
+    }
 
     /* ============ CHAPTER COVER (05) — HALF-BLEED ORANGE ============ */
     .nx-chap{padding:0;min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
@@ -784,9 +965,120 @@
     .nx-climate{background:var(--nx-ink);color:var(--nx-on-ink)}
     .nx-climate .nx-section__title{color:var(--nx-on-ink)}
     .nx-climate .nx-section__lede{color:var(--nx-mute-on-ink)}
-    .nx-climate__chart{margin-top:32px;background:var(--nx-ink-2);border-radius:var(--nx-r-md);padding:32px;overflow:hidden}
-    .nx-climate__chart svg{width:100%;height:auto;display:block}
+    .nx-climate__chart{
+      margin-top:24px;background:var(--nx-ink-2);border-radius:var(--nx-r-md);
+      padding:clamp(18px, 2.4vw, 28px) clamp(20px, 3vw, 32px);
+      overflow:hidden;position:relative;
+      max-width:760px;
+    }
+    .nx-climate__chart svg{width:100%;height:auto;display:block;max-height:280px}
     .nx-climate__chart svg text{font-family:var(--nx-font-mono)}
+
+    /* "Plan sujeito a ajustes" disclaimer — applied to forward-looking content */
+    .nx-planning{
+      display:inline-flex;gap:10px;align-items:center;
+      margin-bottom:18px;padding:6px 14px;
+      background:rgba(200,82,4,.10);border:1px solid rgba(200,82,4,.32);
+      border-radius:var(--nx-r-pill);
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      letter-spacing:.16em;text-transform:uppercase;color:var(--nx-orange);
+    }
+    .nx-planning::before{
+      content:"";width:7px;height:7px;border-radius:50%;background:var(--nx-orange);
+      box-shadow:0 0 0 0 rgba(200,82,4,.6);
+      animation:nxPulseDot 2.4s var(--nx-ease-out) infinite;
+    }
+
+    /* ============ CERTIFICAÇÃO DE ATIVOS (cap 03 · from PDF p.31) ============ */
+    .nx-certs{background:var(--nx-paper)}
+    .nx-certs__layout{
+      display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(32px,5vw,72px);
+      align-items:start;margin-top:24px;
+    }
+    .nx-certs__table{
+      display:grid;border-top:1px solid var(--nx-line);font-size:var(--nx-size-sm);
+    }
+    .nx-certs__row{
+      display:grid;grid-template-columns:1.4fr repeat(4, minmax(0, 1fr));
+      align-items:center;padding:14px 6px;
+      border-bottom:1px solid var(--nx-line);
+      transition:background-color .25s;
+    }
+    .nx-certs__row:hover{background:rgba(200,82,4,.04)}
+    .nx-certs__row.is-head{
+      padding:10px 6px;font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      color:var(--nx-orange);letter-spacing:var(--nx-track-caps);text-transform:uppercase;
+      border-bottom:1px solid var(--nx-line-dark);
+    }
+    .nx-certs__type{font-weight:var(--nx-w-medium);color:var(--nx-ink)}
+    .nx-certs__cell{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      color:var(--nx-ink);letter-spacing:.06em;
+    }
+    .nx-certs__cell.is-empty{color:var(--nx-mid);font-size:14px}
+    .nx-certs__cell strong{color:var(--nx-orange);font-weight:var(--nx-w-medium)}
+
+    .nx-certs__donut{
+      position:relative;display:grid;gap:18px;
+      grid-template-rows:auto 1fr;align-self:start;
+    }
+    .nx-certs__donut-head{
+      display:flex;flex-direction:column;gap:4px;
+    }
+    .nx-certs__donut-num{
+      font-size:clamp(1.7rem,3vw,2.4rem);font-weight:var(--nx-w-light);
+      letter-spacing:-.025em;line-height:1;color:var(--nx-ink);
+    }
+    .nx-certs__donut-num .unit{font-size:.45em;color:var(--nx-orange);margin-left:5px}
+    .nx-certs__donut-cap{
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      color:var(--nx-mute-on-bone);letter-spacing:.12em;text-transform:uppercase;
+    }
+    .nx-certs__donut-svg{
+      display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;
+    }
+    .nx-certs__donut-svg svg{width:170px;height:170px;display:block;flex-shrink:0}
+    .nx-certs__donut-svg circle{transition:stroke-width .25s, opacity .25s}
+    .nx-certs__donut-svg g:hover circle{stroke-width:24}
+    .nx-certs__donut-legend{
+      display:grid;gap:8px;
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);
+      letter-spacing:.06em;color:var(--nx-mute-on-bone);
+    }
+    .nx-certs__donut-legend div{display:grid;grid-template-columns:14px 1fr auto;align-items:center;gap:8px}
+    .nx-certs__donut-legend i{display:block;width:10px;height:10px;border-radius:2px}
+    .nx-certs__donut-legend strong{color:var(--nx-ink);font-weight:var(--nx-w-medium)}
+
+    /* Objetivos 2026 redesigned · cards instead of list */
+    .nx-objectives{
+      display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:12px;margin-top:18px;
+    }
+    .nx-objectives__card{
+      padding:18px 18px 16px;background:var(--nx-paper);border:1px solid var(--nx-line);
+      border-radius:var(--nx-r-md);display:flex;flex-direction:column;gap:8px;
+      transition:transform .3s var(--nx-ease-arch), border-color .25s;
+      position:relative;overflow:hidden;
+    }
+    .nx-objectives__card::before{
+      content:"";position:absolute;top:0;left:0;width:36px;height:2px;background:var(--nx-orange);
+    }
+    .nx-objectives__card:hover{transform:translateY(-3px);border-color:var(--nx-orange)}
+    .nx-objectives__top{
+      display:flex;justify-content:space-between;align-items:baseline;
+      font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);letter-spacing:.14em;text-transform:uppercase;
+    }
+    .nx-objectives__num{color:var(--nx-orange);font-weight:var(--nx-w-medium)}
+    .nx-objectives__year{color:var(--nx-mute-on-bone)}
+    .nx-objectives__text{
+      font-size:var(--nx-size-sm);color:var(--nx-ink);font-weight:var(--nx-w-regular);
+      line-height:1.4;letter-spacing:-.005em;
+    }
+    .nx-objectives__tag{
+      align-self:flex-start;margin-top:auto;padding:3px 8px;
+      font-family:var(--nx-font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+      background:rgba(200,82,4,.08);color:var(--nx-orange);border-radius:var(--nx-r-pill);
+    }
 
     /* ============ CONSIDERAÇÕES FINAIS (MFZ closing) ============ */
     .nx-closing{background:var(--nx-paper);position:relative;overflow:hidden}
@@ -1386,53 +1678,63 @@
     </div>
   </section>
 
-  <!-- ====== 04 ENVIRONMENTAL — 17,2% ====== -->
-  <section class="nx-stage nx-stage--bone nx-env" data-reveal id="env">
-    <div class="nx-env__big">17,2<span class="unit">%</span></div>
-    <div class="nx-env__caption">
-      <span class="nx-impact__eyebrow" data-i18n="env.eyebrow">03 — Environmental</span>
-      <h3 data-i18n="env.title">Energia renovável integrada na carteira em 2025.</h3>
-      <p data-i18n="env.lede">Contratos verdes com Garantias de Origem mais produção fotovoltaica on-site. Em paralelo, redução de <strong style="color:var(--nx-orange)">−21,1%</strong> no consumo total e fleet 66,7% elétrica.</p>
-      <div class="nx-env__chips">
-        <span class="nx-env__chip"><b>−21,1%</b><span data-i18n="env.energy">consumo total</span></span>
-        <span class="nx-env__chip"><b>66,7%</b><span data-i18n="env.fleet">frota elétrica</span></span>
-        <span class="nx-env__chip"><b>97,3%</b><span data-i18n="env.waste">resíduos valorizados</span></span>
-      </div>
-      <div class="nx-env__bars" aria-hidden="true">
-        <span style="height:30%"></span>
-        <span style="height:62%"></span>
-        <span style="height:48%"></span>
-        <span style="height:75%"></span>
-        <span style="height:54%"></span>
-        <span style="height:85%"></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====== ENVIRONMENTAL · detail metrics ====== -->
-  <section class="nx-section nx-stage--bone" data-reveal id="env-detail">
+  <!-- ====== 04 ENVIRONMENTAL — 4 KPI cards · click opens data sheet ====== -->
+  <section class="nx-section nx-env" data-reveal id="env">
     <div class="nx-section__inner">
-      <div class="nx-section__head">
-        <span class="nx-section__eyebrow" data-i18n="envd.eyebrow">02.2 — Environmental · detalhe</span>
-        <h2 class="nx-section__title" data-i18n="envd.title">Energia, água, resíduos, mobilidade.</h2>
+
+      <div class="nx-env__head">
+        <span class="nx-env__sub" data-i18n="env.eyebrow">02.2 — Environmental</span>
+        <h2 class="nx-env__title" data-i18n="env.title">Energia, água, resíduos, mobilidade.</h2>
+        <p class="nx-env__lede" data-i18n="env.lede">Quatro indicadores ambientais geridos diretamente pela Nexa. Toque num indicador para abrir o detalhe completo: distribuição, evolução e contexto.</p>
       </div>
-      <div class="nx-metrics">
-        <div class="nx-metric"><span class="nx-metric__label" data-i18n="envd.energy">Consumo energético</span><span class="nx-metric__value" data-count="1501.5" data-decimals="1">1.501,5<span class="unit">MWh</span></span><span class="nx-metric__delta is-down">−21,1% vs 2024</span></div>
-        <div class="nx-metric"><span class="nx-metric__label" data-i18n="envd.water">Consumo de água</span><span class="nx-metric__value" data-count="9933" data-decimals="0">9.933<span class="unit">m³</span></span><span class="nx-metric__delta is-down">−14,5% vs 2024</span></div>
-        <div class="nx-metric"><span class="nx-metric__label" data-i18n="envd.waste">Resíduos valorizados</span><span class="nx-metric__value" data-count="97.3" data-decimals="1">97,3<span class="unit">%</span></span><span class="nx-metric__delta" data-i18n="envd.waste.note">construção: 100%</span></div>
-        <div class="nx-metric"><span class="nx-metric__label" data-i18n="envd.fleet">Frota elétrica</span><span class="nx-metric__value" data-count="66.7" data-decimals="1">66,7<span class="unit">%</span></span><span class="nx-metric__delta" data-i18n="envd.fleet.note">4 de 6 veículos</span></div>
+
+      <div class="nx-kpi-grid">
+        <button type="button" class="nx-kpi-card" data-sheet="energia">
+          <span class="nx-kpi-card__cat" data-i18n="env.kpi.energy">Energia</span>
+          <span class="nx-kpi-card__val">1.501,5<span class="unit">MWh</span></span>
+          <span class="nx-kpi-card__delta is-down">−21,1% vs 2024</span>
+          <span class="nx-kpi-card__cta" data-i18n="kpi.open">Ver gráficos →</span>
+        </button>
+        <button type="button" class="nx-kpi-card" data-sheet="agua">
+          <span class="nx-kpi-card__cat" data-i18n="env.kpi.water">Água</span>
+          <span class="nx-kpi-card__val">9.933<span class="unit">m³</span></span>
+          <span class="nx-kpi-card__delta is-down">−14,5% vs 2024</span>
+          <span class="nx-kpi-card__cta" data-i18n="kpi.open">Ver gráficos →</span>
+        </button>
+        <button type="button" class="nx-kpi-card" data-sheet="residuos">
+          <span class="nx-kpi-card__cat" data-i18n="env.kpi.waste">Resíduos valorizados</span>
+          <span class="nx-kpi-card__val">97,3<span class="unit">%</span></span>
+          <span class="nx-kpi-card__delta">construção: 100%</span>
+          <span class="nx-kpi-card__cta" data-i18n="kpi.open">Ver gráficos →</span>
+        </button>
+        <button type="button" class="nx-kpi-card" data-sheet="mobilidade">
+          <span class="nx-kpi-card__cat" data-i18n="env.kpi.mob">Mobilidade · frota elétrica</span>
+          <span class="nx-kpi-card__val">66,7<span class="unit">%</span></span>
+          <span class="nx-kpi-card__delta">59,9% emissões evitadas</span>
+          <span class="nx-kpi-card__cta" data-i18n="kpi.open">Ver gráficos →</span>
+        </button>
       </div>
+
+      <!-- Scope 1+2+3 highlighted as a separate row (more weight in the report) -->
+      <div class="nx-kpi-grid nx-kpi-grid--2col">
+        <button type="button" class="nx-kpi-card nx-kpi-card--ink" data-sheet="scopes">
+          <span class="nx-kpi-card__cat" data-i18n="env.kpi.scope">Emissões Scope 1 + 2 + 3</span>
+          <span class="nx-kpi-card__val">342,6<span class="unit">TonCO₂e</span></span>
+          <span class="nx-kpi-card__delta">Scope 3 = 91,3% do total</span>
+          <span class="nx-kpi-card__cta" data-i18n="kpi.open">Ver gráficos →</span>
+        </button>
+        <div class="nx-pill">
+          <span class="nx-pill__year">2025</span>
+          <span class="nx-pill__cap" data-i18n="env.ren.cap">Energia renovável integrada</span>
+          <div class="nx-pill__num">17,2<span class="unit">%</span></div>
+          <p class="nx-pill__note" data-i18n="env.ren.note">Garantias de Origem em contratos OIC + produção fotovoltaica on-site no Palacete 31 de Janeiro.</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- Orange callout band · Total emissions -->
-  <div class="nx-orangeband" data-reveal>
-    <div class="nx-orangeband__num" data-count="342.6" data-decimals="1">342,6<span class="unit">TonCO₂e</span></div>
-    <div class="nx-orangeband__body">
-      <h3 data-i18n="emissions.title">Total Scope 1 + 2 + 3 em 2025</h3>
-      <p data-i18n="emissions.body">8,1 (Scope 1, frota) + 21,9 (Scope 2, eletricidade obra) + 312,6 (Scope 3, cadeia de valor). Scope 3 representa 91,3% do total — perfil típico de gestoras imobiliárias.</p>
-    </div>
-  </div>
+  <!-- (env-detail + orangeband removed · their content now lives inside the KPI data sheets) -->
 
   <!-- ====== 05 PHILOSOPHY ====== -->
   <section class="nx-stage nx-stage--ink nx-phil" data-reveal id="phil">
@@ -1555,11 +1857,89 @@
     </div>
   </section>
 
-  <!-- ====== PERSPETIVAS FUTURAS ====== -->
+  <!-- ====== CERTIFICAÇÃO DE ATIVOS (cap 03 · PDF p.31) ====== -->
+  <section class="nx-section nx-certs" data-reveal id="certs">
+    <div class="nx-section__inner">
+      <div class="nx-section__head">
+        <span class="nx-planning" data-i18n="planning.tag">Plano sujeito a ajustes · 2026</span>
+        <span class="nx-section__eyebrow" data-i18n="certs.eyebrow">03.1 — Estratégia de Certificação de Ativos</span>
+        <h2 class="nx-section__title" data-i18n="certs.title">98% do GFA alinhado com a estratégia de certificação.</h2>
+        <p class="nx-section__lede" data-i18n="certs.lede">A carteira atual (243.552 m², 14 ativos sem landbank) inclui-se progressivamente em LEED, BREEAM, WELL, WiredScore e SmartScore. O primeiro selo LEED Gold® foi atribuído ao edifício La Movida em 2025.</p>
+      </div>
+
+      <div class="nx-certs__layout">
+        <div class="nx-certs__table" role="table" aria-label="Estratégia de certificação por tipologia">
+          <div class="nx-certs__row is-head" role="row">
+            <span role="columnheader" data-i18n="certs.col.type">Tipologia</span>
+            <span class="nx-certs__cell" role="columnheader">LEED / BREEAM</span>
+            <span class="nx-certs__cell" role="columnheader">WELL</span>
+            <span class="nx-certs__cell" role="columnheader">Wired</span>
+            <span class="nx-certs__cell" role="columnheader">Smart</span>
+          </div>
+          <div class="nx-certs__row" role="row">
+            <span class="nx-certs__type" role="cell" data-i18n="certs.t.res1">Residencial Unifamiliar</span>
+            <span class="nx-certs__cell" role="cell">Cert · <strong>Silver</strong></span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+          </div>
+          <div class="nx-certs__row" role="row">
+            <span class="nx-certs__type" role="cell" data-i18n="certs.t.res2">Residencial Multifamiliar</span>
+            <span class="nx-certs__cell" role="cell">Silver · <strong>Gold</strong></span>
+            <span class="nx-certs__cell" role="cell">Silver · <strong>Gold</strong></span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+          </div>
+          <div class="nx-certs__row" role="row">
+            <span class="nx-certs__type" role="cell" data-i18n="certs.t.hotel">Hotel</span>
+            <span class="nx-certs__cell" role="cell">Cert · <strong>Very Good</strong></span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+          </div>
+          <div class="nx-certs__row" role="row">
+            <span class="nx-certs__type" role="cell" data-i18n="certs.t.office">Escritórios</span>
+            <span class="nx-certs__cell" role="cell">Silver · <strong>Gold</strong></span>
+            <span class="nx-certs__cell" role="cell">Silver · <strong>Gold</strong></span>
+            <span class="nx-certs__cell" role="cell"><strong>Cert</strong></span>
+            <span class="nx-certs__cell" role="cell"><strong>Cert</strong></span>
+          </div>
+          <div class="nx-certs__row" role="row">
+            <span class="nx-certs__type" role="cell" data-i18n="certs.t.retail">Retalho</span>
+            <span class="nx-certs__cell" role="cell">Cert · <strong>Silver</strong></span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+          </div>
+          <div class="nx-certs__row" role="row">
+            <span class="nx-certs__type" role="cell" data-i18n="certs.t.log">Logística</span>
+            <span class="nx-certs__cell" role="cell">Cert · <strong>Silver</strong></span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+            <span class="nx-certs__cell is-empty" role="cell">—</span>
+          </div>
+        </div>
+
+        <div class="nx-certs__donut">
+          <div class="nx-certs__donut-head">
+            <span class="nx-certs__donut-num">243.552<span class="unit">m²</span></span>
+            <span class="nx-certs__donut-cap" data-i18n="certs.gfa">GFA · 14 ativos (sem landbank)</span>
+          </div>
+          <div class="nx-certs__donut-svg">
+            <svg id="certs-donut" viewBox="0 0 100 100" aria-label="Distribuição GFA por tipologia"></svg>
+            <div class="nx-certs__donut-legend" id="certs-legend"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== PERSPETIVAS FUTURAS · 3 pilares ====== -->
   <section class="nx-section nx-persp" data-reveal id="persp">
     <div class="nx-section__inner">
       <div class="nx-section__head">
-        <span class="nx-section__eyebrow" data-i18n="persp.eyebrow">03.1 — Perspetivas Futuras</span>
+        <span class="nx-planning" data-i18n="planning.tag">Plano sujeito a ajustes · 2026</span>
+        <span class="nx-section__eyebrow" data-i18n="persp.eyebrow">03.2 — Perspetivas Futuras</span>
         <h2 class="nx-section__title" data-i18n="persp.title">Plano climático 2025–2030.</h2>
         <p class="nx-section__lede" data-i18n="persp.lede">Três pilares operacionais para reduzir −68,8% das emissões Scope 1+2 até 2030, ultrapassando a meta de −40%.</p>
       </div>
@@ -1579,15 +1959,43 @@
       </div>
 
       <h3 class="nx-subhead" data-i18n="persp.objectives">Objetivos 2026</h3>
-      <ul class="nx-persp__objectives">
-        <li><span class="k">→</span><span class="v" data-i18n="obj.1">Fecho das certificações LEED, WELL, WiredScore e SmartScore do SPARK</span><span class="y">2026</span></li>
-        <li><span class="k">→</span><span class="v" data-i18n="obj.2">Fecho da certificação LEED do The Breeze</span><span class="y">2026</span></li>
-        <li><span class="k">→</span><span class="v" data-i18n="obj.3">Arranque da certificação LEED do Valpark</span><span class="y">2026</span></li>
-        <li><span class="k">→</span><span class="v" data-i18n="obj.4">Estratégia de certificação ou OPR para os 4 ativos sob gestão por terceiros</span><span class="y">2026</span></li>
-        <li><span class="k">→</span><span class="v" data-i18n="obj.5">Plano de ação para neutralidade remuneratória (gap salarial 37,1% → 0%)</span><span class="y">2026</span></li>
-        <li><span class="k">→</span><span class="v" data-i18n="obj.6">Análise de Dupla Materialidade Externa com stakeholders</span><span class="y">2026</span></li>
-        <li><span class="k">→</span><span class="v" data-i18n="obj.7">Análise de risco físico climático (pilot)</span><span class="y">2026</span></li>
-      </ul>
+      <div class="nx-objectives">
+        <div class="nx-objectives__card">
+          <div class="nx-objectives__top"><span class="nx-objectives__num">O1</span><span class="nx-objectives__year">2026</span></div>
+          <p class="nx-objectives__text" data-i18n="obj.1">Fecho das certificações LEED, WELL, WiredScore e SmartScore do SPARK.</p>
+          <span class="nx-objectives__tag" data-i18n="obj.tag.cert">Certificação</span>
+        </div>
+        <div class="nx-objectives__card">
+          <div class="nx-objectives__top"><span class="nx-objectives__num">O2</span><span class="nx-objectives__year">2026</span></div>
+          <p class="nx-objectives__text" data-i18n="obj.2">Fecho da certificação LEED do The Breeze.</p>
+          <span class="nx-objectives__tag" data-i18n="obj.tag.cert">Certificação</span>
+        </div>
+        <div class="nx-objectives__card">
+          <div class="nx-objectives__top"><span class="nx-objectives__num">O3</span><span class="nx-objectives__year">2026</span></div>
+          <p class="nx-objectives__text" data-i18n="obj.3">Arranque da certificação LEED do Valpark.</p>
+          <span class="nx-objectives__tag" data-i18n="obj.tag.cert">Certificação</span>
+        </div>
+        <div class="nx-objectives__card">
+          <div class="nx-objectives__top"><span class="nx-objectives__num">O4</span><span class="nx-objectives__year">2026</span></div>
+          <p class="nx-objectives__text" data-i18n="obj.4">Estratégia de certificação ou OPR para os 4 ativos sob gestão por terceiros.</p>
+          <span class="nx-objectives__tag" data-i18n="obj.tag.strategy">Estratégia</span>
+        </div>
+        <div class="nx-objectives__card">
+          <div class="nx-objectives__top"><span class="nx-objectives__num">O5</span><span class="nx-objectives__year">2026</span></div>
+          <p class="nx-objectives__text" data-i18n="obj.5">Plano de ação para neutralidade remuneratória (gap salarial 37,1% → 0%).</p>
+          <span class="nx-objectives__tag" data-i18n="obj.tag.social">Social</span>
+        </div>
+        <div class="nx-objectives__card">
+          <div class="nx-objectives__top"><span class="nx-objectives__num">O6</span><span class="nx-objectives__year">2026</span></div>
+          <p class="nx-objectives__text" data-i18n="obj.6">Análise de Dupla Materialidade Externa com stakeholders.</p>
+          <span class="nx-objectives__tag" data-i18n="obj.tag.gov">Governance</span>
+        </div>
+        <div class="nx-objectives__card">
+          <div class="nx-objectives__top"><span class="nx-objectives__num">O7</span><span class="nx-objectives__year">2026</span></div>
+          <p class="nx-objectives__text" data-i18n="obj.7">Análise de risco físico climático (pilot).</p>
+          <span class="nx-objectives__tag" data-i18n="obj.tag.climate">Climate</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1595,7 +2003,8 @@
   <section class="nx-section nx-climate" data-reveal id="climate">
     <div class="nx-section__inner">
       <div class="nx-section__head">
-        <span class="nx-section__eyebrow" data-i18n="climate.eyebrow">03.2 — Trajetória climática</span>
+        <span class="nx-planning" data-i18n="planning.tag">Plano sujeito a ajustes · 2026</span>
+        <span class="nx-section__eyebrow" data-i18n="climate.eyebrow">03.3 — Trajetória climática</span>
         <h2 class="nx-section__title" data-i18n="climate.title">Scope 1+2: de 30,0 a 9,4 TonCO₂e (−68,8%).</h2>
         <p class="nx-section__lede" data-i18n="climate.lede">Projeção anual 2025–2030 com base nas três alavancas operacionais. A meta de −40% é largamente ultrapassada.</p>
       </div>
@@ -2711,6 +3120,362 @@
         host.appendChild(g);
       });
     })();
+
+    // ============ Certificação donut (PDF p.31 · GFA por tipologia) ============
+    (function buildCertsDonut(){
+      const svg = document.getElementById('certs-donut');
+      const legendEl = document.getElementById('certs-legend');
+      if(!svg || !legendEl) return;
+      const SVG_NS = 'http://www.w3.org/2000/svg';
+
+      const segments = [
+        {label:'Residencial',  pct:43.3, color:'#C85204'},
+        {label:'Escritórios',  pct:33.9, color:'#A8420A'},
+        {label:'Outros',       pct:16.1, color:'#EDCCC0'},
+        {label:'Logística',    pct: 5.4, color:'#D6915C'},
+        {label:'Retalho',      pct: 1.2, color:'#7B3008'},
+        {label:'Hotel',        pct: 0.1, color:'#4A4A48'}
+      ];
+
+      const r = 38, cx = 50, cy = 50, stroke = 18;
+      const C = 2 * Math.PI * r;
+      svg.setAttribute('viewBox', '0 0 100 100');
+
+      // background ring
+      const bg = document.createElementNS(SVG_NS, 'circle');
+      bg.setAttribute('cx', cx); bg.setAttribute('cy', cy); bg.setAttribute('r', r);
+      bg.setAttribute('fill', 'none'); bg.setAttribute('stroke', '#F5F2EB'); bg.setAttribute('stroke-width', stroke);
+      svg.appendChild(bg);
+
+      let offset = 0;
+      segments.forEach((s, i) => {
+        const g = document.createElementNS(SVG_NS, 'g');
+        const len = C * (s.pct / 100);
+        const circle = document.createElementNS(SVG_NS, 'circle');
+        circle.setAttribute('cx', cx); circle.setAttribute('cy', cy); circle.setAttribute('r', r);
+        circle.setAttribute('fill', 'none');
+        circle.setAttribute('stroke', s.color);
+        circle.setAttribute('stroke-width', stroke);
+        // start at 12 o'clock by rotating -90° around the center
+        circle.setAttribute('transform', `rotate(-90 ${cx} ${cy})`);
+        circle.setAttribute('stroke-dasharray', `${len.toFixed(2)} ${(C - len).toFixed(2)}`);
+        circle.setAttribute('stroke-dashoffset', (-offset).toFixed(2));
+        g.appendChild(circle);
+        svg.appendChild(g);
+        offset += len;
+      });
+
+      // center caption
+      const t1 = document.createElementNS(SVG_NS, 'text');
+      t1.setAttribute('x', cx); t1.setAttribute('y', cy - 1);
+      t1.setAttribute('text-anchor', 'middle');
+      t1.setAttribute('font-family', 'Montserrat, sans-serif');
+      t1.setAttribute('font-size', '8');
+      t1.setAttribute('font-weight', '500');
+      t1.setAttribute('fill', '#2D2D2C');
+      t1.textContent = 'GFA';
+      svg.appendChild(t1);
+      const t2 = document.createElementNS(SVG_NS, 'text');
+      t2.setAttribute('x', cx); t2.setAttribute('y', cy + 8);
+      t2.setAttribute('text-anchor', 'middle');
+      t2.setAttribute('font-family', 'JetBrains Mono, monospace');
+      t2.setAttribute('font-size', '5.5');
+      t2.setAttribute('fill', '#9A9794');
+      t2.setAttribute('letter-spacing', '0.16em');
+      t2.textContent = '243.552 m²';
+      svg.appendChild(t2);
+
+      // legend
+      segments.forEach(s => {
+        const row = document.createElement('div');
+        const swatch = document.createElement('i');
+        swatch.style.background = s.color;
+        const name = document.createElement('strong');
+        name.textContent = s.label;
+        const pct = document.createElement('span');
+        pct.textContent = s.pct.toFixed(1).replace('.', ',') + '%';
+        row.appendChild(swatch);
+        row.appendChild(name);
+        row.appendChild(pct);
+        legendEl.appendChild(row);
+      });
+    })();
+
+    // ============ DATA SHEETS · KPI → modal with all associated charts ============
+    // Reusable DOM builders (safe: textContent + appendChild, no innerHTML)
+    function buildDonut(segments, centerCap){
+      const wrap = document.createElement('div');
+      wrap.className = 'nx-donut';
+      const SVG_NS = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(SVG_NS, 'svg');
+      svg.setAttribute('class', 'nx-donut__svg');
+      svg.setAttribute('viewBox', '0 0 100 100');
+      const r = 38, cx = 50, cy = 50, stroke = 18;
+      const C = 2 * Math.PI * r;
+      const bg = document.createElementNS(SVG_NS, 'circle');
+      bg.setAttribute('cx', cx); bg.setAttribute('cy', cy); bg.setAttribute('r', r);
+      bg.setAttribute('fill', 'none'); bg.setAttribute('stroke', '#F5F2EB'); bg.setAttribute('stroke-width', stroke);
+      svg.appendChild(bg);
+      let offset = 0;
+      segments.forEach(s => {
+        const g = document.createElementNS(SVG_NS, 'g');
+        const len = C * (s.pct / 100);
+        const c = document.createElementNS(SVG_NS, 'circle');
+        c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r);
+        c.setAttribute('fill', 'none');
+        c.setAttribute('stroke', s.color);
+        c.setAttribute('stroke-width', stroke);
+        c.setAttribute('transform', `rotate(-90 ${cx} ${cy})`);
+        c.setAttribute('stroke-dasharray', `${len.toFixed(2)} ${(C - len).toFixed(2)}`);
+        c.setAttribute('stroke-dashoffset', (-offset).toFixed(2));
+        g.appendChild(c);
+        svg.appendChild(g);
+        offset += len;
+      });
+      if(centerCap){
+        const t = document.createElementNS(SVG_NS, 'text');
+        t.setAttribute('x', cx); t.setAttribute('y', cy + 2);
+        t.setAttribute('text-anchor', 'middle');
+        t.setAttribute('font-family', 'JetBrains Mono, monospace');
+        t.setAttribute('font-size', '6');
+        t.setAttribute('fill', '#9A9794');
+        t.setAttribute('letter-spacing', '0.16em');
+        t.textContent = centerCap;
+        svg.appendChild(t);
+      }
+      wrap.appendChild(svg);
+      const legend = document.createElement('div');
+      legend.className = 'nx-donut__legend';
+      segments.forEach(s => {
+        const row = document.createElement('div');
+        const i = document.createElement('i');
+        i.style.background = s.color;
+        const name = document.createElement('strong');
+        name.textContent = s.label;
+        const pct = document.createElement('span');
+        pct.textContent = s.pct.toFixed(s.pct < 1 ? 1 : 1).replace('.', ',') + '%';
+        row.appendChild(i); row.appendChild(name); row.appendChild(pct);
+        legend.appendChild(row);
+      });
+      wrap.appendChild(legend);
+      return wrap;
+    }
+
+    function buildHbars(opts){
+      // opts = {label, rows: [{cat, val, unit, w, strong}]}
+      const wrap = document.createElement('div');
+      wrap.className = 'nx-hbars';
+      if(opts.label){
+        const l = document.createElement('div');
+        l.className = 'nx-hbars__label';
+        l.textContent = opts.label;
+        wrap.appendChild(l);
+      }
+      opts.rows.forEach(row => {
+        const r = document.createElement('div');
+        r.className = 'nx-hbars__row';
+        const cat = document.createElement('span');
+        cat.className = 'nx-hbars__cat';
+        cat.textContent = row.cat;
+        r.appendChild(cat);
+        const bar = document.createElement('div');
+        bar.className = 'nx-hbars__bar';
+        const fill = document.createElement('div');
+        fill.className = 'nx-hbars__fill' + (row.strong ? ' is-strong' : '');
+        fill.style.setProperty('--w', (row.w || 50) + '%');
+        // when inserted, after a frame trigger transition
+        requestAnimationFrame(() => { fill.style.transform = 'scaleX(1)'; });
+        bar.appendChild(fill);
+        r.appendChild(bar);
+        const val = document.createElement('span');
+        val.className = 'nx-hbars__val';
+        val.textContent = row.val;
+        if(row.unit){
+          const u = document.createElement('span');
+          u.className = 'unit';
+          u.textContent = ' ' + row.unit;
+          val.appendChild(u);
+        }
+        r.appendChild(val);
+        wrap.appendChild(r);
+      });
+      return wrap;
+    }
+
+    function buildPill(opts){
+      // opts = {cap, num, unit, year, note}
+      const pill = document.createElement('div');
+      pill.className = 'nx-pill';
+      if(opts.year){
+        const y = document.createElement('span');
+        y.className = 'nx-pill__year';
+        y.textContent = opts.year;
+        pill.appendChild(y);
+      }
+      const cap = document.createElement('span');
+      cap.className = 'nx-pill__cap';
+      cap.textContent = opts.cap;
+      pill.appendChild(cap);
+      const num = document.createElement('div');
+      num.className = 'nx-pill__num';
+      num.textContent = opts.num;
+      if(opts.unit){
+        const u = document.createElement('span');
+        u.className = 'unit';
+        u.textContent = opts.unit;
+        num.appendChild(u);
+      }
+      pill.appendChild(num);
+      if(opts.note){
+        const n = document.createElement('p');
+        n.className = 'nx-pill__note';
+        n.textContent = opts.note;
+        pill.appendChild(n);
+      }
+      return pill;
+    }
+
+    function buildPanel(opts){
+      // opts = {title, stat, unit, note, body (DOM node)}
+      const p = document.createElement('div');
+      p.className = 'nx-sheet__panel';
+      if(opts.title){
+        const t = document.createElement('div');
+        t.className = 'nx-sheet__panel-title';
+        t.textContent = opts.title;
+        p.appendChild(t);
+      }
+      if(opts.stat){
+        const s = document.createElement('div');
+        s.className = 'nx-sheet__panel-stat';
+        s.textContent = opts.stat;
+        if(opts.unit){
+          const u = document.createElement('span');
+          u.className = 'unit';
+          u.textContent = ' ' + opts.unit;
+          s.appendChild(u);
+        }
+        p.appendChild(s);
+      }
+      if(opts.note){
+        const n = document.createElement('p');
+        n.className = 'nx-sheet__panel-note';
+        n.textContent = opts.note;
+        p.appendChild(n);
+      }
+      if(opts.body) p.appendChild(opts.body);
+      return p;
+    }
+
+    const SHEETS = {
+      energia: {
+        eyebrow: '02.2 — Environmental · Energia',
+        title: 'Consumo energético · 1.501,5 MWh',
+        titleAccent: '−21,1%',
+        lede: 'Redução absoluta de 401 MWh face a 2024 (1.902,5 MWh). Contratos verdes com Garantias de Origem mais produção fotovoltaica on-site.',
+        build: () => {
+          const frag = document.createDocumentFragment();
+          // Row 1: overview donut + renewable pill
+          const r1 = document.createElement('div');
+          r1.className = 'nx-sheet__row nx-sheet__row--2col';
+          r1.appendChild(buildPanel({
+            title: 'Distribuição por atividade · 2025',
+            stat: '1.501,5', unit: 'MWh',
+            body: buildDonut([
+              {label:'Operação Terceiros', pct:60.1, color:'#C85204'},
+              {label:'Operação OIC',       pct:30.6, color:'#A8420A'},
+              {label:'Construção',         pct: 9.3, color:'#EDCCC0'}
+            ], '1.501,5')
+          }));
+          r1.appendChild(buildPill({
+            year:'2025',
+            cap:'Energia renovável integrada',
+            num:'17,2', unit:'%',
+            note:'Garantias de Origem em contratos OIC + produção fotovoltaica on-site no Palacete 31 de Janeiro.'
+          }));
+          frag.appendChild(r1);
+          // Row 2: 3 panels with hbars
+          const r2 = document.createElement('div');
+          r2.className = 'nx-sheet__row nx-sheet__row--3col';
+          r2.appendChild(buildPanel({
+            title:'Operação · Gestão OIC', stat:'458,9', unit:'MWh',
+            note:'Castro Capital SIC — redução de 29,5% face a 2024 (651,0 MWh).',
+            body: buildHbars({
+              label:'Consumo por tipo',
+              rows:[
+                {cat:'Eletricidade', val:'358,1', unit:'MWh', w:78, strong:true},
+                {cat:'Gás natural',  val:'82,4',  unit:'MWh', w:18},
+                {cat:'Combustível',  val:'18,4',  unit:'MWh', w:4}
+              ]
+            })
+          }));
+          r2.appendChild(buildPanel({
+            title:'Operação · Gestão de Terceiros', stat:'902,5', unit:'MWh',
+            note:'Estimativas baseadas em metragens padronizadas e medições reportadas pelos condóminos.',
+            body: buildHbars({
+              label:'Consumo por tipo',
+              rows:[
+                {cat:'Eletricidade', val:'794,2', unit:'MWh', w:88, strong:true},
+                {cat:'Outros',       val:'108,3', unit:'MWh', w:12}
+              ]
+            })
+          }));
+          r2.appendChild(buildPanel({
+            title:'Construção', stat:'140,1', unit:'MWh',
+            note:'SPARK II e The Breeze em obra. Consumo médio de 1,5 MWh/m² de área construída.',
+            body: buildHbars({
+              label:'Consumo por tipo',
+              rows:[
+                {cat:'Eletricidade', val:'86,9', unit:'MWh', w:62, strong:true},
+                {cat:'Gás natural',  val:'39,2', unit:'MWh', w:28},
+                {cat:'Combustível',  val:'14,0', unit:'MWh', w:10}
+              ]
+            })
+          }));
+          frag.appendChild(r2);
+          return frag;
+        }
+      }
+      // água, residuos, mobilidade, scopes → próxima iteração
+    };
+
+    function openSheet(key){
+      const sheet = SHEETS[key];
+      if(!sheet){ console.warn('No sheet for', key); return; }
+      modalContent.replaceChildren();
+      const wrap = document.createElement('div');
+      wrap.className = 'nx-sheet';
+      const eye = document.createElement('div');
+      eye.className = 'nx-sheet__eyebrow';
+      eye.textContent = sheet.eyebrow;
+      wrap.appendChild(eye);
+      const title = document.createElement('h2');
+      title.className = 'nx-sheet__title';
+      title.id = 'modal-title';
+      title.textContent = sheet.title;
+      if(sheet.titleAccent){
+        title.appendChild(document.createTextNode(' · '));
+        const em = document.createElement('em');
+        em.textContent = sheet.titleAccent;
+        title.appendChild(em);
+      }
+      wrap.appendChild(title);
+      if(sheet.lede){
+        const lede = document.createElement('p');
+        lede.className = 'nx-sheet__lede';
+        lede.textContent = sheet.lede;
+        wrap.appendChild(lede);
+      }
+      const body = sheet.build();
+      wrap.appendChild(body);
+      modalContent.appendChild(wrap);
+      openModal();
+    }
+
+    // Wire KPI cards to data sheets
+    document.querySelectorAll('.nx-kpi-card[data-sheet]').forEach(card => {
+      card.addEventListener('click', () => openSheet(card.dataset.sheet));
+    });
 
     // Wire map cities · open modal for those with assets, dim those without
     (function initMap(){
