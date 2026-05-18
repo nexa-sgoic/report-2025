@@ -639,8 +639,8 @@
     .nx-sheet__row{
       display:grid;gap:18px;margin-top:8px;
     }
-    .nx-sheet__row--2col{grid-template-columns:1.2fr 1fr;align-items:start}
-    .nx-sheet__row--3col{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .nx-sheet__row--2col{grid-template-columns:1.2fr 1fr;align-items:stretch}
+    .nx-sheet__row--3col{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}
     @media (max-width:720px){
       .nx-sheet__row--2col, .nx-sheet__row--3col{grid-template-columns:1fr}
     }
@@ -667,7 +667,7 @@
     }
     .nx-sheet__panel-stat .unit{font-size:.45em;color:var(--nx-orange);margin-left:4px;font-weight:var(--nx-w-regular)}
     .nx-sheet__panel-note{color:var(--nx-mute-on-bone);font-size:var(--nx-size-sm);line-height:1.45}
-    .nx-sheet .nx-pill{min-height:140px}
+    .nx-sheet .nx-pill{min-height:240px;height:100%}
 
     @media (max-width:880px){
       .nx-kpi-grid{grid-template-columns:repeat(2,1fr)}
@@ -3017,9 +3017,12 @@
       '.nx-persp, .nx-section[id="social"], .nx-section[id="gov"], ' +
       '.nx-section[id="econ"], .nx-closing, .nx-explore'
     ));
+    // Pure orange surfaces (full-width or wide enough to sit behind the rail).
+    // Chain pause excluded · its dominant background is ink-dark with only a
+    // sutle orange tint — rail stays cream over it via default behavior.
     const orangeSurfaces = Array.from(document.querySelectorAll(
       '.nx-chapcover, .nx-chapdiv, .nx-orangeband, ' +
-      '.nx-chainpause, .nx-stage--orange'
+      '.nx-board__pillquote, .nx-stage--orange'
     ));
 
     function onScroll(){
