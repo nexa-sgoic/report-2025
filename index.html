@@ -267,43 +267,61 @@
     @keyframes nxFadeIn{to{opacity:1}}
 
     /* ============ IMPACT (02) — 198M€ ============ */
-    .nx-impact{align-items:end;padding-block:9vh}
-    .nx-impact__grid{display:grid;grid-template-columns:1fr;gap:clamp(24px,4vh,64px);width:100%;max-width:1440px;margin:0 auto}
+    .nx-impact{align-items:start;padding-block:7vh}
+    .nx-impact__grid{display:grid;grid-template-columns:1fr;gap:clamp(20px,3vh,40px);width:100%;max-width:1440px;margin:0 auto}
     .nx-impact__eyebrow{font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);color:var(--nx-mute-on-bone);letter-spacing:var(--nx-track-caps);text-transform:uppercase}
+    .nx-impact__eyebrow::before{
+      content:"";display:inline-block;width:24px;height:1px;background:var(--nx-orange);
+      vertical-align:middle;margin-right:10px;
+    }
+
+    /* Hero row: map (left) + headline number + lede + 4 metrics (right) */
+    .nx-impact__hero{
+      display:grid;grid-template-columns:0.85fr 1fr;gap:clamp(24px,4vw,64px);align-items:stretch;
+    }
+    .nx-impact__hero .nx-mapwrap{
+      margin-top:0;display:contents;
+    }
+    .nx-impact__panel{display:grid;align-content:center;gap:clamp(14px,2vh,24px)}
     .nx-impact__num{
-      font-size:clamp(4rem, 12vw, 11rem);
+      font-size:clamp(3rem, 8vw, 6.4rem);
       font-weight:var(--nx-w-light);
-      line-height:.86;
+      line-height:.88;
       letter-spacing:-.04em;
       color:var(--nx-ink);
       display:inline-flex;align-items:flex-start;gap:.05em;
       opacity:0;transform:translateX(-40px);transition:transform 1.2s var(--nx-ease-arch), opacity 1.2s var(--nx-ease-out);
     }
-    .nx-impact__num .unit{font-size:.36em;color:var(--nx-orange);margin-top:.18em}
+    .nx-impact__num .unit{font-size:.32em;color:var(--nx-orange);margin-top:.18em;font-weight:var(--nx-w-regular)}
     .nx-impact.is-in .nx-impact__num{opacity:1;transform:translateX(0)}
 
-    .nx-impact__row{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,4vw,80px);align-items:end}
     .nx-impact__lede{
-      font-size:clamp(1.2rem,2.4vw,1.9rem);
+      font-size:clamp(1.05rem,1.6vw,1.35rem);
       font-weight:var(--nx-w-light);letter-spacing:-.01em;
-      max-width:32ch;line-height:1.25;
+      max-width:40ch;line-height:1.35;color:var(--nx-mute-on-bone);
       opacity:0;transform:translateY(20px);transition:transform 1s .4s var(--nx-ease-arch), opacity 1s .4s var(--nx-ease-out);
     }
     .nx-impact.is-in .nx-impact__lede{opacity:1;transform:translateY(0)}
-    .nx-impact__lede em{font-style:normal;color:var(--nx-orange);font-weight:var(--nx-w-regular)}
+    .nx-impact__lede em{font-style:normal;color:var(--nx-ink);font-weight:var(--nx-w-medium)}
 
-    .nx-impact__mini{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .nx-impact__mini > div{
-      padding:18px;background:var(--nx-paper);border:1px solid var(--nx-line);border-radius:var(--nx-r-md);
-      display:grid;gap:6px;
-      opacity:0;transform:translateY(28px);transition:transform .8s var(--nx-ease-arch), opacity .8s var(--nx-ease-out);
+    .nx-impact__metrics{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+      background:var(--nx-line);border:1px solid var(--nx-line);border-radius:var(--nx-r-sm);
+      margin-top:10px;
     }
-    .nx-impact.is-in .nx-impact__mini > div:nth-child(1){transition-delay:.7s}
-    .nx-impact.is-in .nx-impact__mini > div:nth-child(2){transition-delay:.85s}
-    .nx-impact.is-in .nx-impact__mini > div:nth-child(3){transition-delay:1s}
-    .nx-impact.is-in .nx-impact__mini > div{opacity:1;transform:translateY(0)}
-    .nx-impact__mini b{display:block;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:var(--nx-w-light);color:var(--nx-ink);letter-spacing:-.02em;line-height:1}
-    .nx-impact__mini span{font-size:var(--nx-size-2xs);color:var(--nx-mute-on-bone);letter-spacing:var(--nx-track-loose);text-transform:uppercase;font-family:var(--nx-font-mono)}
+    .nx-impact__metrics > div{
+      padding:14px 16px;background:var(--nx-bone);display:flex;flex-direction:column;gap:4px;
+      opacity:0;transform:translateY(16px);
+      transition:transform .8s var(--nx-ease-arch), opacity .8s var(--nx-ease-out);
+    }
+    .nx-impact.is-in .nx-impact__metrics > div{opacity:1;transform:translateY(0)}
+    .nx-impact.is-in .nx-impact__metrics > div:nth-child(1){transition-delay:.55s}
+    .nx-impact.is-in .nx-impact__metrics > div:nth-child(2){transition-delay:.65s}
+    .nx-impact.is-in .nx-impact__metrics > div:nth-child(3){transition-delay:.75s}
+    .nx-impact.is-in .nx-impact__metrics > div:nth-child(4){transition-delay:.85s}
+    .nx-impact__metrics b{display:block;font-size:clamp(1.4rem,2.4vw,2rem);font-weight:var(--nx-w-light);color:var(--nx-ink);letter-spacing:-.02em;line-height:1}
+    .nx-impact__metrics b .unit{font-size:.45em;color:var(--nx-orange);margin-left:3px;font-weight:var(--nx-w-regular)}
+    .nx-impact__metrics span{font-size:var(--nx-size-2xs);color:var(--nx-mute-on-bone);letter-spacing:var(--nx-track-caps);text-transform:uppercase;font-family:var(--nx-font-mono)}
 
     /* X mark watermark on impact */
     .nx-impact__x{
@@ -821,11 +839,12 @@
     .nx-phil--orange .nx-phil__wheat span{background:rgba(255,255,255,.32)}
 
     /* ============ MAP PORTUGAL — aviation-chart style, WGS84 coords ============ */
-    .nx-mapwrap{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,4vw,64px);align-items:stretch;margin-top:32px}
+    .nx-mapwrap{display:grid;grid-template-columns:0.85fr 1fr;gap:clamp(24px,4vw,64px);align-items:stretch;margin-top:32px}
     .nx-map{
-      position:relative;aspect-ratio:3/4;background:var(--nx-paper);
+      position:relative;aspect-ratio:5/7;background:var(--nx-paper);
       border-radius:var(--nx-r-md);overflow:hidden;border:1px solid var(--nx-line);
-      padding:clamp(20px,3vh,40px);
+      padding:clamp(14px,2.4vh,28px);
+      max-width:380px;justify-self:start;width:100%;
     }
     /* corner brackets (aviation chart frame) */
     .nx-map::before, .nx-map::after,
@@ -1030,10 +1049,11 @@
     /* ============ RESPONSIVE ============ */
     @media (max-width:880px){
       .nx-radial, .nx-env{grid-template-columns:1fr;gap:32px}
-      .nx-impact__row{grid-template-columns:1fr}
+      .nx-impact__hero{grid-template-columns:1fr;gap:24px}
+      .nx-impact .nx-map{max-width:340px;margin:0 auto}
       .nx-chap{grid-template-columns:1fr;grid-template-rows:auto auto}
       .nx-chap__left{min-height:50vh}
-      .nx-impact__mini{grid-template-columns:repeat(3,1fr)}
+      .nx-impact__metrics{grid-template-columns:repeat(2,1fr)}
       .nx-impact__x{display:none}
       .nx-chrome{grid-template-columns:auto 1fr;gap:12px}
       .nx-chrome__contact span:last-child{display:none}
@@ -1195,19 +1215,10 @@
       <line x1="42" y1="58" x2="14" y2="86" stroke="currentColor" stroke-width="7"/>
     </svg>
     <div class="nx-impact__grid">
-      <span class="nx-impact__eyebrow" data-i18n="impact.eyebrow">01 — Universo Nexa</span>
-      <div class="nx-impact__row">
-        <div class="nx-impact__num" data-count="198" data-suffix="M€" data-decimals="0">198<span class="unit">M€</span></div>
-        <div class="nx-impact__lede" data-i18n="impact.lede">Ativos imobiliários sob gestão, distribuídos por <em>8 cidades em Portugal</em> através de <em>3 fundos regulados</em> pela CMVM.</div>
-      </div>
-      <div class="nx-impact__mini">
-        <div><b data-count="18" data-decimals="0">18</b><span data-i18n="impact.assets">Ativos imobiliários</span></div>
-        <div><b data-count="10" data-decimals="0">10</b><span data-i18n="impact.team">Colaboradores</span></div>
-        <div><b data-count="3" data-decimals="0">3</b><span data-i18n="impact.funds">OIC sob gestão</span></div>
-      </div>
+      <span class="nx-impact__eyebrow" data-i18n="impact.eyebrow">Universo Nexa</span>
 
-      <!-- Portugal map + macro stats -->
-      <div class="nx-mapwrap">
+      <!-- Hero row: map (left) + headline + lede + 4 KPIs (right) -->
+      <div class="nx-impact__hero">
         <div class="nx-map" id="portugal-map" data-reveal>
           <span class="nx-map__bracket-tr"></span>
           <span class="nx-map__bracket-bl"></span>
@@ -1216,11 +1227,15 @@
           <!-- SVG built dynamically from WGS84 coords (see buildPortugalMap in JS) -->
           <svg id="portugal-svg" viewBox="0 0 300 400" aria-label="Mapa de Portugal continental" preserveAspectRatio="xMidYMid meet"></svg>
         </div>
-        <div class="nx-map__sidestats">
-          <div class="nx-metric"><span class="nx-metric__label" data-i18n="map.aum">Ativos sob gestão</span><span class="nx-metric__value" data-count="198" data-decimals="0">198<span class="unit">M€</span></span></div>
-          <div class="nx-metric"><span class="nx-metric__label" data-i18n="map.cities">Cidades em Portugal</span><span class="nx-metric__value" data-count="8" data-decimals="0">8</span></div>
-          <div class="nx-metric"><span class="nx-metric__label" data-i18n="map.assets">Ativos imobiliários</span><span class="nx-metric__value" data-count="18" data-decimals="0">18</span></div>
-          <div class="nx-metric"><span class="nx-metric__label" data-i18n="map.funds">OIC em gestão</span><span class="nx-metric__value" data-count="3" data-decimals="0">3</span></div>
+        <div class="nx-impact__panel">
+          <div class="nx-impact__num" data-count="198" data-suffix="M€" data-decimals="0">198<span class="unit">M€</span></div>
+          <div class="nx-impact__lede" data-i18n="impact.lede">Ativos imobiliários sob gestão, distribuídos por <em>8 cidades em Portugal</em> através de <em>3 fundos regulados</em> pela CMVM.</div>
+          <div class="nx-impact__metrics">
+            <div><b data-count="18" data-decimals="0">18</b><span data-i18n="impact.assets">Ativos imobiliários</span></div>
+            <div><b data-count="8"  data-decimals="0">8</b><span data-i18n="map.cities">Cidades em Portugal</span></div>
+            <div><b data-count="10" data-decimals="0">10</b><span data-i18n="impact.team">Colaboradores</span></div>
+            <div><b data-count="3"  data-decimals="0">3</b><span data-i18n="impact.funds">OIC sob gestão</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -2254,7 +2269,7 @@
         "hero.quote":"“Good governance and long-term thinking are the foundations of sustainable investment.”",
         "verb.connect":"Connect","verb.invest":"Invest","verb.build":"Build the future",
         "verb.from":"Mensagem do Board","verb.fromName":"Conselho de Administração · 2025","verb.cap":"Tagline",
-        "impact.eyebrow":"01 — Universo Nexa",
+        "impact.eyebrow":"Universo Nexa",
         "impact.lede":"Ativos imobiliários sob gestão, distribuídos por 8 cidades em Portugal através de 3 fundos regulados pela CMVM.",
         "impact.assets":"Ativos imobiliários","impact.team":"Colaboradores","impact.funds":"OIC sob gestão",
         "matrix.eyebrow":"02 — Análise de Dupla Materialidade",
@@ -2352,7 +2367,7 @@
         "hero.quote":"“Good governance and long-term thinking are the foundations of sustainable investment.”",
         "verb.connect":"Connect","verb.invest":"Invest","verb.build":"Build the future",
         "verb.from":"Board Message","verb.fromName":"Board of Directors · 2025","verb.cap":"Tagline",
-        "impact.eyebrow":"01 — The Nexa Universe",
+        "impact.eyebrow":"The Nexa Universe",
         "impact.lede":"Real estate assets under management, across 8 cities in Portugal, through 3 CMVM-regulated funds.",
         "impact.assets":"Real estate assets","impact.team":"Team members","impact.funds":"Funds under management",
         "matrix.eyebrow":"02 — Double Materiality Analysis",
@@ -2579,26 +2594,46 @@
         'Faro':                {lat:37.019, lon:-7.930}
       };
 
-      // Portugal continental silhouette · hand-traced points (lat,lon) along the coast / Spanish border
+      // Portugal continental silhouette · denser hand-traced points along coast / Spanish border
       const SILHOUETTE = [
-        // West coast (top → bottom)
-        [41.85,-8.86],[41.69,-8.83],[41.54,-8.79],[41.40,-8.79],[41.25,-8.74],[41.15,-8.68],
-        [41.06,-8.66],[40.96,-8.65],[40.76,-8.69],[40.65,-8.74],[40.50,-8.78],[40.32,-8.80],
-        [40.19,-8.83],[40.01,-8.86],[39.74,-9.02],[39.51,-9.18],[39.36,-9.32],[39.30,-9.42],
-        [39.10,-9.42],[38.95,-9.40],[38.78,-9.43],[38.68,-9.39],
-        // Lisboa peninsula notch + Setúbal
-        [38.70,-9.18],[38.66,-9.00],[38.51,-8.95],[38.40,-8.86],[38.30,-8.83],
-        [38.05,-8.78],[37.95,-8.80],[37.80,-8.82],[37.65,-8.81],[37.45,-8.83],[37.20,-8.85],
-        // South coast (W → E)
-        [37.04,-8.75],[37.02,-8.40],[37.04,-8.10],[37.04,-7.85],[37.08,-7.62],[37.18,-7.40],
-        // East border (S → N, jagged Spanish frontier)
-        [37.40,-7.36],[37.65,-7.42],[37.90,-7.42],[38.18,-7.32],[38.40,-7.20],[38.50,-7.00],
-        [38.70,-7.00],[38.90,-6.95],[39.15,-7.05],[39.35,-7.30],[39.55,-7.36],[39.78,-7.42],
-        [39.95,-7.30],[40.10,-7.05],[40.25,-6.92],[40.35,-6.92],[40.50,-6.80],[40.75,-6.80],
-        [40.95,-6.85],[41.07,-6.85],[41.25,-6.74],[41.40,-6.55],[41.55,-6.55],[41.65,-6.70],
-        [41.85,-6.85],[41.95,-7.10],[42.05,-7.28],[42.15,-7.45],[42.10,-7.62],[41.98,-7.90],
-        [41.95,-8.10],[41.99,-8.35],[41.95,-8.62],[41.88,-8.80],
-        [41.85,-8.86]
+        // ── North-west corner (Caminha / Rio Minho · border with Galicia) ──
+        [41.87,-8.87],[41.85,-8.86],[41.82,-8.86],
+        // West coast (top → bottom)  — Esposende, Póvoa, Vila do Conde, Porto, Aveiro, Figueira, Nazaré, Peniche
+        [41.69,-8.83],[41.54,-8.79],[41.40,-8.78],[41.36,-8.78],[41.32,-8.77],
+        [41.25,-8.74],[41.15,-8.68],[41.13,-8.67],[41.06,-8.66],[40.96,-8.65],
+        [40.76,-8.69],[40.65,-8.73],[40.50,-8.78],[40.40,-8.80],[40.32,-8.81],
+        [40.19,-8.83],[40.10,-8.85],[40.01,-8.87],[39.85,-8.95],[39.74,-9.02],
+        // Cabo Carvoeiro · Peniche notch
+        [39.62,-9.10],[39.51,-9.18],[39.42,-9.25],[39.36,-9.32],[39.30,-9.42],
+        // Cabo da Roca · westernmost point of continental Europe
+        [39.10,-9.42],[39.00,-9.43],[38.95,-9.42],[38.88,-9.40],[38.78,-9.43],[38.78,-9.50],[38.68,-9.43],
+        // Tejo estuary opening (Lisboa) — sharp inland notch
+        [38.69,-9.30],[38.70,-9.16],[38.70,-9.00],[38.66,-8.90],
+        // Setúbal peninsula · Cabo Espichel + Sado estuary
+        [38.51,-8.95],[38.42,-9.00],[38.40,-8.86],[38.40,-8.80],[38.30,-8.83],
+        // South-west coast (Sines, Cabo de Sines, Vila Nova de Milfontes, Aljezur)
+        [38.05,-8.78],[37.95,-8.80],[37.80,-8.82],[37.65,-8.81],[37.45,-8.83],[37.30,-8.85],
+        [37.20,-8.85],[37.10,-8.85],
+        // ── Cabo de São Vicente (SW corner) ──
+        [37.04,-8.95],[37.00,-8.99],[36.97,-8.95],[36.97,-8.75],
+        // South coast (W → E) — Lagos, Portimão, Albufeira, Faro, Olhão, Tavira, Vila Real Sto António
+        [37.02,-8.55],[37.05,-8.40],[37.07,-8.20],[37.08,-8.10],[37.05,-7.95],[37.05,-7.85],
+        [37.08,-7.62],[37.10,-7.55],[37.18,-7.40],[37.19,-7.40],
+        // ── Foz do Guadiana (south-east corner / Spanish border) ──
+        [37.20,-7.40],[37.25,-7.40],[37.40,-7.36],
+        // East border (S → N) — jagged Spanish frontier (Algarve → Alentejo → Beira → Trás-os-Montes)
+        [37.65,-7.42],[37.90,-7.42],[38.05,-7.35],[38.18,-7.32],[38.30,-7.25],[38.40,-7.20],
+        [38.50,-7.00],[38.60,-6.95],[38.70,-7.00],[38.85,-6.97],[38.90,-6.95],[39.05,-7.00],
+        [39.15,-7.05],[39.25,-7.20],[39.35,-7.30],[39.45,-7.34],[39.55,-7.36],[39.68,-7.40],
+        [39.78,-7.42],[39.88,-7.36],[39.95,-7.30],[40.05,-7.15],[40.10,-7.05],[40.18,-6.95],
+        [40.25,-6.92],[40.35,-6.92],[40.45,-6.85],[40.50,-6.80],[40.65,-6.80],[40.75,-6.80],
+        [40.95,-6.85],[41.07,-6.85],[41.18,-6.78],[41.25,-6.74],[41.35,-6.62],[41.40,-6.55],
+        [41.55,-6.55],[41.65,-6.70],[41.78,-6.78],[41.85,-6.85],[41.90,-6.97],[41.95,-7.10],
+        [42.05,-7.28],[42.10,-7.40],[42.15,-7.45],[42.13,-7.55],[42.10,-7.62],[42.05,-7.75],
+        [41.98,-7.90],[41.95,-8.00],[41.95,-8.10],[41.97,-8.22],[41.99,-8.35],[41.97,-8.50],
+        [41.95,-8.62],[41.92,-8.72],[41.88,-8.80],
+        // close (Caminha)
+        [41.87,-8.87]
       ];
 
       // Build grid (lat/long lines + labels)
