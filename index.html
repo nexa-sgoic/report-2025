@@ -795,8 +795,10 @@
     .nx-chapcover__pattern--squares .sq svg{
       width:100%;height:100%;display:block;overflow:visible;
     }
-    .nx-chapcover__pattern--squares .sq rect{fill:rgba(237,234,227,.62)}
-    .nx-chapcover__pattern--squares .sq .pip{fill:rgba(237,234,227,.85)}
+    /* Lighter orange · approx #E87B3A · achieved via white overlay 38%
+       on the brand orange bg. Pip slightly more opaque to read as core. */
+    .nx-chapcover__pattern--squares .sq rect{fill:rgba(255,255,255,.38)}
+    .nx-chapcover__pattern--squares .sq .pip{fill:rgba(255,255,255,.55)}
 
     /* Diretrizes 2025–2050 · ribbon between persp head and the 3 pillars */
     .nx-persp__marks{
@@ -3309,17 +3311,18 @@
       });
     })();
 
-    // Squares pattern: 7 × 4 tiles. Each tile is an SVG frame of 4 bars
-    // that EXTEND 18% past the box so where they cross at the corners
-    // they overlap into visible plus-marks (the cross shape the user
-    // asked for · was triangle-corners before). Plus a central pip.
+    // Squares pattern: 7 × 4 tiles. Each tile is an SVG frame of 4
+    // separate bars (top, bottom, left, right) that DO NOT touch at the
+    // corners — there's an 18-unit gap in every corner so the orange bg
+    // shows through as 4 little holes per tile. Plus a central pip.
+    // (Was crossing-bars · user clarified they want the gaps visible.)
     (function buildSquaresPatterns(){
-      const SQ_SVG = `<svg viewBox="-18 -18 136 136" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect x="-18" y="0"   width="136" height="16"/>
-        <rect x="-18" y="84"  width="136" height="16"/>
-        <rect x="0"   y="-18" width="16"  height="136"/>
-        <rect x="84"  y="-18" width="16"  height="136"/>
-        <rect class="pip" x="38" y="38" width="24" height="24"/>
+      const SQ_SVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="18" y="0"   width="64" height="16"/>
+        <rect x="18" y="84"  width="64" height="16"/>
+        <rect x="0"  y="18"  width="16" height="64"/>
+        <rect x="84" y="18"  width="16" height="64"/>
+        <rect class="pip" x="42" y="42" width="16" height="16"/>
       </svg>`;
       document.querySelectorAll('.nx-chapcover__pattern--squares').forEach(host => {
         host.replaceChildren();
