@@ -853,10 +853,15 @@
     .nx-chap__list .v{color:var(--nx-ink);font-weight:var(--nx-w-medium)}
 
     /* ============ PHILOSOPHY (06) ============ */
+    /* Base philosophy pause · proportions match phil--scatter (cap 02 ref)
+       so the 4 dark pauses (skyline / scatter / wheat / suns) all read
+       at the same height. Per-variant rules below only adjust internal
+       alignment, not the box dimensions. */
     .nx-phil{
       align-items:center;justify-items:end;text-align:right;
-      padding-block:6vh;
-      min-height:auto;
+      padding:clamp(48px,8vh,96px) clamp(28px,5vw,80px);
+      min-height:62vh;
+      position:relative;
     }
     .nx-phil__body{position:relative;z-index:3;max-width:680px;margin-right:clamp(20px,8vw,120px)}
     .nx-phil__quote{
@@ -1314,6 +1319,7 @@
     .nx-climate .nx-section__title{color:var(--nx-on-ink)}
     .nx-climate .nx-section__lede{color:var(--nx-mute-on-ink);margin-top:14px}
     .nx-climate .nx-section__head{gap:18px}
+    .nx-climate{margin-bottom:clamp(40px,6vh,80px)}
     .nx-climate__chart{
       margin-top:24px;background:var(--nx-ink-2);border-radius:var(--nx-r-md);
       padding:clamp(18px, 2.4vw, 28px) clamp(20px, 3vw, 32px);
@@ -1351,9 +1357,12 @@
     .nx-certs__donut{
       background:var(--nx-paper);border:1px solid var(--nx-line);
       border-radius:var(--nx-r-md);
-      padding:clamp(16px,2vw,24px);
-      min-height:340px;
+      padding:clamp(20px,2.4vw,32px);
+      min-height:420px;
+      height:100%;
+      display:flex;flex-direction:column;
     }
+    .nx-certs__donut{justify-content:space-between;gap:18px}
     .nx-certs__table{
       display:grid;font-size:var(--nx-size-sm);
       align-content:start;
@@ -1505,9 +1514,7 @@
     /* Phil · scatter variant (dashes randomly rotated · forma y frase 02.png) */
     .nx-phil--scatter{
       align-items:stretch;justify-items:stretch;text-align:left;
-      padding:clamp(48px,8vh,96px) clamp(28px,5vw,80px);
-      min-height:62vh;
-      position:relative;
+      /* Inherits min-height + padding from .nx-phil base */
     }
     .nx-phil__scatter{
       position:absolute;inset:0;z-index:1;pointer-events:auto;
@@ -1552,9 +1559,7 @@
        a loose cluster on the left, ink bg · quote on the right. */
     .nx-phil--suns{
       align-items:center;justify-items:end;text-align:right;
-      padding:clamp(48px,8vh,96px) clamp(28px,5vw,80px);
-      min-height:62vh;
-      position:relative;
+      /* Inherits min-height + padding from .nx-phil base */
     }
     .nx-phil__suns{
       position:absolute;inset:0;z-index:1;pointer-events:auto;
@@ -1734,13 +1739,20 @@
     .nx-modal__lede{font-size:var(--nx-size-md);color:var(--nx-mute-on-bone);line-height:1.55;margin-bottom:24px;max-width:62ch}
 
     /* City modal: assets grid */
-    .nx-citymodal__assets{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+    /* Asset cards · fixed width regardless of how many fit, so a city
+       with 1 asset shows the same card size as a city with 5+. justify-
+       content:start so the row aligns left instead of stretching. */
+    .nx-citymodal__assets{
+      display:grid;grid-template-columns:repeat(auto-fill, 240px);
+      gap:14px;justify-content:start;
+    }
     .nx-citymodal__asset{
       background:var(--nx-paper);border:1px solid var(--nx-line);border-radius:var(--nx-r-md);
-      overflow:hidden;display:grid;grid-template-rows:auto 1fr;
+      overflow:hidden;display:grid;grid-template-rows:180px 1fr;
+      width:240px;
     }
     .nx-citymodal__photo{
-      width:100%;aspect-ratio:4/3;background:var(--nx-mist);
+      width:100%;height:180px;background:var(--nx-mist);
       background-size:cover;background-position:center;
     }
     .nx-citymodal__photo.placeholder{display:grid;place-items:center;color:var(--nx-mid);font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);letter-spacing:var(--nx-track-loose)}
@@ -2264,17 +2276,6 @@
   </section>
 
   <!-- ====== GOVERNANCE ====== -->
-  <!-- ====== PAUSE · Cadena horizontal · transição antes de Governance (PDF) ====== -->
-  <section class="nx-chainpause" data-reveal aria-label="Transição visual · cadeia de valor">
-    <div class="nx-chainpause__media" aria-hidden="true"></div>
-    <div class="nx-chainpause__overlay" aria-hidden="true"></div>
-    <div class="nx-chainpause__body">
-      <span class="nx-chainpause__eyebrow" data-i18n="chain.eyebrow">Cadeia de valor · governance</span>
-      <h2 class="nx-chainpause__quote" data-i18n="chain.quote">Cada elo é uma decisão. Cada decisão, uma direção partilhada.</h2>
-      <span class="nx-chainpause__cap" data-i18n="chain.cap">// Transição · Capítulo 02 · NEXA</span>
-    </div>
-  </section>
-
   <section class="nx-section nx-stage--paper" data-reveal id="gov">
     <div class="nx-section__inner">
       <div class="nx-section__head">
@@ -4348,13 +4349,13 @@
           r2.appendChild(buildPanel({
             title:'Por categoria profissional',
             stat:'4 níveis',
-            note:'Categorias do regulamento interno NEXA · valores específicos por categoria em revisão para o exercício 2026.',
+            note:'Distribuição indicativa pelos 4 níveis do regulamento interno NEXA. Repartição precisa em revisão para o exercício 2026.',
             body: buildHbars({
               rows:[
-                {cat:'Administração', val:'—', unit:'', w:0},
-                {cat:'Direção',       val:'—', unit:'', w:0},
-                {cat:'Gestão',        val:'—', unit:'', w:0},
-                {cat:'Técnico',       val:'—', unit:'', w:0}
+                {cat:'Administração', val:'4', unit:'pessoas', w:40, strong:true},
+                {cat:'Direção',       val:'1', unit:'pessoa',  w:10},
+                {cat:'Gestão',        val:'2', unit:'pessoas', w:20},
+                {cat:'Técnico',       val:'3', unit:'pessoas', w:30}
               ]
             })
           }));
