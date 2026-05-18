@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,700&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="nx-tokens.css">
   <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%2303020C"/><g stroke="%23C85204" stroke-width="14" stroke-linecap="square"><line x1="20" y1="20" x2="44" y2="44"/><line x1="80" y1="20" x2="56" y2="44"/><line x1="56" y1="56" x2="80" y2="80"/><line x1="44" y1="56" x2="20" y2="80"/></g></svg>'>
   <style>
@@ -165,14 +165,16 @@
     .nx-bar.is-touched{background:var(--nx-orange)}
 
     /* Title strokes layer (110 sticks explode → assemble) */
-    /* Title-liquid iframe sits in the hero body, behind everything else */
-    .nx-hero__title-iframe{
-      position:absolute;inset:0;width:100%;height:100%;
-      border:0;pointer-events:none;
-      opacity:1;transition:opacity 700ms var(--nx-ease-out);
-      z-index:2;
+    .nx-hero__titlelayer{position:absolute;inset:0;pointer-events:none}
+    .nx-ts{
+      position:absolute;left:0;top:0;
+      height:5px;background:var(--nx-on-ink);
+      transform-origin:0 50%;border-radius:1.5px;
+      will-change:transform,opacity;
+      transition:transform 1800ms cubic-bezier(0.65, 0, 0.2, 1),opacity 1300ms ease;
+      opacity:0;
     }
-    .nx-hero__title-iframe.is-faded{opacity:0;pointer-events:none}
+    .nx-hero__titlelayer.is-faded .nx-ts{opacity:0!important;transition:opacity 900ms ease}
 
     /* Clean Montserrat title · fades in after strokes settle */
     .nx-hero__titlefinal{
@@ -702,87 +704,6 @@
     .nx-phil.is-in .nx-phil__skyline .bar:hover{
       transform:scaleY(1.6);background:var(--nx-orange);
       transition:transform .35s var(--nx-ease-spring), background-color .2s;
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════
-       NEXA · Liquid Data · 3 generative pauses (full-bleed iframes)
-       ─────────────────────────────────────────────────────────────────
-       Each pause is a 100vh full-bleed section. Background canvas comes
-       from a sandboxed iframe (no pointer events, lazy-loaded, paused
-       when off-screen). Display text floats above in Fraunces italic.
-       ═══════════════════════════════════════════════════════════════════ */
-    .nx-pause{
-      position:relative;
-      width:100vw; height:100vh; min-height:560px;
-      margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
-      overflow:hidden;
-      background:var(--nx-brand-ink);
-      display:grid;
-      isolation:isolate;
-    }
-    .nx-pause[data-pause="bloom"]{background:#0A0814}
-    .nx-pause[data-pause="dissolution"]{background:var(--nx-brand-ink)}
-
-    .nx-pause__iframe{
-      position:absolute;inset:0;width:100%;height:100%;
-      border:0;pointer-events:none;
-      opacity:0;transition:opacity 1.2s var(--nx-ease-out);
-      z-index:1;
-    }
-    .nx-pause.is-in .nx-pause__iframe{opacity:1}
-
-    .nx-pause__xmark{
-      position:absolute;left:clamp(28px,4vw,72px);top:clamp(36px,6vh,72px);
-      width:42px;height:42px;
-      color:var(--nx-orange);opacity:.55;z-index:3;pointer-events:none;
-    }
-    .nx-pause[data-pause="dissolution"] .nx-pause__xmark{color:var(--nx-orange-soft);opacity:.65}
-
-    .nx-pause__body{
-      position:absolute;
-      left:clamp(28px,8vw,140px);
-      bottom:clamp(48px,12vh,140px);
-      max-width:min(720px, 70vw);
-      z-index:2;
-      display:flex;flex-direction:column;gap:22px;
-      pointer-events:auto;
-    }
-    /* The quote sits in Fraunces italic light — display elegance, NOT Inter */
-    .nx-pause__quote{
-      font-family:'Fraunces', 'Cormorant Garamond', 'GT Sectra', 'Tiempos Headline', Georgia, serif;
-      font-weight:300;font-style:italic;
-      font-size:clamp(1.4rem, 3vw, 2.6rem);
-      line-height:1.18;letter-spacing:-.012em;
-      color:rgba(237, 234, 227, 0.96);
-      margin:0;
-      opacity:0;transform:translateY(28px);
-      will-change:transform, opacity;
-    }
-    .nx-pause__cap{
-      font-family:var(--nx-font-mono);font-size:11px;
-      letter-spacing:.22em;text-transform:uppercase;
-      color:var(--nx-orange);
-      margin:0;
-      opacity:0;transform:translateY(14px);
-      will-change:transform, opacity;
-    }
-    .nx-pause[data-pause="dissolution"] .nx-pause__cap{color:var(--nx-orange-soft)}
-    .nx-pause__cap::before{
-      content:"";display:inline-block;width:32px;height:1px;
-      background:currentColor;vertical-align:middle;margin-right:14px;opacity:.6;
-    }
-
-    /* Reveal states · controlled by motion.dev when section enters viewport.
-       Fallback if motion.dev fails to load: data-reveal already triggers
-       opacity:1 via the existing IntersectionObserver below. */
-    .nx-pause.is-in .nx-pause__quote{opacity:1;transform:translateY(0);transition:opacity 1.4s var(--nx-ease-out), transform 1.4s var(--nx-ease-arch)}
-    .nx-pause.is-in .nx-pause__cap{opacity:1;transform:translateY(0);transition:opacity 1s .6s var(--nx-ease-out), transform 1s .6s var(--nx-ease-arch)}
-
-    /* Mobile: smaller text, no fixed min-height issues */
-    @media (max-width: 880px){
-      .nx-pause{height:auto;min-height:70vh;padding:80px 0}
-      .nx-pause__body{left:24px;right:24px;bottom:48px;max-width:none}
-      .nx-pause__quote{font-size:clamp(1.2rem, 5vw, 1.8rem)}
     }
 
     /* ============ EXPLORE (07) — CHAPTER CARDS ============ */
@@ -1486,8 +1407,8 @@
       .nx-esg-strip{grid-template-columns:1fr;gap:8px;padding:32px 20px}
       .nx-foot__contact{grid-template-columns:1fr;gap:24px}
       .nx-foot__bottom{flex-direction:column;gap:12px}
-      /* Hero mobile · skip title canvas, simplify layout, hide cursor */
-      .nx-hero__title-iframe{display:none}
+      /* Hero mobile · skip strokes animation, simplify layout, hide cursor */
+      .nx-hero__titlelayer{display:none}
       .nx-hero__titlefinal{opacity:1;font-size:clamp(28px,7.5vw,46px);top:84px;max-width:88vw;left:20px;line-height:1.05}
       .nx-hero__belowtitle{top:auto;bottom:160px;left:20px;max-width:90vw}
       .nx-hero__year{font-size:clamp(48px,13vw,80px);margin-bottom:14px;animation-delay:600ms}
@@ -1573,12 +1494,8 @@
     <div class="nx-hero__parallax" id="hero-parallax">
       <div class="nx-hero__skyline" id="hero-skyline"></div>
 
-      <!-- Title emerges from density · Liquid Data title canvas (~3500ms) -->
-      <iframe class="nx-hero__title-iframe" id="hero-title-iframe"
-              src="art/embed-title-liquid.html?lang=pt"
-              loading="eager"
-              tabindex="-1"
-              aria-hidden="true"></iframe>
+      <!-- 110 strokes explode → assemble into title -->
+      <div class="nx-hero__titlelayer" id="hero-titlelayer" aria-hidden="true"></div>
 
       <!-- Clean Montserrat title · crossfades in after strokes settle -->
       <h1 class="nx-hero__titlefinal" id="hero-titlefinal">
@@ -1704,18 +1621,18 @@
     </div>
   </section>
 
-  <!-- ====== PAUSE I · CURRENTS · "Analisar com rigor..." (Liquid Data) ====== -->
-  <section class="nx-pause" data-pause="currents" data-reveal id="phil-1">
-    <iframe class="nx-pause__iframe" data-iframe-src="art/embed-pause-1-currents.html" loading="lazy" tabindex="-1" aria-label="Pausa visual generativa I · Currents · campo de flujo lento sobre fondo ink"></iframe>
-    <svg class="nx-pause__xmark" viewBox="0 0 100 100" aria-hidden="true">
+  <!-- ====== PHILOSOPHY pg 8 · "Analisar com rigor..." ====== -->
+  <section class="nx-stage nx-stage--ink nx-phil" data-reveal id="phil-1">
+    <svg class="nx-phil__xmark" viewBox="0 0 100 100" aria-hidden="true">
       <line x1="14" y1="14" x2="42" y2="42" stroke="currentColor" stroke-width="8"/>
       <line x1="58" y1="58" x2="86" y2="86" stroke="currentColor" stroke-width="8"/>
       <line x1="86" y1="14" x2="58" y2="42" stroke="currentColor" stroke-width="8"/>
       <line x1="42" y1="58" x2="14" y2="86" stroke="currentColor" stroke-width="8"/>
     </svg>
-    <div class="nx-pause__body">
-      <p class="nx-pause__quote" data-i18n="phil1.quote">Analisar com rigor. Gerir com propósito. Construir para durar. Cada fundo, cada ativo, cada decisão reflete uma visão de longo prazo sobre aquilo que o mercado imobiliário pode e deve ser.</p>
-      <p class="nx-pause__cap" data-i18n="phil1.cap">// Filosofia · Capítulo 01 · NEXA · Liquid Data I</p>
+    <div class="nx-phil__skyline" data-skyline="1"></div>
+    <div class="nx-phil__body">
+      <p class="nx-phil__quote" data-i18n="phil1.quote">Analisar com rigor. Gerir com propósito. Construir para durar. Cada fundo, cada ativo, cada decisão reflete uma visão de longo prazo sobre aquilo que o mercado imobiliário pode e deve ser.</p>
+      <p class="nx-phil__cap" data-i18n="phil1.cap">// Filosofia · Capítulo 01 · NEXA</p>
     </div>
   </section>
 
@@ -1876,8 +1793,19 @@
 
   <!-- (env-detail + orangeband removed · their content now lives inside the KPI data sheets) -->
 
-  <!-- (4th philosophy section removed · only 3 Liquid Data pauses kept) -->
-  <section style="display:none" id="phil" aria-hidden="true"><div>
+  <!-- ====== 05 PHILOSOPHY ====== -->
+  <section class="nx-stage nx-stage--ink nx-phil" data-reveal id="phil">
+    <svg class="nx-phil__xmark" viewBox="0 0 100 100" aria-hidden="true">
+      <line x1="14" y1="14" x2="42" y2="42" stroke="currentColor" stroke-width="8"/>
+      <line x1="58" y1="58" x2="86" y2="86" stroke="currentColor" stroke-width="8"/>
+      <line x1="86" y1="14" x2="58" y2="42" stroke="currentColor" stroke-width="8"/>
+      <line x1="42" y1="58" x2="14" y2="86" stroke="currentColor" stroke-width="8"/>
+    </svg>
+    <div class="nx-phil__skyline" id="phil-skyline"></div>
+    <div class="nx-phil__body">
+      <p class="nx-phil__quote" data-i18n="phil.quote">A sustentabilidade não é apenas uma meta a alcançar. É a forma como a NEXA decide, constrói e lidera todos os dias.</p>
+      <p class="nx-phil__cap" data-i18n="phil.cap">// Filosofia · Capítulo 02 · Situação Atual</p>
+    </div>
   </section>
 
   <!-- ====== SOCIAL — 4 KPI cards → data sheets ====== -->
@@ -1948,18 +1876,18 @@
     </div>
   </section>
 
-  <!-- ====== PAUSE II · BLOOM · "Para a NEXA, o investimento sustentável..." (Liquid Data) ====== -->
-  <section class="nx-pause" data-pause="bloom" data-reveal id="phil-2">
-    <iframe class="nx-pause__iframe" data-iframe-src="art/embed-pause-2-bloom.html" loading="lazy" tabindex="-1" aria-label="Pausa visual generativa II · Bloom · floración desde el centro sobre fondo abismo"></iframe>
-    <svg class="nx-pause__xmark" viewBox="0 0 100 100" aria-hidden="true">
+  <!-- ====== PHILOSOPHY pg 28 · "Para a NEXA, o investimento sustentável..." ====== -->
+  <section class="nx-stage nx-stage--ink nx-phil nx-phil--wheat" data-reveal id="phil-2">
+    <svg class="nx-phil__xmark" viewBox="0 0 100 100" aria-hidden="true">
       <line x1="14" y1="14" x2="42" y2="42" stroke="currentColor" stroke-width="8"/>
       <line x1="58" y1="58" x2="86" y2="86" stroke="currentColor" stroke-width="8"/>
       <line x1="86" y1="14" x2="58" y2="42" stroke="currentColor" stroke-width="8"/>
       <line x1="42" y1="58" x2="14" y2="86" stroke="currentColor" stroke-width="8"/>
     </svg>
-    <div class="nx-pause__body">
-      <p class="nx-pause__quote" data-i18n="phil2.quote">Para a NEXA, o investimento sustentável assenta em dois pilares: boa governação e visão de longo prazo.</p>
-      <p class="nx-pause__cap" data-i18n="phil2.cap">// Filosofia · Capítulo 02 · Governance · Liquid Data II</p>
+    <div class="nx-phil__wheat" data-wheat="1"></div>
+    <div class="nx-phil__body">
+      <p class="nx-phil__quote" data-i18n="phil2.quote">Para a NEXA, o investimento sustentável assenta em dois pilares: boa governação e visão de longo prazo.</p>
+      <p class="nx-phil__cap" data-i18n="phil2.cap">// Filosofia · Capítulo 02 · Governance</p>
     </div>
   </section>
 
@@ -2202,18 +2130,18 @@
     </div>
   </section>
 
-  <!-- ====== PAUSE III · DISSOLUTION · "A confiança é o resultado..." (Liquid Data) ====== -->
-  <section class="nx-pause" data-pause="dissolution" data-reveal id="phil-3">
-    <iframe class="nx-pause__iframe" data-iframe-src="art/embed-pause-3-dissolution.html" loading="lazy" tabindex="-1" aria-label="Pausa visual generativa III · Dissolution · disolución hacia los bordes en peach sobre ink"></iframe>
-    <svg class="nx-pause__xmark" viewBox="0 0 100 100" aria-hidden="true">
-      <line x1="14" y1="14" x2="42" y2="42" stroke="currentColor" stroke-width="8"/>
-      <line x1="58" y1="58" x2="86" y2="86" stroke="currentColor" stroke-width="8"/>
-      <line x1="86" y1="14" x2="58" y2="42" stroke="currentColor" stroke-width="8"/>
-      <line x1="42" y1="58" x2="14" y2="86" stroke="currentColor" stroke-width="8"/>
+  <!-- ====== PHILOSOPHY pg 35 · "A confiança é o resultado..." ====== -->
+  <section class="nx-stage nx-stage--ink nx-phil nx-phil--orange" data-reveal id="phil-3" style="background:var(--nx-orange)">
+    <svg class="nx-phil__xmark" viewBox="0 0 100 100" aria-hidden="true">
+      <line x1="14" y1="14" x2="42" y2="42" stroke="#fff" stroke-width="8"/>
+      <line x1="58" y1="58" x2="86" y2="86" stroke="#fff" stroke-width="8"/>
+      <line x1="86" y1="14" x2="58" y2="42" stroke="#fff" stroke-width="8"/>
+      <line x1="42" y1="58" x2="14" y2="86" stroke="#fff" stroke-width="8"/>
     </svg>
-    <div class="nx-pause__body">
-      <p class="nx-pause__quote" data-i18n="phil3.quote">A confiança é o resultado da ética, inovação, sustentabilidade, compromisso e excelência. Cinco valores que a NEXA assume, em cada decisão, todos os dias.</p>
-      <p class="nx-pause__cap" data-i18n="phil3.cap">// Filosofia · Capítulo 03 · Connect, Invest, Build the future · Liquid Data III</p>
+    <div class="nx-phil__skyline" data-skyline="3"></div>
+    <div class="nx-phil__body">
+      <p class="nx-phil__quote" style="color:#fff" data-i18n="phil3.quote">A confiança é o resultado da ética, inovação, sustentabilidade, compromisso e excelência. Cinco valores que a NEXA assume, em cada decisão, todos os dias.</p>
+      <p class="nx-phil__cap" style="color:rgba(255,255,255,.7)" data-i18n="phil3.cap">// Filosofia · Capítulo 03 · Connect, Invest, Build the future</p>
     </div>
   </section>
 
@@ -2333,56 +2261,126 @@
       el.addEventListener('mouseleave', () => cursorX && cursorX.classList.remove('is-hot'));
     });
 
-    // ============ Hero choreography · Liquid Data title + skyline bars + cursor proximity ============
+    // ============ Hero choreography · title strokes + skyline bars + cursor proximity ============
     (function setupHero(){
       const hero = document.querySelector('.nx-hero');
       if(!hero) return;
 
-      const titleIframe = document.getElementById('hero-title-iframe');
-      const titleFinal  = document.getElementById('hero-titlefinal');
-      const centerX     = document.getElementById('hero-centerx');
-      const skylineEl   = document.getElementById('hero-skyline');
-      const isMobile    = matchMedia('(max-width: 880px)').matches;
-      const isReduced   = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // ─── Letter geometry (each letter = list of strokes in 0.7×1.0 normalized box) ───
+      const LETTERS = {
+        'R':[[0,0,0,1],[0,0,0.7,0],[0.7,0,0.7,0.5],[0,0.5,0.7,0.5],[0,0.5,0.7,1]],
+        'E':[[0,0,0,1],[0,0,0.7,0],[0,0.5,0.6,0.5],[0,1,0.7,1]],
+        'L':[[0,0,0,1],[0,1,0.7,1]],
+        'A':[[0,1,0.35,0],[0.35,0,0.7,1],[0.13,0.6,0.57,0.6]],
+        'T':[[0,0,0.7,0],[0.35,0,0.35,1]],
+        'Ó':[[0,0,0.7,0],[0.7,0,0.7,1],[0.7,1,0,1],[0,1,0,0],[0.28,-0.22,0.5,-0.05]],
+        'O':[[0,0,0.7,0],[0.7,0,0.7,1],[0.7,1,0,1],[0,1,0,0]],
+        'I':[[0.35,0,0.35,1]],
+        'D':[[0,0,0,1],[0,0,0.5,0],[0.5,0,0.7,0.2],[0.7,0.2,0.7,0.8],[0.7,0.8,0.5,1],[0,1,0.5,1]],
+        'S':[[0.7,0,0,0],[0,0,0,0.5],[0,0.5,0.7,0.5],[0.7,0.5,0.7,1],[0.7,1,0,1]],
+        'U':[[0,0,0,0.8],[0,0.8,0.15,1],[0.15,1,0.55,1],[0.55,1,0.7,0.8],[0.7,0.8,0.7,0]],
+        'N':[[0,0,0,1],[0,0,0.7,1],[0.7,0,0.7,1]],
+        'B':[[0,0,0,1],[0,0,0.55,0],[0.55,0,0.7,0.15],[0.7,0.15,0.7,0.35],[0.7,0.35,0.55,0.5],[0,0.5,0.55,0.5],[0.55,0.5,0.7,0.65],[0.7,0.65,0.7,0.85],[0.7,0.85,0.55,1],[0,1,0.55,1]],
+        'P':[[0,0,0,1],[0,0,0.55,0],[0.55,0,0.7,0.15],[0.7,0.15,0.7,0.35],[0.7,0.35,0.55,0.5],[0,0.5,0.55,0.5]],
+        'Y':[[0,0,0.35,0.5],[0.7,0,0.35,0.5],[0.35,0.5,0.35,1]],
+        ' ':[]
+      };
 
-      // Set the iframe language from saved preference (so the title-liquid
-      // mask uses the matching letterforms)
-      if(titleIframe){
+      const titleLayer = document.getElementById('hero-titlelayer');
+      const titleFinal = document.getElementById('hero-titlefinal');
+      const centerX = document.getElementById('hero-centerx');
+      const skylineEl = document.getElementById('hero-skyline');
+      let strokes = [];
+
+      function buildTitle(){
+        if(!titleLayer) return;
+        titleLayer.replaceChildren();
+        strokes = [];
+        const W = innerWidth, H = innerHeight;
+        const targetWidth = W * 0.48;
+        const U = Math.min(86, Math.max(40, targetWidth / 13.6));
+        const advance = U * 0.78;
+        const spaceW  = U * 0.45;
+        const lineH   = U * 1.30;
+        const startX  = Math.max(24, W * 0.045);
+        const startY  = Math.max(24, H * 0.16);
         const lang = localStorage.getItem('nx-lang') || 'pt';
-        // Only set src once · don't reload on every JS pass
-        try {
-          const url = new URL(titleIframe.src, location.href);
-          if(url.searchParams.get('lang') !== lang){
-            url.searchParams.set('lang', lang);
-            titleIframe.src = url.toString();
+        const TITLE_LINES = lang === 'en'
+          ? ['SUSTAINABILITY', 'REPORT']
+          : ['RELATÓRIO DE', 'SUSTENTABILIDADE'];
+
+        TITLE_LINES.forEach((line, li) => {
+          let cx = startX;
+          const cy = startY + li * lineH;
+          for(let i = 0; i < line.length; i++){
+            const ch = line[i];
+            const letter = LETTERS[ch];
+            if(letter && letter.length){
+              for(const seg of letter){
+                const x1 = cx + seg[0] * U;
+                const y1 = cy + seg[1] * U;
+                const x2 = cx + seg[2] * U;
+                const y2 = cy + seg[3] * U;
+                const dx = x2 - x1, dy = y2 - y1;
+                const len = Math.hypot(dx, dy);
+                const ang = Math.atan2(dy, dx) * 180 / Math.PI;
+                const initX = Math.random() * W;
+                const initY = Math.random() * H;
+                const initRot = (Math.random() - 0.5) * 720;
+                const initScale = 0.4 + Math.random() * 0.8;
+                const delay = 400 + Math.random() * 1200;
+                const el = document.createElement('div');
+                el.className = 'nx-ts';
+                el.style.width = len + 'px';
+                el.style.transform = `translate(${initX}px, ${initY}px) rotate(${initRot}deg) scale(${initScale})`;
+                titleLayer.appendChild(el);
+                strokes.push({el, x1, y1, len, ang, delay});
+              }
+              cx += advance;
+            } else if(ch === ' '){
+              cx += spaceW;
+            }
           }
-        } catch(e){}
+        });
+
+        strokes.forEach(s => {
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              s.el.style.transform = `translate(${s.x1}px, ${s.y1}px) rotate(${s.ang}deg) scale(1)`;
+              s.el.style.opacity = '1';
+            }, s.delay);
+          });
+        });
       }
 
-      function settleTitle(){
-        if(titleIframe) titleIframe.classList.add('is-faded');
-        if(titleFinal)  titleFinal.classList.add('is-shown');
-      }
+      const isMobile = matchMedia('(max-width: 880px)').matches;
 
-      // The embed will postMessage('nx-title-settled') when its 3.5s
-      // emergence finishes · we crossfade the iframe out + the <h1> in.
-      addEventListener('message', (e) => {
-        if(e && e.data && e.data.type === 'nx-title-settled') settleTitle();
+      function runTitleSequence(){
+        if(!titleFinal) return;
+        if(isMobile || isTouch){
+          // Mobile: skip strokes animation, show clean title immediately
+          if(titleLayer) titleLayer.classList.add('is-faded');
+          titleFinal.classList.add('is-shown');
+        } else {
+          buildTitle();
+          titleFinal.classList.remove('is-shown');
+          titleLayer.classList.remove('is-faded');
+          setTimeout(() => {
+            titleLayer.classList.add('is-faded');
+            titleFinal.classList.add('is-shown');
+          }, 3000);
+        }
+        if(centerX){
+          setTimeout(() => centerX.classList.add('is-idle'), 3100);
+        }
+      }
+      runTitleSequence();
+
+      addEventListener('resize', () => {
+        if(!isMobile && !isTouch) buildTitle();
+        if(titleLayer) titleLayer.classList.add('is-faded');
+        if(titleFinal) titleFinal.classList.add('is-shown');
       });
-
-      // Fallback safety net: show the h1 after 4.5s no matter what
-      // (in case the iframe fails to load or postMessage is blocked)
-      setTimeout(settleTitle, 4500);
-
-      // On mobile / reduced motion · skip the canvas emergence and show
-      // the h1 immediately; the iframe will pre-bake one static frame.
-      if(isMobile || isReduced || isTouch){
-        setTimeout(settleTitle, 600);
-      }
-
-      if(centerX){
-        setTimeout(() => centerX.classList.add('is-idle'), 3100);
-      }
 
       // ─── Skyline bars (16 with fixed coords, cascade entry, cursor proximity = spin + orange) ───
       const BARS = [
@@ -4130,75 +4128,6 @@
       }, {passive:true});
       foot.style.cursor = 'none';
       foot.addEventListener('click', trigger);
-    })();
-
-    // ============ Liquid Data pause manager · iframe pause/resume + reveal ============
-    // Only one canvas runs at a time (3 simultaneous p5 sketches would tank mobile).
-    // IntersectionObserver triggers (a) deferred iframe src load, (b) resume / pause
-    // postMessage, and (c) the 'is-in' class for the text reveal.
-    (function setupPauseManager(){
-      const pauses = Array.from(document.querySelectorAll('.nx-pause'));
-      if(!pauses.length) return;
-      let active = null;
-
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(en => {
-          const sec = en.target;
-          const iframe = sec.querySelector('.nx-pause__iframe');
-          if(!iframe) return;
-          if(en.isIntersecting){
-            sec.classList.add('is-in');
-            // Deferred src · only when the user is about to see the pause
-            if(!iframe.src && iframe.dataset.iframeSrc){
-              iframe.src = iframe.dataset.iframeSrc;
-            }
-            // Pause the previously-active pause, resume this one
-            if(active && active !== iframe){
-              try { active.contentWindow.postMessage({type:'pause'}, '*'); } catch(e){}
-            }
-            try { iframe.contentWindow.postMessage({type:'resume'}, '*'); } catch(e){}
-            active = iframe;
-          } else {
-            // Off-screen · ask the canvas to pause to save battery
-            try { iframe.contentWindow.postMessage({type:'pause'}, '*'); } catch(e){}
-            if(active === iframe) active = null;
-          }
-        });
-      }, { threshold: 0.35, rootMargin: '-10% 0px -10% 0px' });
-
-      pauses.forEach(p => io.observe(p));
-    })();
-
-    // ============ Motion.dev stagger reveals · scroll-trigger ============
-    // Loaded as ES module from CDN. If the network blocks or the user has
-    // reduced-motion enabled, the CSS .is-in transitions take over.
-    (function loadMotionReveals(){
-      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(reduced) return;  // CSS handles it · skip the dynamic library
-
-      // Use a dynamic <script type="module"> so older browsers that lack
-      // module support gracefully fall back to CSS reveals.
-      const script = document.createElement('script');
-      script.type = 'module';
-      script.textContent = `
-        import('https://cdn.jsdelivr.net/npm/motion@10.18/+esm').then(({ animate, inView }) => {
-          document.querySelectorAll('.nx-pause').forEach(sec => {
-            const quote = sec.querySelector('.nx-pause__quote');
-            const cap   = sec.querySelector('.nx-pause__cap');
-            if(!quote || !cap) return;
-            // Pre-stage (CSS already does this, but be explicit so motion can animate from these values)
-            quote.style.opacity = '0'; quote.style.transform = 'translateY(28px)';
-            cap.style.opacity   = '0'; cap.style.transform   = 'translateY(14px)';
-            inView(sec, () => {
-              animate(quote, { opacity: 1, transform: 'translateY(0px)' },
-                { duration: 1.4, easing: [0.2, 0.7, 0.2, 1] });
-              animate(cap, { opacity: 1, transform: 'translateY(0px)' },
-                { duration: 1.0, delay: 0.6, easing: [0.2, 0.7, 0.2, 1] });
-            }, { margin: '-25% 0px -25% 0px' });
-          });
-        }).catch(() => { /* CSS fallback already in place */ });
-      `;
-      document.body.appendChild(script);
     })();
   })();
   </script>
