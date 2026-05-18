@@ -156,10 +156,10 @@
     /* Skyline bars · color-inverted */
     .nx-hero__skyline{position:absolute;inset:0;pointer-events:none}
     .nx-bar{
-      position:absolute;height:18px;background:#1A1A18;
+      position:absolute;height:24px;background:#1A1A18;
       transform-origin:50% 50%;
       will-change:transform,opacity,background-color;
-      border-radius:1px;
+      border-radius:2px;
       transition:background-color 240ms var(--nx-ease-out);
     }
     .nx-bar.is-touched{background:var(--nx-orange)}
@@ -1494,7 +1494,7 @@
       .nx-hero__centerx.is-idle{animation:nxXIdleMobile 8s ease-in-out infinite}
       @keyframes nxXIdleMobile{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.03) rotate(0.6deg)}}
       /* Skyline bars mobile: keep but lighter (8 instead of 16 would need JS — keep all but smaller height) */
-      .nx-bar{height:12px}
+      .nx-bar{height:16px}
       .nx-board__body{grid-template-columns:1fr}
       .nx-people__board{grid-template-columns:repeat(2,1fr)}
       .nx-persp__pillars{grid-template-columns:1fr}
@@ -2468,12 +2468,20 @@
         if(titleFinal) titleFinal.classList.add('is-shown');
       });
 
-      // ─── Skyline bars (16 with fixed coords, cascade entry, cursor proximity = spin + orange) ───
+      // ─── Hero bars · diagonal SW→NE cascade (per forma pagina inicial.png) ───
+      // 10 horizontal bars rising from the bottom-left to the top-right.
+      // All share the same -16° rotation so they read as a single diagonal band.
       const BARS = [
-        {x:60,y:12,w:22,r:-26},{x:73,y:19,w:14,r:-26},{x:54,y:22,w:20,r:-26},{x:68,y:28,w:18,r:-26},
-        {x:48,y:34,w:22,r:-25},{x:64,y:40,w:22,r:-25},{x:52,y:46,w:24,r:-25},{x:70,y:52,w:22,r:-24},
-        {x:56,y:58,w:28,r:-23},{x:72,y:62,w:20,r:-23},{x:50,y:68,w:30,r:-22},{x:66,y:74,w:26,r:-22},
-        {x:54,y:80,w:32,r:-20},{x:70,y:86,w:26,r:-18},{x:60,y:92,w:32,r:-18},{x:78,y:96,w:22,r:-16}
+        {x: 2,  y: 86, w: 18, r: -16},
+        {x: 10, y: 78, w: 20, r: -16},
+        {x: 16, y: 70, w: 22, r: -16},
+        {x: 24, y: 62, w: 22, r: -16},
+        {x: 32, y: 54, w: 24, r: -16},
+        {x: 40, y: 46, w: 24, r: -16},
+        {x: 50, y: 38, w: 22, r: -16},
+        {x: 60, y: 30, w: 22, r: -16},
+        {x: 70, y: 22, w: 20, r: -16},
+        {x: 78, y: 14, w: 20, r: -16}
       ];
       let bW = innerWidth, bH = innerHeight;
       const bars = BARS.map((b, i) => {
