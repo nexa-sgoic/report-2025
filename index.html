@@ -316,9 +316,10 @@
       align-self:center;
     }
     .nx-impact__metrics.nx-impact__metrics--5 > div{
-      padding:16px 22px;background:var(--nx-paper);
+      padding:18px 22px;background:var(--nx-paper);
       border:1px solid var(--nx-line);border-radius:var(--nx-r-md);
-      display:flex;flex-direction:column;gap:4px;
+      display:flex;flex-direction:column;justify-content:center;gap:6px;
+      min-height:96px;
       transition:transform .35s var(--nx-ease-arch), border-color .25s, background .25s;
     }
     .nx-impact__metrics.nx-impact__metrics--5 > div:hover{
@@ -692,6 +693,7 @@
       background:var(--nx-orange);overflow:hidden;
       display:grid;align-items:end;
       isolation:isolate;
+      scroll-margin-top:8px;   /* rail anchor lands at the top of the orange · same as #cover03 */
     }
     .nx-chapcover__pattern{
       position:absolute;inset:0;z-index:1;pointer-events:none;
@@ -1326,11 +1328,22 @@
     /* ============ CERTIFICAÇÃO DE ATIVOS (cap 03 · from PDF p.31) ============ */
     .nx-certs{background:var(--nx-paper)}
     .nx-certs__layout{
-      display:grid;grid-template-columns:1.7fr 1fr;gap:clamp(24px,3vw,44px);
-      align-items:start;margin-top:24px;
+      display:grid;grid-template-columns:1.7fr 1fr;gap:clamp(20px,2.4vw,32px);
+      align-items:stretch;margin-top:24px;
+    }
+    /* Both columns now share the same frame · paper bg + line border +
+       padding · they read as a single uniform card system, matching the
+       .nx-sheet__panel look used in the modals. */
+    .nx-certs__table,
+    .nx-certs__donut{
+      background:var(--nx-paper);border:1px solid var(--nx-line);
+      border-radius:var(--nx-r-md);
+      padding:clamp(16px,2vw,24px);
+      min-height:340px;
     }
     .nx-certs__table{
-      display:grid;border-top:1px solid var(--nx-line);font-size:var(--nx-size-sm);
+      display:grid;font-size:var(--nx-size-sm);
+      align-content:start;
     }
     .nx-certs__row{
       display:grid;grid-template-columns:1.5fr repeat(4, minmax(0, 1fr));
@@ -1342,8 +1355,9 @@
     .nx-certs__row.is-head{
       padding:10px 4px;font-family:var(--nx-font-mono);font-size:10.5px;
       color:var(--nx-orange);letter-spacing:.14em;text-transform:uppercase;
-      border-bottom:1px solid var(--nx-line-dark);
+      border-top:0;
     }
+    .nx-certs__row:first-child{border-top:0}
     .nx-certs__row.is-head > span:first-child{text-align:left}
     .nx-certs__row.is-head > span:not(:first-child){text-align:center}
     .nx-certs__type{
