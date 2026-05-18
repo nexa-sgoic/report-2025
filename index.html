@@ -126,7 +126,7 @@
       overflow:hidden;
     }
     /* Sections that genuinely need full-viewport presence (hero, chapter cover) keep it explicitly */
-    .nx-hero, .nx-chap{min-height:100vh}
+    .nx-hero{min-height:100vh}
 
     /* Right-side breathing space so section content never collides with the scroll-rail
        (rail sits at right:clamp(16px, 2.4vw, 36px) and is ~80px wide w/ labels) */
@@ -388,7 +388,7 @@
     /* (X watermark removed — was floating to the right of the map and reading as a stray logo) */
 
     /* ============ RADIAL · DUPLA MATERIALIDADE — Climate-Tech-Map inspired ============ */
-    .nx-radial{display:grid;grid-template-columns:minmax(280px,1.1fr) minmax(360px,1fr);gap:clamp(28px,4vw,72px);align-items:center;padding-block:8vh;padding-right:clamp(60px,8vw,120px)}
+    .nx-radial{display:grid;grid-template-columns:minmax(280px,1.1fr) minmax(360px,1fr);gap:clamp(28px,4vw,72px);align-items:center;padding-block:6vh;padding-right:clamp(60px,8vw,120px)}
     .nx-radial__head{display:grid;gap:18px;max-width:46ch}
     .nx-radial__eyebrow{font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);color:var(--nx-mute-on-ink);letter-spacing:var(--nx-track-caps);text-transform:uppercase}
     .nx-radial__title{font-size:clamp(2rem,5vw,4.5rem);font-weight:var(--nx-w-light);letter-spacing:-.03em;line-height:1.02}
@@ -518,7 +518,7 @@
     /* Environmental section · panel layout */
     .nx-env{
       background:var(--nx-bone);
-      padding-block:8vh;
+      padding-block:6vh;
     }
     .nx-env__head{display:grid;gap:8px;max-width:62ch;margin-bottom:36px}
     .nx-env__title{
@@ -800,7 +800,7 @@
     }
 
     /* ============ CHAPTER COVER (05) — HALF-BLEED ORANGE ============ */
-    .nx-chap{padding:0;min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+    .nx-chap{padding:0;min-height:auto;display:grid;grid-template-columns:1fr 1fr}
     .nx-chap__left{
       background:var(--nx-orange);position:relative;overflow:hidden;display:grid;align-items:end;
     }
@@ -894,7 +894,7 @@
     .nx-chainpause{
       position:relative;width:100vw;
       margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
-      min-height:64vh;overflow:hidden;
+      min-height:48vh;overflow:hidden;
       display:grid;align-items:end;
       background:var(--nx-brand-ink);
       isolation:isolate;
@@ -953,7 +953,7 @@
     }
 
     /* ============ EXPLORE (07) — CHAPTER CARDS ============ */
-    .nx-explore{padding-block:9vh;align-items:start}
+    .nx-explore{padding-block:7vh;align-items:start}
     .nx-explore__head{margin-bottom:64px;max-width:48ch}
     .nx-explore__eyebrow{font-family:var(--nx-font-mono);font-size:var(--nx-size-2xs);color:var(--nx-orange);letter-spacing:var(--nx-track-caps);text-transform:uppercase;margin-bottom:14px;display:inline-block}
     .nx-explore__title{font-size:clamp(2rem,4vw,3.5rem);font-weight:var(--nx-w-light);letter-spacing:-.03em;line-height:1.05}
@@ -1141,7 +1141,7 @@
 
     /* ============ SECTION SCAFFOLDING (reusable) ============ */
     .nx-section{
-      padding:clamp(80px,12vh,140px) clamp(20px,5vw,80px);
+      padding:clamp(56px,8vh,100px) clamp(20px,5vw,80px);
       position:relative;
     }
     .nx-section__inner{max-width:1240px;margin:0 auto;display:grid;gap:clamp(24px,4vh,48px)}
@@ -1469,8 +1469,8 @@
     /* Phil · scatter variant (dashes randomly rotated · forma y frase 02.png) */
     .nx-phil--scatter{
       align-items:stretch;justify-items:stretch;text-align:left;
-      padding:clamp(60px,10vh,120px) clamp(28px,5vw,80px);
-      min-height:80vh;
+      padding:clamp(48px,8vh,96px) clamp(28px,5vw,80px);
+      min-height:62vh;
       position:relative;
     }
     .nx-phil__scatter{
@@ -1516,8 +1516,8 @@
        a loose cluster on the left, ink bg · quote on the right. */
     .nx-phil--suns{
       align-items:center;justify-items:end;text-align:right;
-      padding:clamp(60px,10vh,120px) clamp(28px,5vw,80px);
-      min-height:80vh;
+      padding:clamp(48px,8vh,96px) clamp(28px,5vw,80px);
+      min-height:62vh;
       position:relative;
     }
     .nx-phil__suns{
