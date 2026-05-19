@@ -261,7 +261,10 @@
     .nx-cursor-x.is-on{opacity:1}
     .nx-cursor-x.is-hot{width:40px;height:40px;opacity:1}
     .nx-cursor-x line{stroke:var(--nx-orange);stroke-width:8;fill:none;stroke-linecap:square}
-    body.is-touch .nx-cursor-x{display:none}
+    /* Custom orange X cursor stays visible on touch too · follows the finger */
+    body.is-touch{cursor:auto}
+    body.is-touch .nx-cursor-x{display:block;width:34px;height:34px}
+    body.is-touch .nx-cursor-x.is-on{opacity:.9}
 
     .nx-hero__sub{
       position:absolute;bottom:clamp(80px,14vh,140px);left:0;right:0;
@@ -297,18 +300,26 @@
       margin-top:0;display:contents;
     }
     .nx-impact__panel{display:grid;align-content:center;gap:clamp(14px,2vh,24px)}
-    /* Hero footnote (bottom-left, dark hero) */
+    /* Hero footnote (bottom-left, dark hero) · responsive · two lines on phone */
     .nx-hero__period{
-      position:absolute;left:clamp(28px,5vw,96px);
-      bottom:clamp(28px,5vh,56px);z-index:8;
+      position:absolute;left:clamp(20px,5vw,96px);
+      right:clamp(20px,5vw,96px);
+      bottom:clamp(20px,4vh,56px);z-index:8;
       font-family:var(--nx-font-mono);font-size:10.5px;
       letter-spacing:.22em;text-transform:uppercase;
-      color:var(--nx-mid);
+      color:var(--nx-mid);max-width:42ch;
       opacity:0;animation:nxFadeIn 1s var(--nx-ease-out) 3800ms forwards;
     }
     .nx-hero__period::before{
       content:"";display:inline-block;width:24px;height:1px;
       background:var(--nx-orange);vertical-align:middle;margin-right:12px;
+    }
+    @media (max-width: 560px){
+      .nx-hero__period{
+        font-size:9.5px;letter-spacing:.14em;
+        line-height:1.5;max-width:none;
+      }
+      .nx-hero__period::before{width:18px;margin-right:8px}
     }
     /* nx-impact__metrics--5 · 5 framed cards stacked vertically (one over the other) */
     .nx-impact__metrics.nx-impact__metrics--5{
@@ -1829,8 +1840,14 @@
       .nx-chap__left{min-height:50vh}
       .nx-impact__metrics{grid-template-columns:repeat(2,1fr)}
       .nx-impact__x{display:none}
-      .nx-chrome{grid-template-columns:auto 1fr;gap:12px}
-      .nx-chrome__contact span:last-child{display:none}
+      /* Chrome mobile · 2 cols (brand on left · pdf+lang on right · contact hidden) */
+      .nx-chrome{grid-template-columns:auto 1fr;gap:12px;padding:14px 18px}
+      .nx-chrome__contact{display:none}
+      .nx-chrome__brand{justify-self:start}
+      .nx-chrome__right{justify-self:end;gap:10px}
+      .nx-chrome__pdf{padding:6px 10px;font-size:10px;letter-spacing:.16em;gap:5px}
+      .nx-chrome__pdf svg{width:11px;height:11px}
+      .nx-chrome__lang{font-size:10px;gap:10px}
       .nx-rail{display:none}
       .nx-esg-strip{grid-template-columns:1fr;gap:8px;padding:32px 20px}
       .nx-foot__contact{grid-template-columns:1fr;gap:24px}
@@ -2736,6 +2753,25 @@
       if(cursorX) cursorX.classList.remove('is-on');
       mx = -9999; my = -9999;
     });
+    // Touch parity · finger position drives cursor + bar proximity on phones
+    function setPointerFromTouch(touch){
+      mx = touch.clientX; my = touch.clientY;
+      mxN = (touch.clientX / innerWidth) - 0.5;
+      myN = (touch.clientY / innerHeight) - 0.5;
+      if(cursorX) cursorX.classList.add('is-on');
+    }
+    addEventListener('touchstart', (e) => {
+      if(e.touches[0]) setPointerFromTouch(e.touches[0]);
+    }, {passive:true});
+    addEventListener('touchmove', (e) => {
+      if(e.touches[0]) setPointerFromTouch(e.touches[0]);
+    }, {passive:true});
+    addEventListener('touchend', () => {
+      // Keep the cursor visible 1.5s after release so the user sees the effect
+      setTimeout(() => {
+        if(cursorX) cursorX.classList.remove('is-on');
+      }, 1500);
+    }, {passive:true});
     document.querySelectorAll('a,button,.nx-rail__item,.nx-explore__card,.nx-esg-tile,.nx-metric,.nx-people__card,.nx-map__city,.nx-chrome__pdf,.nx-chrome__contact,.nx-backtotop').forEach(el => {
       el.addEventListener('mouseenter', () => cursorX && cursorX.classList.add('is-hot'));
       el.addEventListener('mouseleave', () => cursorX && cursorX.classList.remove('is-hot'));
