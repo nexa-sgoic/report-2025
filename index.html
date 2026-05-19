@@ -699,12 +699,16 @@
     .nx-chapcover{
       position:relative;width:100vw;
       margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
-      /* Fixed-height so the three covers are visually identical (was
-         aspect-ratio + min/max which could collapse differently per
-         viewport). Range tuned for desktop 13"→27"+. */
-      height:clamp(440px, 56vw, 760px);
+      /* Height bound by viewport so when the rail jumps to the cover,
+         the ENTIRE orange section fits below the chrome — numeral and
+         pattern both visible without scrolling.
+         svh = small-viewport-height (excludes mobile address bar). */
+      height:min(calc(100svh - 88px), 720px);
+      min-height:440px;
       background:var(--nx-orange);overflow:hidden;
-      display:grid;align-items:end;
+      /* Numeral centered vertically (was bottom) so it never gets clipped
+         on shorter viewports · still right-aligned per the brand layout. */
+      display:grid;align-items:center;
       isolation:isolate;
       /* Anchor scroll offset so the orange lands BELOW the fixed chrome
          header (~64px) — was 8px which caused the cover to slide under
@@ -717,11 +721,12 @@
     .nx-chapcover__num{
       position:relative;z-index:2;
       font-family:var(--nx-font-sans);font-weight:var(--nx-w-bold);
-      font-size:clamp(7rem,16vw,16rem);
+      font-size:clamp(6rem,14vw,14rem);
       line-height:.85;letter-spacing:-.05em;
       color:rgba(237,204,192,.72);
-      /* Extra right padding so the giant numeral doesn't collide with the lateral rail */
-      padding:0 clamp(96px,10vw,160px) clamp(24px,5vh,72px) 0;
+      /* Right padding clears the lateral rail · zero bottom because the
+         grid centers the numeral vertically now. */
+      padding:0 clamp(96px,10vw,160px) 0 0;
       justify-self:end;
       opacity:0;transform:translateY(40px);
       transition:opacity 1.2s var(--nx-ease-out), transform 1.2s var(--nx-ease-arch);
