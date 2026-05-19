@@ -1848,7 +1848,11 @@
       .nx-chrome__pdf{padding:6px 10px;font-size:10px;letter-spacing:.16em;gap:5px}
       .nx-chrome__pdf svg{width:11px;height:11px}
       .nx-chrome__lang{font-size:10px;gap:10px}
-      .nx-rail{display:none}
+      /* Rail visible on mobile too · just smaller and tighter */
+      .nx-rail{right:10px;gap:10px}
+      .nx-rail__num{font-size:9.5px}
+      .nx-rail__bar{width:16px;height:1.5px}
+      .nx-rail__item.is-active .nx-rail__bar{width:26px}
       .nx-esg-strip{grid-template-columns:1fr;gap:8px;padding:32px 20px}
       .nx-foot__contact{grid-template-columns:1fr;gap:24px}
       .nx-foot__bottom{flex-direction:column;gap:12px}
@@ -1887,9 +1891,18 @@
       .nx-certs__row{padding:11px 4px;gap:6px}
       .nx-certs__cell{font-size:10px}
       .nx-certs__type{font-size:13px}
-      /* Dark pauses: tighter min-height */
-      .nx-phil{min-height:auto;padding:clamp(40px,7vh,72px) 22px}
+      /* Dark pauses · proportional min-height so each one feels like a
+         section, not a sliver. Keep padding tight. */
+      .nx-phil{min-height:52vh;padding:clamp(56px,9vh,96px) 22px}
       .nx-phil__quote{font-size:clamp(1.05rem,4.8vw,1.6rem)}
+      .nx-phil__xmark{width:36px;height:36px;left:18px;top:24px}
+      .nx-phil__cap{font-size:9.5px;letter-spacing:.14em}
+
+      /* Radial materiality · larger viewBox + better spoke label fit */
+      .nx-radial{padding-block:clamp(60px,9vh,100px);grid-template-columns:1fr;gap:24px}
+      .nx-radial__map{max-width:100%;aspect-ratio:1}
+      .nx-radial__title{font-size:clamp(1.6rem,6vw,2.2rem)}
+      .nx-radial__lede{font-size:14px}
       /* Scatter dashes: half the size, no horizontal scroll risk */
       .nx-phil__scatter span{transform:translate(var(--x,0), var(--y,0)) rotate(var(--rot,0deg)) scale(.55)}
       .nx-phil--scatter.is-in .nx-phil__scatter span{
@@ -1899,9 +1912,46 @@
       .nx-phil--suns.is-in .nx-phil__suns .sun{transform:translate(var(--x,0), var(--y,0)) scale(.6)}
       @keyframes nxSunSpinMobile{to{transform:translate(var(--x,0), var(--y,0)) scale(.6) rotate(360deg)}}
       .nx-phil--suns.is-in .nx-phil__suns .sun{animation-name:nxSunSpinMobile}
-      /* Chapter covers: shorter on phone, numeral inboard */
-      .nx-chapcover{min-height:36vh;aspect-ratio:auto;max-height:none}
-      .nx-chapcover__num{font-size:clamp(5rem,18vw,9rem);padding:0 28px clamp(20px,4vh,40px) 0}
+      /* Chapter covers · phone-sized so the pattern grid + numeral fit
+         within the visible orange area (no truncated shapes). */
+      .nx-chapcover{min-height:auto;aspect-ratio:4/3;max-height:none}
+      .nx-chapcover__num{
+        font-size:clamp(4rem,16vw,7rem);
+        padding:0 20px clamp(18px,3vh,32px) 0;
+        color:rgba(237,204,192,.82);
+      }
+      /* Lines pattern · denser grid (5 rows × 14 cols = 70 bars · fits 4:3) */
+      .nx-chapcover__pattern--lines{
+        padding:18px 18px;gap:14px;
+      }
+      .nx-chapcover__pattern--lines .row{
+        grid-template-columns:repeat(14,1fr);gap:5px;
+      }
+      .nx-chapcover__pattern--lines .row > :nth-child(n+15){display:none}
+      /* Squares pattern · keep 5 cols × 3 rows = 15 visible; hide the
+         16th onwards so we never render half-cut shapes. */
+      .nx-chapcover__pattern--squares{
+        grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(3,1fr);
+        gap:14px;padding:18px 18px;
+      }
+      .nx-chapcover__pattern--squares .sq:nth-child(n+16){display:none}
+      /* Suns pattern (cap 03) · 4 cols × 3 rows = 12 suns visible */
+      .nx-chapcover__pattern--suns{
+        grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);
+        gap:14px;padding:18px 18px;
+      }
+      .nx-chapcover__pattern--suns .sun:nth-child(n+13){display:none}
+
+      /* Chapter divider band · title can wrap to 2 lines if needed */
+      .nx-chapdiv{
+        grid-template-columns:auto 1fr auto;
+        text-align:left;gap:14px;padding:20px 22px;
+        align-items:center;
+      }
+      .nx-chapdiv__title{
+        font-size:clamp(1rem,4vw,1.4rem);
+        line-height:1.15;letter-spacing:-.01em;
+      }
       /* Hero title slightly smaller still */
       .nx-hero__titlefinal{font-size:clamp(22px,7vw,38px)}
       /* Sheet modal panels stack on phone (done by 720px rule, redundant safe) */
