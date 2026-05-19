@@ -249,32 +249,23 @@ Pendiente decisión de MFZ.
 
 ---
 
-## 12. Archivos del proyecto · qué subir al repo
-
-### 12.1 Estructura actual del repo `sustainability-reports-NEXA/`
-```
-sustainability-reports-NEXA/
-├── assets/brand/                ✅ ya existe — Logo + Manual_Normas
-├── data/                        ✅ ya existe — 16 JSONs
-├── docs/DESIGN_BRIEF.md         ✅ ya existe
-├── pdfs/RS_NEXA_2025.pdf        ✅ ya existe
-├── uploads/font/Fonte_Montserrat/  ✅ ya existe
-├── uploads/leed/                ✅ ya existe (5 formatos)
-├── uploads/references/pdf_pages/   ✅ ya existe
-└── README.md                    ✅ ya existe
-```
-
-### 12.2 Falta agregar al repo (desde mi proyecto Claude Design):
+## 12. Estructura del repo
 
 ```
-sustainability-reports-NEXA/
-├── nx-tokens.css                ← copiar desde Claude Design
-├── BRAND_GUIDELINES.md          ← copiar (este archivo)
-├── Design System.html           ← copiar (specimen visual)
-├── NEXA.html                    ← copiar (home prototype)
-└── strings/
-    ├── pt.json                  ← extraer del NEXA.html
-    └── en.json                  ← extraer del NEXA.html
+report-2025/
+├── index.html                  Página completa (single-file)
+├── nx-tokens.css               Tokens de design
+├── BRAND_GUIDELINES.md         Este documento
+├── design-system.html          Specimen visual
+├── HANDOFF_IT.md               Documentación para IT NEXA
+├── README.md
+├── assets/brand/               Logo + Manual de Normas
+├── brand/                      Variantes del logo
+├── data/                       16 JSONs estruturados
+├── pdfs/RS_NEXA_2025.pdf       PDF oficial del relatório
+└── uploads/
+    ├── leed/                   Selo LEED Gold®
+    └── projects/               Fotos dos ativos
 ```
 
 ### 12.3 Próximos pasos para que Claude Code arme `index.html`

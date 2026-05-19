@@ -4,15 +4,15 @@
 > Objetivo: ativar o site público sob o domínio `nexa-sgoic.pt`.
 >
 > **Data**: 2026-05-19
-> **Site origem**: <https://mariafernandazelayaferrer-sudo.github.io/sustainability-reports-NEXA/>
-> **Repositório**: <https://github.com/mariafernandazelayaferrer-sudo/sustainability-reports-NEXA>
+> **Site origem**: <https://nexa-sgoic.github.io/report-2025/>
+> **Repositório**: <https://github.com/nexa-sgoic/report-2025>
 > **Responsável de conteúdo**: Fernanda Zelaya · Responsável ESG da NEXA
 
 ---
 
 ## 0 · TL;DR · 3 passos para apontar o domínio
 
-1. **DNS** · criar um CNAME em `nexa-sgoic.pt` apontando para `mariafernandazelayaferrer-sudo.github.io` (subdomínio sugerido: `sustentabilidade.nexa-sgoic.pt`).
+1. **DNS** · criar um CNAME em `nexa-sgoic.pt` apontando para `nexa-sgoic.github.io` (subdomínio sugerido: `sustentabilidade.nexa-sgoic.pt`).
 2. **Repo** · adicionar um ficheiro `CNAME` na raíz do repo com o subdomínio escolhido.
 3. **GitHub Pages** · ativar HTTPS nas settings do repo após a propagação DNS (24-48h).
 
@@ -42,7 +42,7 @@ No painel DNS do registrador (cPanel, Cloudflare, OVH, etc.), adicionar:
 
 ```
 Tipo    Nome                          Valor                                        TTL
-CNAME   sustentabilidade               mariafernandazelayaferrer-sudo.github.io.   3600
+CNAME   sustentabilidade               nexa-sgoic.github.io.   3600
 ```
 
 > Sugestões alternativas de subdomínio: `relatorio.nexa-sgoic.pt`, `rs.nexa-sgoic.pt`, `2025.nexa-sgoic.pt`.
@@ -83,7 +83,7 @@ curl -I https://sustentabilidade.nexa-sgoic.pt/
 
 Se preferirem não usar GitHub Pages:
 
-1. Fazer `git clone https://github.com/mariafernandazelayaferrer-sudo/sustainability-reports-NEXA.git`
+1. Fazer `git clone https://github.com/nexa-sgoic/report-2025.git`
 2. Servir o conteúdo estático do repo a partir de qualquer servidor HTTP (nginx, Apache, S3+CloudFront, Vercel, Netlify, etc.)
 3. Configurar o vhost para responder em `sustentabilidade.nexa-sgoic.pt`
 4. Activar HTTPS com Let's Encrypt ou certificado próprio
@@ -167,7 +167,7 @@ Para melhorar performance:
 ## 8 · Suporte & contato
 
 Para questões técnicas sobre o código:
-- Repo GitHub: <https://github.com/mariafernandazelayaferrer-sudo/sustainability-reports-NEXA>
+- Repo GitHub: <https://github.com/nexa-sgoic/report-2025>
 - Memória do projeto: ver `README.md` no repo
 
 Para questões de conteúdo:
