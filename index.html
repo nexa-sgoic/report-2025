@@ -3248,6 +3248,26 @@
     const backtop = document.getElementById('backtotop');
     if(backtop) backtop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 
+    // Rail anchor scroll · the native #anchor jump respects scroll-margin-top
+    // but the chrome header has variable height (PT/EN buttons, mobile grid)
+    // so we measure it at click time and place the target right beneath it.
+    const chromeEl = document.querySelector('.nx-chrome');
+    railItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        const href = item.getAttribute('href') || '';
+        if(!href.startsWith('#')) return;
+        const target = document.getElementById(href.slice(1));
+        if(!target) return;
+        e.preventDefault();
+        const chromeH = chromeEl ? chromeEl.getBoundingClientRect().height : 0;
+        const gap = 8;
+        const top = window.scrollY + target.getBoundingClientRect().top - chromeH - gap;
+        window.scrollTo({top, behavior:'smooth'});
+        // keep the hash in the URL for shareability (but without re-jumping)
+        if(history.replaceState) history.replaceState(null, '', href);
+      });
+    });
+
     // Surfaces the rail flies over · split into two buckets so the rail
     // can flip its color depending on whether the surface is light (bone/
     // paper · rail → ink) or orange (chapter covers/dividers/chain pause ·
