@@ -2293,7 +2293,7 @@
         <button type="button" class="nx-kpi-card" data-sheet="colaboradores">
           <span class="nx-kpi-card__cat" data-i18n="social.kpi.team">Colaboradores</span>
           <span class="nx-kpi-card__val">10</span>
-          <span class="nx-kpi-card__delta">3 mulheres · 7 homens · turnover 0%</span>
+          <span class="nx-kpi-card__delta">7 mulheres · 3 homens · turnover 0%</span>
           <span class="nx-kpi-card__cta" data-i18n="kpi.open">Ver gráficos →</span>
         </button>
         <button type="button" class="nx-kpi-card" data-sheet="salarios">
@@ -2305,12 +2305,12 @@
         <button type="button" class="nx-kpi-card" data-sheet="formacao">
           <span class="nx-kpi-card__cat" data-i18n="social.kpi.training">Formação · horas/pessoa</span>
           <span class="nx-kpi-card__val">28,6<span class="unit">h</span></span>
-          <span class="nx-kpi-card__delta">70,0% cobertura · 88,9% prémios</span>
+          <span class="nx-kpi-card__delta">70,0% cobertura · 90,2% prémios</span>
           <span class="nx-kpi-card__cta" data-i18n="kpi.open">Ver gráficos →</span>
         </button>
         <button type="button" class="nx-kpi-card" data-sheet="igualdade">
           <span class="nx-kpi-card__cat" data-i18n="social.kpi.gap">Igualdade · gap salarial</span>
-          <span class="nx-kpi-card__val">37,1<span class="unit">%</span></span>
+          <span class="nx-kpi-card__val">37,7<span class="unit">%</span></span>
           <span class="nx-kpi-card__delta">a fechar até 2030 · plano 2026</span>
           <span class="nx-kpi-card__cta" data-i18n="kpi.open">Ver gráficos →</span>
         </button>
@@ -2527,7 +2527,7 @@
         </div>
         <div class="nx-objectives__card">
           <div class="nx-objectives__top"><span class="nx-objectives__num">O5</span><span class="nx-objectives__year">2026</span></div>
-          <p class="nx-objectives__text" data-i18n="obj.5">Plano de ação para neutralidade remuneratória (gap salarial 37,1% → 0%).</p>
+          <p class="nx-objectives__text" data-i18n="obj.5">Plano de ação para neutralidade remuneratória (gap salarial 37,7% → 0%).</p>
           <span class="nx-objectives__tag" data-i18n="obj.tag.social">Social</span>
         </div>
         <div class="nx-objectives__card">
@@ -3468,7 +3468,7 @@
         "obj.2":"Fecho da certificação LEED do The Breeze",
         "obj.3":"Arranque da certificação LEED do Valpark",
         "obj.4":"Estratégia de certificação ou OPR para os 4 ativos sob gestão por terceiros",
-        "obj.5":"Plano de ação para neutralidade remuneratória (gap salarial 37,1% → 0%)",
+        "obj.5":"Plano de ação para neutralidade remuneratória (gap salarial 37,7% → 0%)",
         "obj.6":"Análise de Dupla Materialidade Externa com stakeholders",
         "obj.7":"Análise de risco físico climático (pilot)",
         "climate.eyebrow":"03.2 — Trajetória climática","climate.title":"Scope 1+2: de 30,0 a 9,4 TonCO₂e (−68,8%).","climate.lede":"Projeção anual 2025–2030. A meta de −40% é largamente ultrapassada.",
@@ -4375,8 +4375,8 @@
             body: buildHbars({
               label:'Por género',
               rows:[
-                {cat:'Homens',   val:'7', unit:'pessoas', w:70, strong:true},
-                {cat:'Mulheres', val:'3', unit:'pessoas', w:30}
+                {cat:'Mulheres', val:'7', unit:'pessoas', w:70, strong:true},
+                {cat:'Homens',   val:'3', unit:'pessoas', w:30}
               ]
             })
           }));
@@ -4421,9 +4421,9 @@
 
       salarios: {
         eyebrow: '02.3 — Social · Remunerações',
-        title: 'Salário médio · 2.686,80 €',
+        title: 'Salário médio · 2.696,2 €',
         titleAccent: '3,1× mínimo nacional',
-        lede: 'Política salarial digna — todos os colaboradores acima do mínimo nacional (870 €). Prémios de performance abrangem 90% dos elegíveis.',
+        lede: 'Política salarial digna — todos os colaboradores acima do mínimo nacional (870 €). Prémios de performance abrangem 90,2% dos elegíveis em 2025.',
         build: () => {
           const frag = document.createDocumentFragment();
           const r1 = document.createElement('div');
@@ -4435,15 +4435,15 @@
             body: buildHbars({
               rows:[
                 {cat:'Mínimo nacional', val:'870',      unit:'€', w:32},
-                {cat:'Salário médio',   val:'2.686,80', unit:'€', w:100, strong:true}
+                {cat:'Salário médio',   val:'2.696,2', unit:'€', w:100, strong:true}
               ]
             })
           }));
           r1.appendChild(buildPill({
             year:'2025',
             cap:'Prémios performance',
-            num:'90', unit:'%',
-            note:'88,9% dos colaboradores receberam prémio em 2025. Os 10% restantes não eram elegíveis por entrada nesse ano.'
+            num:'90,2', unit:'%',
+            note:'90,2% dos colaboradores receberam prémio em 2025 (88,9% em 2024). Os restantes não eram elegíveis por entrada nesse ano.'
           }));
           frag.appendChild(r1);
           return frag;
@@ -4462,11 +4462,11 @@
           r1.appendChild(buildPanel({
             title:'Horas de formação por pessoa',
             stat:'28,6', unit:'h',
-            note:'Comparação direta com 2024 (40,3 h/pessoa).',
+            note:'Comparação direta com 2024 (98,1 h/pessoa).',
             body: buildHbars({
               rows:[
-                {cat:'2024', val:'40,3', unit:'h', w:100},
-                {cat:'2025', val:'28,6', unit:'h', w:71, strong:true}
+                {cat:'2024', val:'98,1', unit:'h', w:100, strong:true},
+                {cat:'2025', val:'28,6', unit:'h', w:29}
               ]
             })
           }));
@@ -4489,20 +4489,20 @@
 
       igualdade: {
         eyebrow: '02.3 — Social · Igualdade',
-        title: 'Gap salarial global · 37,1%',
+        title: 'Gap salarial global · 37,7%',
         titleAccent: 'Plano fecho 2030',
-        lede: 'Em 2025 o gap salarial global entre homens e mulheres é de 37,1%. Plano de neutralidade remuneratória em construção (Objetivo O5 do plano 2026).',
+        lede: 'Em 2025 o gap salarial global entre homens e mulheres é de 37,7%. Plano de neutralidade remuneratória em construção (Objetivo O5 do plano 2026).',
         build: () => {
           const frag = document.createDocumentFragment();
           const r1 = document.createElement('div');
           r1.className = 'nx-sheet__row nx-sheet__row--2col';
           r1.appendChild(buildPanel({
             title:'Gap salarial · 2025',
-            stat:'37,1', unit:'% global',
+            stat:'37,7', unit:'% global',
             note:'Diferença média ponderada entre salário masculino e feminino. O detalhe por categoria profissional está em revisão e será publicado no exercício 2026.',
             body: buildHbars({
               rows:[
-                {cat:'Global', val:'37,1', unit:'%', w:75, strong:true},
+                {cat:'Global', val:'37,7', unit:'%', w:75, strong:true},
                 {cat:'Meta 2030', val:'0,0',  unit:'%', w:1}
               ]
             })
@@ -4511,7 +4511,7 @@
             year:'2030',
             cap:'Meta de fecho do gap',
             num:'0', unit:'%',
-            note:'Plano de ação para neutralidade remuneratória — gap salarial 37,1% → 0% até 2030. Objetivo O5 do plano 2026.'
+            note:'Plano de ação para neutralidade remuneratória — gap salarial 37,7% → 0% até 2030. Objetivo O5 do plano 2026.'
           }));
           frag.appendChild(r1);
           return frag;
@@ -4703,10 +4703,10 @@
         'Consumo de água':'9.933 m³ em 2025 (vs 11.622 m³ em 2024). Construção respondeu por 32,0%, com SPARK como principal consumidor.',
         'Resíduos valorizados':'97,3% dos resíduos foram valorizados em 2025. 100% dos resíduos de construção foram encaminhados para valorização.',
         'Frota elétrica':'4 dos 6 veículos da NEXA são elétricos. Em 2025, evitaram-se 59,9% das emissões associadas à mobilidade — equivalente a 14,1 TonCO₂e.',
-        'Colaboradores':'10 colaboradores em 2025 (3 mulheres, 7 homens). Crescimento moderado vs. 2024 (9 colaboradores), em fase de consolidação organizacional.',
+        'Colaboradores':'10 colaboradores em 2025 (7 mulheres, 3 homens). Crescimento moderado vs. 2024 (9 colaboradores), em fase de consolidação organizacional.',
         'Turnover 2025':'Zero saídas de colaboradores durante o período. 1 nova contratação, demonstrando uma abordagem criteriosa à gestão de recursos humanos.',
         'Salário médio':'Salário médio dos colaboradores: 2.686,8 € (vs. 870 € de salário mínimo nacional) — 3,1× acima do mínimo.',
-        'Prémios performance':'90% dos colaboradores receberam prémio de performance em 2025. Os 10% restantes não eram elegíveis por entrada nesse ano.',
+        'Prémios performance':'90,2% dos colaboradores receberam prémio de performance em 2025 (88,9% em 2024). Os restantes não eram elegíveis por entrada nesse ano.',
         'Formação':'28,6h por pessoa em 2025 (vs. 98h em 2024). Cobertura: 70% dos colaboradores. Foco em ações especializadas, alinhadas com a estrutura estabilizada.',
         'Acima do mínimo nacional':'100% dos colaboradores receberam remuneração superior ao salário mínimo nacional (870 €) em 2025.',
         'Condenações 2025':'Zero condenações ou coimas por violação de legislação anticorrupção ou antissuborno em 2025.',
