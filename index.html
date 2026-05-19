@@ -700,38 +700,59 @@
       position:relative;width:100vw;
       margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
       /* Height bound by viewport so when the rail jumps to the cover,
-         the ENTIRE orange section fits below the chrome — numeral and
-         pattern both visible without scrolling.
+         the ENTIRE orange section fits below the chrome — head + pattern
+         both visible without scrolling.
          svh = small-viewport-height (excludes mobile address bar). */
       height:min(calc(100svh - 88px), 720px);
       min-height:440px;
       background:var(--nx-orange);overflow:hidden;
-      /* Numeral centered vertically (was bottom) so it never gets clipped
-         on shorter viewports · still right-aligned per the brand layout. */
-      display:grid;align-items:center;
+      /* Layout: chapter head sits at the top, pattern fills the rest.
+         This unifies the cover with the rest of the design system (all
+         section eyebrows and chapter dividers introduce content from
+         the top, not the bottom). */
+      display:grid;grid-template-rows:auto 1fr;align-items:stretch;
       isolation:isolate;
-      /* Anchor scroll offset so the orange lands BELOW the fixed chrome
-         header (~64px) — was 8px which caused the cover to slide under
-         the lang/PDF buttons on rail click. */
-      scroll-margin-top:72px;
+      /* Anchor target lands EXACTLY at the top of the orange (rail JS
+         handles the precise scroll · no chrome offset by design). */
+      scroll-margin-top:0;
     }
     .nx-chapcover__pattern{
       position:absolute;inset:0;z-index:1;pointer-events:none;
     }
-    .nx-chapcover__num{
+    /* Chapter head · top-left · same hierarchy as nx-chapdiv (mono num
+       + sans title) so the visual language is consistent across all
+       chapter transitions. Sits above the pattern (z-index:2). */
+    .nx-chapcover__head{
       position:relative;z-index:2;
-      font-family:var(--nx-font-sans);font-weight:var(--nx-w-bold);
-      font-size:clamp(6rem,14vw,14rem);
-      line-height:.85;letter-spacing:-.05em;
-      color:rgba(237,204,192,.72);
-      /* Right padding clears the lateral rail · zero bottom because the
-         grid centers the numeral vertically now. */
-      padding:0 clamp(96px,10vw,160px) 0 0;
-      justify-self:end;
-      opacity:0;transform:translateY(40px);
-      transition:opacity 1.2s var(--nx-ease-out), transform 1.2s var(--nx-ease-arch);
+      padding:clamp(36px,6vh,80px) clamp(96px,10vw,160px) 0 clamp(28px,5vw,80px);
+      display:flex;align-items:baseline;
+      gap:clamp(14px,1.6vw,24px);flex-wrap:wrap;
+      color:var(--nx-brand-ink);
+      pointer-events:none;
     }
-    .nx-chapcover.is-in .nx-chapcover__num{opacity:1;transform:translateY(0)}
+    .nx-chapcover__num{
+      font-family:var(--nx-font-mono);
+      font-size:var(--nx-size-2xs);
+      letter-spacing:var(--nx-track-caps);
+      text-transform:uppercase;
+      font-weight:var(--nx-w-medium);
+      opacity:.85;
+    }
+    .nx-chapcover__sep{
+      font-family:var(--nx-font-mono);
+      font-size:var(--nx-size-2xs);
+      opacity:.5;
+    }
+    .nx-chapcover__title{
+      font-family:var(--nx-font-sans);
+      font-size:clamp(1.8rem,4.4vw,3.8rem);
+      font-weight:var(--nx-w-bold);
+      letter-spacing:-.025em;line-height:1;
+      color:var(--nx-brand-ink);
+      opacity:0;transform:translateY(20px);
+      transition:opacity 1s var(--nx-ease-out), transform 1s var(--nx-ease-arch);
+    }
+    .nx-chapcover.is-in .nx-chapcover__title{opacity:1;transform:translateY(0)}
 
     /* — Lines pattern (Cap 01) — */
     .nx-chapcover__pattern--lines{
@@ -2211,15 +2232,12 @@
   <!-- Chapter cover 01 · full-bleed orange + lines pattern + numeral -->
   <section class="nx-chapcover" id="cover01" data-reveal aria-label="Capítulo 01 · NEXA">
     <div class="nx-chapcover__pattern nx-chapcover__pattern--lines" data-pattern="lines" aria-hidden="true"></div>
-    <div class="nx-chapcover__num">01</div>
+    <header class="nx-chapcover__head">
+      <span class="nx-chapcover__num">01</span>
+      <span class="nx-chapcover__sep">—</span>
+      <span class="nx-chapcover__title" data-i18n="chap1.title">NEXA</span>
+    </header>
   </section>
-
-  <!-- Chapter divider 01 -->
-  <div class="nx-chapdiv" id="ch01">
-    <span class="nx-chapdiv__num">01</span>
-    <span class="nx-chapdiv__title" data-i18n="chap1.title">NEXA</span>
-    <span class="nx-chapdiv__arrow">→</span>
-  </div>
 
   <!-- ====== Mensagem do Board ====== -->
   <section class="nx-section nx-board" data-reveal id="board">
@@ -2299,15 +2317,12 @@
   <!-- Chapter cover 02 · full-bleed orange + squares pattern + numeral -->
   <section class="nx-chapcover" id="cover02" data-reveal aria-label="Capítulo 02 · Situação Atual">
     <div class="nx-chapcover__pattern nx-chapcover__pattern--squares" data-pattern="squares" aria-hidden="true"></div>
-    <div class="nx-chapcover__num">02</div>
+    <header class="nx-chapcover__head">
+      <span class="nx-chapcover__num">02</span>
+      <span class="nx-chapcover__sep">—</span>
+      <span class="nx-chapcover__title" data-i18n="chap2.title">Situação Atual</span>
+    </header>
   </section>
-
-  <!-- Chapter divider 02 -->
-  <div class="nx-chapdiv" id="ch02">
-    <span class="nx-chapdiv__num">02</span>
-    <span class="nx-chapdiv__title" data-i18n="chap2.title">Situação Atual</span>
-    <span class="nx-chapdiv__arrow">→</span>
-  </div>
 
   <!-- ====== 03 MATERIALITY · RADIAL MAP (Climate-Tech-Map inspired) ====== -->
   <section class="nx-stage nx-stage--ink nx-radial" data-reveal id="matrix">
@@ -2537,17 +2552,14 @@
     </div>
   </section>
 
-  <!-- Chapter divider 03 -->
-  <div class="nx-chapdiv" id="ch03">
-    <span class="nx-chapdiv__num">03</span>
-    <span class="nx-chapdiv__title" data-i18n="chap3.title">Connect, Invest, Build the future</span>
-    <span class="nx-chapdiv__arrow">→</span>
-  </div>
-
-  <!-- Chapter cover 03 · full-bleed orange + suns pattern + numeral (matches 03.png) -->
+  <!-- Chapter cover 03 · full-bleed orange + suns pattern + unified head -->
   <section class="nx-chapcover" id="cover03" data-reveal aria-label="Capítulo 03 · Connect, Invest, Build the future">
     <div class="nx-chapcover__pattern nx-chapcover__pattern--suns" data-pattern="suns" id="suns" aria-hidden="true"></div>
-    <div class="nx-chapcover__num">03</div>
+    <header class="nx-chapcover__head">
+      <span class="nx-chapcover__num">03</span>
+      <span class="nx-chapcover__sep">—</span>
+      <span class="nx-chapcover__title" data-i18n="chap3.title">Connect, Invest, Build the future</span>
+    </header>
   </section>
 
   <!-- ====== CERTIFICAÇÃO DE ATIVOS (cap 03 · PDF p.31) ====== -->
@@ -3253,10 +3265,10 @@
     const backtop = document.getElementById('backtotop');
     if(backtop) backtop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 
-    // Rail anchor scroll · the native #anchor jump respects scroll-margin-top
-    // but the chrome header has variable height (PT/EN buttons, mobile grid)
-    // so we measure it at click time and place the target right beneath it.
-    const chromeEl = document.querySelector('.nx-chrome');
+    // Rail anchor scroll · land EXACTLY at the top of the orange cover
+    // (the user wants the start of the orange to align with the top of
+    // the viewport, even if the floating chrome overlaps the very top
+    // edge slightly). No chrome offset, no gap.
     railItems.forEach(item => {
       item.addEventListener('click', (e) => {
         const href = item.getAttribute('href') || '';
@@ -3264,11 +3276,8 @@
         const target = document.getElementById(href.slice(1));
         if(!target) return;
         e.preventDefault();
-        const chromeH = chromeEl ? chromeEl.getBoundingClientRect().height : 0;
-        const gap = 8;
-        const top = window.scrollY + target.getBoundingClientRect().top - chromeH - gap;
+        const top = window.scrollY + target.getBoundingClientRect().top;
         window.scrollTo({top, behavior:'smooth'});
-        // keep the hash in the URL for shareability (but without re-jumping)
         if(history.replaceState) history.replaceState(null, '', href);
       });
     });
