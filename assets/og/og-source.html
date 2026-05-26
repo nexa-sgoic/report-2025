@@ -3,23 +3,38 @@
 <head>
 <meta charset="utf-8">
 <title>OG Source · NEXA RS 2025</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-  /* OG image 1200x630 · fundo laranja NEXA + logo X branco (estilo favicon).
+  /* OG image 1200x630 · fundo laranja NEXA + logo X branco centrado,
+     "Relatório de Sustentabilidade" em cima e "2025" embaixo (tudo branco).
      Render: headless Chrome --window-size=1200,630 --screenshot. */
   html, body { margin: 0; padding: 0; }
   body {
-    width: 1200px;
-    height: 630px;
+    width: 1200px; height: 630px;
     background: #C85204;            /* NEXA orange · Pantone 2020 C */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     overflow: hidden;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
   }
-  .x-mark { width: 400px; height: 400px; display: block; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 30px; font-weight: 500;
+    letter-spacing: 0.30em; text-transform: uppercase;
+    color: #fff;
+  }
+  .x-mark { width: 270px; height: 270px; display: block; margin: -6px 0; }
+  .year {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 176px; font-weight: 200;
+    letter-spacing: -0.03em; line-height: 1;
+    color: #fff;
+  }
 </style>
 </head>
 <body>
+  <div class="eyebrow">Relatório de Sustentabilidade</div>
   <svg class="x-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <g fill="#FFFFFF">
       <polygon points="16,25 14,34 46,49 47,44"/>
@@ -28,5 +43,6 @@
       <polygon points="84,75 86,66 54,51 53,56"/>
     </g>
   </svg>
+  <div class="year">2025</div>
 </body>
 </html>
