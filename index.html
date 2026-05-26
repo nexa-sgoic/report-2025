@@ -4,9 +4,56 @@
   <meta charset="utf-8">
   <title>NEXA · Relatório de Sustentabilidade 2025</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ── Social previews · OpenGraph + Twitter card ───────────────────── -->
+  <meta name="description" content="Relatório de Sustentabilidade 2025 da NEXA SGOIC — versão web interativa. AUM 198 M€ · 18 ativos · Scope 1+2+3 = 342,6 TonCO₂e.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="NEXA SGOIC">
+  <meta property="og:title" content="NEXA · Relatório de Sustentabilidade 2025">
+  <meta property="og:description" content="Relatório interativo · materialidade, metas ESG e plano climático até 2030.">
+  <meta property="og:url" content="https://nexa-sgoic.github.io/report-2025/">
+  <meta property="og:image" content="https://nexa-sgoic.github.io/report-2025/assets/og/og-image.png?v=1">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="NEXA · Relatório de Sustentabilidade 2025 · X NEXA + sun motifs">
+  <meta property="og:locale" content="pt_PT">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NEXA · Relatório de Sustentabilidade 2025">
+  <meta name="twitter:description" content="Relatório interativo · materialidade, metas ESG e plano climático até 2030.">
+  <meta name="twitter:image" content="https://nexa-sgoic.github.io/report-2025/assets/og/og-image.png?v=1">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <!-- ── Firebase Firestore · live visitor counter ─────────────────────
+       Project: report-2025-nexa
+       Exposes window.fbApi for the non-module counter code, then dispatches
+       'firebase-ready' so the listener attaches. -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import {
+      getFirestore, doc, getDoc, setDoc, onSnapshot, increment, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBje7-ZXIwt0swba82VtpJ2geixcjLL630",
+      authDomain: "report-2025-nexa.firebaseapp.com",
+      projectId: "report-2025-nexa",
+      storageBucket: "report-2025-nexa.firebasestorage.app",
+      messagingSenderId: "343225368708",
+      appId: "1:343225368708:web:21eacb0ea919dc83b802d1",
+      measurementId: "G-S8JG6WE9RD"
+    };
+    try {
+      const app = initializeApp(firebaseConfig);
+      const db  = getFirestore(app);
+      window.fbApi = { db, doc, getDoc, setDoc, onSnapshot, increment, serverTimestamp };
+      window.dispatchEvent(new CustomEvent('firebase-ready'));
+    } catch (err) {
+      console.warn('[firebase] init failed — counter will fall back to local:', err);
+    }
+  </script>
   <link rel="stylesheet" href="nx-tokens.css">
   <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23C85204"/><g fill="%23FFFFFF"><polygon points="16,25 14,34 46,49 47,44"/><polygon points="84,25 86,34 54,49 53,44"/><polygon points="16,75 14,66 46,51 47,56"/><polygon points="84,75 86,66 54,51 53,56"/></g></svg>'>
   <style>
@@ -320,6 +367,45 @@
         line-height:1.5;max-width:none;
       }
       .nx-hero__period::before{width:18px;margin-right:8px}
+    }
+
+    /* Live visitor counter · bottom-right of the hero, mirror of period footnote */
+    .nx-hero__visitors{
+      position:absolute;right:clamp(20px,5vw,96px);
+      bottom:clamp(20px,4vh,56px);z-index:8;
+      font-family:var(--nx-font-mono);font-size:10.5px;
+      letter-spacing:.22em;text-transform:uppercase;
+      color:var(--nx-mid);
+      display:inline-flex;align-items:baseline;gap:10px;
+      opacity:0;animation:nxFadeIn 1s var(--nx-ease-out) 3800ms forwards;
+    }
+    .nx-hero__visitors-label{ color:var(--nx-mid); }
+    .nx-hero__visitors-num{
+      font-family:var(--nx-font-mono);
+      font-size:13px;font-weight:500;
+      color:var(--nx-peach);
+      letter-spacing:.04em;
+      font-variant-numeric:tabular-nums;
+    }
+    .nx-hero__visitors-num::before{ content:"#"; opacity:.55; margin-right:1px; }
+    .nx-hero__visitors-num.is-bump{
+      animation: nxVisitorBump .55s var(--nx-ease-out);
+    }
+    @keyframes nxVisitorBump {
+      0%   { transform: translateY(0); color: var(--nx-peach); }
+      40%  { transform: translateY(-3px); color: var(--nx-orange); }
+      100% { transform: translateY(0); color: var(--nx-peach); }
+    }
+    @media (max-width: 720px){
+      /* On phones the period eats both lines — drop the counter to a tag
+         below the period instead of overlapping. */
+      .nx-hero__visitors{
+        position:static;
+        margin-top:6px;
+        padding-left:36px;       /* align with the period orange dash */
+        font-size:9.5px;letter-spacing:.14em;
+      }
+      .nx-hero__visitors-num{ font-size:11px; }
     }
     /* nx-impact__metrics--5 · 5 framed cards stacked vertically (one over the other) */
     .nx-impact__metrics.nx-impact__metrics--5{
@@ -2134,6 +2220,14 @@
 
       <!-- Período de análise · footnote bottom-left of the dark hero -->
       <div class="nx-hero__period" data-i18n="hero.period">ANÁLISE DE 1 DE JANEIRO A 31 DE DEZEMBRO DE 2025</div>
+
+      <!-- Live visitor counter · bottom-right, mirrors the period footnote.
+           Firestore-backed: 'stats/visitors' document; increments by 1 on
+           each session (gated by sessionStorage to avoid double counts). -->
+      <div class="nx-hero__visitors" id="nxVisitors" aria-live="polite">
+        <span class="nx-hero__visitors-label" data-i18n="hero.visitor">VOCÊ É O VISITANTE</span>
+        <span class="nx-hero__visitors-num" id="nxVisitorsNum">—</span>
+      </div>
     </div>
   </section>
 
@@ -4944,6 +5038,93 @@
       }, {passive:true});
       foot.style.cursor = 'none';
       foot.addEventListener('click', trigger);
+    })();
+
+    // ── LIVE VISITOR COUNTER · Firestore-backed ──────────────────────────
+    // Document path: stats/visitors  ·  field: count (number)
+    // Each browser session increments once (gated by sessionStorage) so a
+    // user opening many tabs / refreshing doesn't pump the number.
+    // Real-time listener keeps the displayed number live for everyone.
+    (function visitorCounter() {
+      const numEl = document.getElementById('nxVisitorsNum');
+      if (!numEl) return;
+      const STATS_DOC = 'visitors';
+      const SESSION_KEY = 'nexa-rs-counted-2025';
+
+      // Bump animation when the number changes (e.g. another visitor entered)
+      let lastShown = null;
+      function paint(n) {
+        const v = String(Math.max(1, Math.floor(n)));
+        if (numEl.textContent === v) return;
+        numEl.textContent = v;
+        if (lastShown !== null && n !== lastShown) {
+          numEl.classList.remove('is-bump');
+          // restart animation
+          void numEl.offsetWidth;
+          numEl.classList.add('is-bump');
+        }
+        lastShown = n;
+      }
+
+      function localFallback() {
+        // Counter without Firestore (offline / ad-blocker): use a stable
+        // sessionStorage placeholder so the page never shows "—".
+        try {
+          let n = parseInt(localStorage.getItem('nexa-rs-localcount') || '0', 10);
+          if (!sessionStorage.getItem(SESSION_KEY)) {
+            n += 1;
+            localStorage.setItem('nexa-rs-localcount', String(n));
+            sessionStorage.setItem(SESSION_KEY, '1');
+          }
+          paint(Math.max(1, n));
+        } catch {
+          paint(1);
+        }
+      }
+
+      async function attachFirestore() {
+        if (!window.fbApi) { localFallback(); return; }
+        const { db, doc, getDoc, setDoc, onSnapshot, increment, serverTimestamp } = window.fbApi;
+        const ref = doc(db, 'stats', STATS_DOC);
+
+        // Real-time listener — runs immediately with the current count.
+        const unsub = onSnapshot(ref, (snap) => {
+          if (snap.exists()) {
+            const data = snap.data();
+            paint(typeof data.count === 'number' ? data.count : 1);
+          }
+        }, (err) => {
+          console.warn('[counter] snapshot error, falling back to local:', err);
+          unsub && unsub();
+          localFallback();
+        });
+
+        // Increment once per session.
+        if (sessionStorage.getItem(SESSION_KEY)) return;
+        try {
+          const snap = await getDoc(ref);
+          if (snap.exists()) {
+            await setDoc(ref, {
+              count: increment(1),
+              lastVisit: serverTimestamp()
+            }, { merge: true });
+          } else {
+            // Seed the first visitor.
+            await setDoc(ref, {
+              count: 1,
+              lastVisit: serverTimestamp()
+            });
+          }
+          sessionStorage.setItem(SESSION_KEY, '1');
+        } catch (err) {
+          console.warn('[counter] write failed:', err);
+          // Listener still works for read; just don't repeat write attempts.
+          sessionStorage.setItem(SESSION_KEY, '1');
+        }
+      }
+
+      if (window.fbApi) attachFirestore();
+      else window.addEventListener('firebase-ready', attachFirestore, { once: true });
     })();
   })();
   </script>
