@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <title>OG Source · NEXA RS 2025</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-  /* OG image 1200x630 · fundo laranja NEXA + logo X branco centrado,
-     "Relatório de Sustentabilidade" em cima e "2025" embaixo (tudo branco).
-     Render: headless Chrome --window-size=1200,630 --screenshot. */
+  /* OG image 1200x630 · fundo laranja NEXA + ICONE OFICIAL branco (logo-pack),
+     "Relatório de Sustentabilidade" em cima e "2025" embaixo (branco, bold).
+     Render: headless Chrome --window-size=1200,630 --virtual-time-budget=6000 --screenshot. */
   html, body { margin: 0; padding: 0; }
   body {
     width: 1200px; height: 630px;
@@ -24,25 +24,19 @@
     letter-spacing: 0.30em; text-transform: uppercase;
     color: #fff;
   }
-  .x-mark { width: 270px; height: 270px; display: block; margin: -6px 0; }
+  /* Icone oficial NEXA (4 barras retas, branco). PNG tem padding transparente. */
+  .x-mark { height: 320px; width: auto; display: block; margin: -8px 0; }
   .year {
     font-family: 'Montserrat', sans-serif;
-    font-size: 176px; font-weight: 200;
-    letter-spacing: -0.03em; line-height: 1;
+    font-size: 116px; font-weight: 700;
+    letter-spacing: -0.01em; line-height: 1;
     color: #fff;
   }
 </style>
 </head>
 <body>
   <div class="eyebrow">Relatório de Sustentabilidade</div>
-  <svg class="x-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <g fill="#FFFFFF">
-      <polygon points="16,25 14,34 46,49 47,44"/>
-      <polygon points="84,25 86,34 54,49 53,44"/>
-      <polygon points="16,75 14,66 46,51 47,56"/>
-      <polygon points="84,75 86,66 54,51 53,56"/>
-    </g>
-  </svg>
+  <img class="x-mark" src="../brand/logo-pack/4_Versao_Monocromatica/1_Versao_Secundaria/PNG/sem_fundo/Nexa_icon_branco_Prancheta%201.png" alt="">
   <div class="year">2025</div>
 </body>
 </html>
